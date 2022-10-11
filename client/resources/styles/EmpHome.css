@@ -9,11 +9,12 @@ font: bold;
 font: italic;
 border-radius: 10px 10px 0 0;
 }
-text{
-margin-left:630px;
+div.time{
+text-align: center;
 border: 0;
 border-top: 1px solid #ccc;
-margin-bottom: 80px;
+font: bold;
+
 
 }
 div.container{
