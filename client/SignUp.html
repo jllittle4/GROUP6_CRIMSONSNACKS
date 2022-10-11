@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+
+<!-- <link rel="stylesheet" href="resources/styles/style.css"/>
+Include JS File Here
+<script src="resources/scripts/SignUp.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="main">
+<h2>Sign Up Crimson Snacks!</h2>
+<form id="form_id" method="post" name="myform">
+    <label> First Name :</label>
+        <input type="text" name = "firstname" id = firstname"/>
+    <label> Last Name :</label>
+        <input type="text" name = "lastname" id = lastname"/>
+    <label> User Name :</label>
+        <input type="text" name="username" id="username"/>
+    <label>Password :</label>
+        <input type="password" name="password" id="password"/>
+    <input type="button" value="SignUp" id="signin" onclick="RettoLogin()"/>
+
+</form>
+
+</body> -->
+
+<link rel='stylesheet' href='resources/styles/style.css' type='text/css' />
+
+<script src="resources/scripts/SignUp.js"></script>
+</head>
+<body onload="document.registration.userid.focus();">
+<h1>Registration Form</h1>
+Use tab keys to move from one input field to the next.
+<form name='registration' id = 'registration'>
+<ul>
+<li><label for="userid">User id:</label></li>
+<li><input type="text" name="userid" id = 'userid' size="12" /></li>
+<li><label for="passid">Password:</label></li>
+<li><input type="password" name="passid" id = 'passid' size="12" /></li>
+<li><label for="userfname"> First Name:</label></li>
+<li><input type="text" name="userfname" id = 'userfname'size="50" /></li>
+<li><label for="userlname"> Last Name:</label></li>
+<li><input type="text" name="userlname" id = 'userlname'size="50" /></li>
+
+<li><input type="button" value="Register" id="submit" onclick="RettoLogin()" /></li>
+</ul>
+</form>
+</body>
+</html>
+
+</html>

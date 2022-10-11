@@ -1,0 +1,130 @@
+let users = []
+const baseurl = 'https://localhost:7139/api/';
+    var uid = document.getElementById('userid');
+    var passid = document.getElementById('passid')
+    var ufname = document.getElementById('userfname');
+    var ulname = document.getElementById('userlname');
+
+
+function formValidation()
+{
+    // var uid = document.registration.userid;
+    // var passid = document.registration.passid;
+    // var ufname = document.registration.userfname;
+    // var ulname = document.registration.userlname;
+
+    if(userid_validation(uid,5,12))
+    {
+        if(passid_validation(passid,7,12))
+        {
+
+                    return true;
+        }
+    }
+return false;
+
+} 
+function userid_validation(uid,mx,my)
+{
+    var uid_len = uid.value.length;
+    if (uid_len == 0 || uid_len >= my || uid_len < mx)
+    {
+    alert("User Id should not be empty / length be between "+mx+" to "+my);
+    uid.focus();
+    return false;
+    }
+return true;
+}
+function passid_validation(passid,mx,my)
+{
+    var passid_len = passid.value.length;
+    if (passid_len == 0 ||passid_len >= my || passid_len < mx)
+    {
+        alert("Password should not be empty / length be between "+mx+" to "+my);
+        passid.focus();
+        return false;
+    }
+return true;
+}
+
+
+
+// function createUser(user){
+//     const postUrl = baseurl + 'users';
+//     // const putUrl = baseurl + 'todos/' + todo.id;
+//     console.log(user);
+    
+//     const sendUser ={
+//         "FirstName": user.ufname,
+//         "LastName": user.ulname,
+//         "UserId": user.uid,
+//         "Password": user.passid,
+    
+//     }
+    
+//     fetch(postUrl, {
+//         method: 'POST',
+//                 headers: {
+//         "Accept": 'application/json',
+//         "Content-Type": 'application/json'
+//         },
+//         body: JSON.stringify(sendUser)
+//     }).then((response)=> {
+//         if(response.status == 200){
+//             window.alert('User has been saved')
+//         }
+//         console.log('response from the save ', response);
+//     })
+// }
+function RettoLogin(){
+    alert('Form Succesfully Submitted');
+    // form.addEventListener('submit', function(e){ //e i sa parameter
+    //     e.preventDefault(); //dont refresh the page
+        console.log('submitted');
+        
+        let user = {
+            // ufname = document.getElementById('userfname').value,
+            // ulname = document.getElementById('userlname').value,
+            // uid = document.getElementById('userid').value,
+            // passid = document.getElementById('passid').value,
+          
+            userid: document.getElementById('userid').value,
+            pass: document.getElementById('passid').value,
+            userfname: document.getElementById('userfname').value,
+            userlname: document.getElementById('userlname').value,
+    
+        }
+        const postUrl = baseurl + 'users';
+    // const putUrl = baseurl + 'todos/' + todo.id;
+    console.log(user);
+    
+    const sendUser ={
+        "FirstName": user.userfname,
+        "LastName": user.userlname,
+        "UserId": user.userid,
+        "Password": user.pass,
+    
+    }
+    
+    fetch(postUrl, {
+        method: 'POST',
+                headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(sendUser)
+    }).then((response)=> {
+        if(response.status == 200){
+            window.alert('User has been saved')
+        }
+        console.log('response from the save ', response);
+    })
+        
+    
+    
+    window.location = 'LogIn.html';
+   
+ 
+
+}
+
