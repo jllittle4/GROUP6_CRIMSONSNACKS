@@ -239,3 +239,10 @@
 /Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/obj/Debug/net6.0/ref/api.dll
 /Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/obj/Debug/net6.0/api.pdb
 /Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/obj/Debug/net6.0/api.genruntimeconfig.cache
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/Google.Protobuf.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/K4os.Compression.LZ4.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/K4os.Compression.LZ4.Streams.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/K4os.Hash.xxHash.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/MySql.Data.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/ZstdNet.dll
+/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/bin/Debug/net6.0/BouncyCastle.Crypto.dll

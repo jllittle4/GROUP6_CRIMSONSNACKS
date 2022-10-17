@@ -6,21 +6,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using Microsoft.AspNetCore.Cors;
-using api.database;
 
 namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Users : ControllerBase
+    public class TimeKeeping : ControllerBase
     {
         // GET: api/Users
         [EnableCors("OpenPolicy")]
         [HttpGet]
-        public List<User> Get()
+        public List<User> GetTime()
         {
             List<User> users = new List<User>();
-            
+            users.Add(new User(){FirstName = "Jeremy", LastName = "Little", UserName = "jllittle", Password = "Jman040402$"});
 
 
             return users;
@@ -28,7 +27,7 @@ namespace api.Controllers
 
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}", Name = "GetTime")]
         public string Get(int id)
         {
             return "value";
@@ -41,22 +40,6 @@ namespace api.Controllers
         {
             System.Console.WriteLine("I made it to post");
             System.Console.WriteLine(value.UserName);
-            
-            System.Console.WriteLine("I made it to post");
-            System.Console.WriteLine(value.UserName);
-            
-            SaveUser saveUser = new SaveUser();
-            saveUser.temp = new User();
-           
-            saveUser.temp.UserName = value.UserName;
-            saveUser.temp.FirstName = value.FirstName;
-            saveUser.temp.LastName = value.LastName;
-
-            saveUser.temp.Password = value.Password;
-
-            // System.Console.WriteLine(saveUser.temp.EmpName);
-            saveUser.SeedUser();
-            
             
         }
 

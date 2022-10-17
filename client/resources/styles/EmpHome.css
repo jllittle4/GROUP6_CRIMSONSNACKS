@@ -81,3 +81,46 @@ outline:black;
 input[type=button]:hover{
 background: linear-gradient(#4476ff 5%, #f1f0eb 100%);
 }
+.modal {
+    align-items: center;
+    align-content: center;
+    padding-left: 275px;
+    display: none;
+    position: absolute; 
+    padding-top: 50px;
+    left: 50px; 
+    top: 50px;
+    width:75%;
+    height: 100px; 
+    background-color: white;
+    background-color: white;
+  }
+  .modal-content {
+   
+    position: relative; 
+    background-color: white;
+    padding: 20px; 
+    margin: auto; 
+    width: 75%;  
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+  .close-btn {
+    float: right; 
+    color: lightgray; 
+    font-size: 24px;  
+    font-weight: bold;
+  }
+  .close-btn:hover {
+    color: black;
+  }
+  @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }

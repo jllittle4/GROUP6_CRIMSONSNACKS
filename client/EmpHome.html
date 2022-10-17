@@ -10,10 +10,35 @@
 <body>
     <h1 name = 'welcome' id = 'welcome'>Welcome, User</h1>
     <text id="time"></text>
-    <input type = "button" id = 'timepunch' value="Clock In" onclick="handleClick()"></input>
+    <input type = "button" id = 'timePunch' value="Clock In" onclick="handleClick()"></input>
+    <div class="modal">
+        <div class="modal-header">
+          <span class="close-btn">&times;</span>
+          <h2>Please Enter the Department You Worked In:</h2>
+        </div>
+        <div class="modal-content">
+          <select id = "ratingInput" type = "button"> Enter A Rating:
+              <option>Shipping</option>
+              <option>Stock</option>
+              <option>Marketing</option>
+              <option>Sales</option>
+          </select>
+          <input id = "submit" type = "button" value = "Submit"></input>
+        </div>
+      </div>
+      <input type = "button" value = 'View Time' id = 'viewTime' onclick="window.location = 'EmpTime.html';"></input>
 
-    <input type = "button" value = 'Request Time Change' id = 'timechange'></input>
-    <input type = "button" value = 'Log Out' id = 'logout' onclick="logOut()"></input>
+    <input type = "button" value = 'Request Time Change' id = 'timechange'onclick = "window.location = 'ReqTimeChange.html';"></input>
+    <!-- <table id = "table">
+        <tr>
+            <th>Date:</th>
+            <th>Clock In:</th>
+            <th>Clock Out:</th>
+            <th>Department:</th>
+            <th>Total Time:</th>
+        </tr>
+    </table> -->
+    <input type = "button" value = 'Log Out' id = 'logout' onclick="retToLogin();"></input>
 </body>
 <script src="resources/scripts/EmpHome.js"></script>
 <style src ="resources/styles/EmpHome.css"></style>

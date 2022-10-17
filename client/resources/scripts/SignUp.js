@@ -38,7 +38,7 @@ return true;
 function passid_validation(passid,mx,my)
 {
     var passid_len = passid.value.length;
-    if (passid_len == 0 ||passid_len >= my || passid_len < mx)
+    if (passid_len == 0 ||passid_len >= 8)
     {
         alert("Password should not be empty / length be between "+mx+" to "+my);
         passid.focus();
@@ -46,6 +46,7 @@ function passid_validation(passid,mx,my)
     }
 return true;
 }
+
 
 
 
@@ -96,12 +97,12 @@ function RettoLogin(){
         }
         const postUrl = baseurl + 'users';
     // const putUrl = baseurl + 'todos/' + todo.id;
-    console.log(user);
+    
     
     const sendUser ={
         "FirstName": user.userfname,
         "LastName": user.userlname,
-        "UserId": user.userid,
+        "UserName": user.userid,
         "Password": user.pass,
     
     }
@@ -118,7 +119,7 @@ function RettoLogin(){
             window.alert('User has been saved')
         }
         console.log('response from the save ', response);
-    })
+    });
         
     
     
