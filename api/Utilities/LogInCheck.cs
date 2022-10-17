@@ -10,6 +10,8 @@ namespace api.Utilities
 {
     public class LogInCheck
     {
+
+        public bool valid {get; set;}
         public ViewAllUsers readObject = new ViewAllUsers();
         // public List<User> users = readObject.GetAllUsers();
 
@@ -22,8 +24,9 @@ namespace api.Utilities
         // }
         public void FindUser(){ //searches for the driver the user inputs
             List<User> users = readObject.GetAllUsers();
+            User returnVal = new User();
 
-            User returnVal = users.Find(x => x.UserName == temp.UserName);
+            returnVal = users.Find(x => x.UserName == temp.UserName);
 
             
             if(returnVal.UserName == temp.UserName){
@@ -32,21 +35,22 @@ namespace api.Utilities
             else{
                 System.Console.WriteLine("Username not found, please try again");
                 
-            }
+                valid = false;
+            }   
 
         }
-        private bool CheckPassword(){
+        public void CheckPassword(){
             List<User> users = readObject.GetAllUsers();
             User returnVal = users.Find(x => x.Password == temp.Password);
 
 
             if(returnVal.Password == temp.Password){
                 System.Console.WriteLine("Login Successful");
-                return true;
+                valid = true;
             }
             else{
                 System.Console.WriteLine("Username not found, please try again");
-                return false;
+                valid = false;
             }
 
 

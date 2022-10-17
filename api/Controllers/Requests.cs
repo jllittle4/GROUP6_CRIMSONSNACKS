@@ -13,7 +13,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Users : ControllerBase
+    public class Requests : ControllerBase
     {
         // GET: api/Users
         [EnableCors("OpenPolicy")]

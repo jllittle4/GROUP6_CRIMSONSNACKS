@@ -102,7 +102,7 @@ function RettoLogin(){
     const sendUser ={
         "FirstName": user.userfname,
         "LastName": user.userlname,
-        "UserName": user.userid,
+        "UserName": user.userid.toLowerCase(),
         "Password": user.pass,
     
     }

@@ -19,7 +19,7 @@ namespace api.database
 
             con.Open();
 
-            string stm = @"SELECT id, name, hire_date, rating from drivers WHERE deleted = '0' ORDER BY hire_date DESC";
+            string stm = @"SELECT Id, FName, LName, UserName, Password from employees;";
             // WHERE deleted = '0' ORDER BY hire_date DESC
             using var cmd = new MySqlCommand(stm, con);
 

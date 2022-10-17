@@ -3,6 +3,11 @@ var datetime = new Date();
 console.log(datetime);
 document.getElementById("time").textContent = datetime; //it will print on html page
 
+let username = window.localStorage.getItem('username');
+let header = document.getElementById('welcome');
+header.textContent = 'Welcome, ' + username;
+console.log(username);
+
 let times = [
     {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
     {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
@@ -69,6 +74,18 @@ window.onclick = function(e){
     modal.style.display = "none"
   }
 }
+
+// function get () {
+//     // (A) GET THE PARAMETERS
+//     var params = new URLSearchParams(window.location.search),
+//         username = params.get("username");
+//         window.localStorage.getItem('username');
+  
+//     // (B) IT WORKS!
+//     console.log(username);  // Foo Bar
+//      // ["Hello", "World"]
+//      return username;
+//   }
 
 // function getDepartment(){
 //     let dept = prompt("Please enter the Department you worked");
