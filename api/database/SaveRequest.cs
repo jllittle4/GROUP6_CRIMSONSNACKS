@@ -18,15 +18,15 @@ namespace api.database
             using var con = new MySqlConnection(cs);
 
             con.Open();
-            var stm = "INSERT INTO EMPLOYEES (FName, LName, UserName, Password) values (@FName, @LName, @UserName, @Password);";
+            var stm = "INSERT INTO EMPLOYEES (firstname, lastname, username, password) values (@firstname, @lastname, @username, @password);";
             using (var cmd = new MySqlCommand(stm, con)){
 
                 //cmd.CommandText = "INSERT INTO drivers (name, hire_date, rating, deleted) values (@EmpName, @HireDate, @rating, @Deleted);";
             
-                cmd.Parameters.AddWithValue("@FName", (temp.FirstName));
-                cmd.Parameters.AddWithValue("@LName", (temp.LastName));
-                cmd.Parameters.AddWithValue("@UserName", (temp.UserName));
-                cmd.Parameters.AddWithValue("@Password", (temp.Password));
+                cmd.Parameters.AddWithValue("@firstname", (temp.FirstName));
+                cmd.Parameters.AddWithValue("@lastname", (temp.LastName));
+                cmd.Parameters.AddWithValue("@username", (temp.UserName));
+                cmd.Parameters.AddWithValue("@password", (temp.Password));
                 cmd.Prepare();
             
 

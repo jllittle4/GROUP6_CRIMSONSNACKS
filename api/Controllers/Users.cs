@@ -29,7 +29,7 @@ namespace api.Controllers
 
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}", Name = "GetUsers")]
         public string Get(int id)
         {
             return "value";
