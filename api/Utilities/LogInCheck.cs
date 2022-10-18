@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace api.Utilities
@@ -41,7 +42,9 @@ namespace api.Utilities
         }
         public void CheckPassword(){
             List<User> users = readObject.GetAllUsers();
+            //IPasswordHasher<User> myPasswordHasher = new PasswordHasher<User>();
             User returnVal = users.Find(x => x.Password == temp.Password);
+            //myPasswordHasher.VerifyHashedPassword(returnVal, temp.Password);
 
 
             if(returnVal.Password == temp.Password){

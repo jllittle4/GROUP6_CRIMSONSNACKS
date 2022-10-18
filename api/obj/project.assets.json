@@ -9026,19 +9026,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/jeremylittle/.nuget/packages/": {}
+    "C:\\Users\\samth\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/api.csproj",
+      "projectUniqueName": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/api.csproj",
-      "packagesPath": "/Users/jeremylittle/.nuget/packages/",
-      "outputPath": "/Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/obj/",
+      "projectPath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\samth\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/jeremylittle/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\samth\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -9093,7 +9093,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.101/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
