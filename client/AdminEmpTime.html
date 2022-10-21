@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Time</title>
+</head>
+<body onload="handleOnLoad();">
+    <div style = "padding-block-end: 40px ;padding-top: 10px; ">
+        <select id="arr" type="button" 
+        style = "width: 400px">Select an Employee</select>
+    <input type = "button" id = 'submit' value = "Submit" onclick="handleTableLoad();"></input>
+    <table id = "table"
+    style = "display: none">
+        <tr>
+            <th>Date:</th>
+            <th>Clock In:</th>
+            <th>Clock Out:</th>
+            <th>Department:</th>
+            <th>Total Time:</th>
+        </tr>
+    </table>
+    <input type = "button" value = 'Return To Dashboard'  onclick="retToHome();"></input>
+</body>
+<script src="resources/scripts/AdminEmpTime.js"></script>
+</html>
