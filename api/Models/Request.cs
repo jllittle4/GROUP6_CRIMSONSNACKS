@@ -2,7 +2,7 @@ namespace api.Models
 {
     public class Request
     {
-        public string RequestId { get; set; }
+        public int RequestId { get; set; }
         //public string UserName { get; set; }
         public DateTime Date { get; set; }
         public DateTime ClockIn { get; set; }
@@ -12,8 +12,12 @@ namespace api.Models
         public int DepartmentId { get; set; }
         //same for this one
         public int EmployeeId { get; set; }
+        public string Status { get; set; }
 
-        //will check whether request is completed when querying, default is 'n'
+        public override string ToString()
+        {
+            return $"{this.RequestId}\t{this.Date}\t{this.ClockIn}\t{this.ClockOut}\t{this.Reason}\t{this.DepartmentId}\t{this.EmployeeId}\t{this.Status}";
+        }
 
     }
 }

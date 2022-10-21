@@ -15,45 +15,41 @@ namespace api.CRUD
         }
         public List<Request> ReadAllRequests()
         {
-            List<Request> allUsers = new List<Request>();
-
-            //ConnectionString myConnection = new ConnectionString();
-            //string cs = myConnection.cs;
-
+            List<Request> allRequests = new List<Request>();
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT employeeid, firstname, lastname, username, password FROM employees;";
-            // WHERE deleted = '0' ORDER BY hire_date DESC
+            string stm = @"SELECT *
+                FROM requests
+                ORDER BY requestid DESC;";
+
             using var cmd = new MySqlCommand(stm, con);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
             while (rdr.Read())
             {
-                Request temp = new Request(); //{ UserId = rdr.GetInt32(0), FirstName = rdr.GetString(1), LastName = rdr.GetString(2), UserName = rdr.GetString(3), Password = rdr.GetString(4) };
-                allUsers.Add(temp);
+                Request temp = new Request() { RequestId = rdr.GetInt32(0), Date = rdr.GetDateTime(1), ClockIn = rdr.GetDateTime(2), ClockOut = rdr.GetDateTime(3), Reason = rdr.GetString(4), DepartmentId = rdr.GetInt32(5), EmployeeId = rdr.GetInt32(6), Status = rdr.GetString(7) };
+                allRequests.Add(temp);
             }
 
             //con.Close();
 
-            return allUsers;
+            return allRequests;
         }
 
         public Request ReadOneRequest(int id)
         {
-            System.Console.WriteLine("Looking for driver...");
+            System.Console.WriteLine("Looking for request...");
 
-            Request myDriver = new Request();
+            Request myRequest = new Request();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT driverid, drivername, driverrating, 
-                DATE_FORMAT(driverhiredate, '%M %e, %Y') 
-                    AS format_driverhiredate 
-                FROM drivers 
-                WHERE driverid = @id";
+            string stm = @"SELECT *
+                FROM requests 
+                WHERE requestid = @id";
 
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@id", id);
@@ -65,22 +61,27 @@ namespace api.CRUD
 
                 while (rdr.Read())
                 {
-                    // myDriver.ID = rdr.GetInt32(0);
-                    // myDriver.Name = rdr.GetString(1);
-                    // myDriver.Rating = rdr.GetDouble(2);
-                    // myDriver.Date = rdr.GetString(3);
-                    // myDriver.Deleted = "n";
+                    myRequest.RequestId = rdr.GetInt32(0);
+                    myRequest.Date = rdr.GetDateTime(1);
+                    myRequest.ClockIn = rdr.GetDateTime(2);
+                    myRequest.ClockOut = rdr.GetDateTime(3);
+                    myRequest.Reason = rdr.GetString(4);
+                    myRequest.DepartmentId = rdr.GetInt32(5);
+                    myRequest.EmployeeId = rdr.GetInt32(6);
+                    myRequest.Status = rdr.GetString(7);
                 }
                 System.Console.WriteLine("The result of the search was: ");
-                System.Console.WriteLine(myDriver.ToString());
+                System.Console.WriteLine(myRequest.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("The search was unsuccessful.");
+                System.Console.WriteLine("Request search was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();
-            return myDriver;
+            return myRequest;
         }
     }
 }

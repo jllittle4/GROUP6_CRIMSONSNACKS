@@ -13,32 +13,33 @@ namespace api.CRUD
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
-        public void UpdateOneRequest(int id, Request updatedUser)
+        public void UpdateOneRequest(int id, Request updatedRequest)
         {
-            System.Console.WriteLine($"The driver with an ID of {id} will be updated to match the following details: ");
-            System.Console.WriteLine(updatedUser.ToString());
+            System.Console.WriteLine($"The request with an ID of {id} will be updated to match the following details: ");
+            System.Console.WriteLine(updatedRequest.ToString());
 
-            //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
             con.Open();
 
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
-            cmd.CommandText = @"UPDATE drivers 
-                SET driverrating = @driverrating 
-                WHERE driverid = @driverid";
-            cmd.Parameters.AddWithValue("@driverrating", updatedUser);
-            cmd.Parameters.AddWithValue("@driverid", id);
+            cmd.CommandText = @"UPDATE requests 
+                SET isapproved = @isapproved 
+                WHERE requestid = @requestid";
+            cmd.Parameters.AddWithValue("@isapproved", updatedRequest.Status);
+            cmd.Parameters.AddWithValue("@requestid", id);
             cmd.Prepare();
 
             try
             {
                 cmd.ExecuteNonQuery();
-                System.Console.WriteLine("Update was successful!");
+                System.Console.WriteLine("Request update was successful!");
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("Update was unsuccessful.");
+                System.Console.WriteLine("Request update was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();

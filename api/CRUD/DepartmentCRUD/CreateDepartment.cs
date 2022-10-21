@@ -7,34 +7,37 @@ namespace api.CRUD
 {
     public class CreateDepartment : ICreateOneDepartment
     {
-        //public User? temp {get; set;}
         private string cs { get; }
         public CreateDepartment()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
-        public void CreateOneDepartment(Department temp)
+        public void CreateOneDepartment(Department newDepartment)
         {
-            //ConnectionString myConnection = new ConnectionString();
-            // Driver temp = new Driver();
-            
-            //string cs = myConnection.cs;
+            System.Console.WriteLine("The following department will be created...");
+            System.Console.WriteLine(newDepartment.ToString());
 
             using var con = new MySqlConnection(cs);
 
             con.Open();
-            var stm = "INSERT INTO EMPLOYEES (departmentid, departmentname) values (default, @departmentname);";
-            using (var cmd = new MySqlCommand(stm, con)){
+            var stm = "INSERT INTO EMPLOYEES (departmentid, departmentname) VALUES (default, @departmentname);";
+            using var cmd = new MySqlCommand(stm, con);
 
-                //cmd.CommandText = "INSERT INTO drivers (name, hire_date, rating, deleted) values (@EmpName, @HireDate, @rating, @Deleted);";
-            
-                cmd.Parameters.AddWithValue("@departmentname", (temp.DepName));
-                cmd.Prepare();
+            cmd.Parameters.AddWithValue("@departmentname", (newDepartment.DepName));
+            cmd.Prepare();
+
+            try
+            {
                 cmd.ExecuteNonQuery();
+                System.Console.WriteLine("The department has been created.");
             }
-
-            //con.Close();
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Department creation was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
+            }
         }
     }
 }

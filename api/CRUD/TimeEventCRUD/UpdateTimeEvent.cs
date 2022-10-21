@@ -13,10 +13,10 @@ namespace api.CRUD
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
-        public void UpdateOneTimeEvent(int id, TimeEvent updatedUser)
+        public void UpdateOneTimeEvent(int id, TimeEvent updatedTimeEvent)
         {
-            System.Console.WriteLine($"The driver with an ID of {id} will be updated to match the following details: ");
-            System.Console.WriteLine(updatedUser.ToString());
+            System.Console.WriteLine($"The time event with an ID of {id} will be updated to match the following details: ");
+            System.Console.WriteLine(updatedTimeEvent.ToString());
 
             //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
@@ -24,21 +24,22 @@ namespace api.CRUD
 
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
-            cmd.CommandText = @"UPDATE drivers 
-                SET driverrating = @driverrating 
-                WHERE driverid = @driverid";
-            cmd.Parameters.AddWithValue("@driverrating", updatedUser);
-            cmd.Parameters.AddWithValue("@driverid", id);
+            cmd.CommandText = @"UPDATE timekeepingevents
+                SET clockedoutcheck = 'y''
+                WHERE eventid = @eventid";
+            cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
             try
             {
                 cmd.ExecuteNonQuery();
-                System.Console.WriteLine("Update was successful!");
+                System.Console.WriteLine("Time event update was successful!");
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("Update was unsuccessful.");
+                System.Console.WriteLine("Time event update was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();
