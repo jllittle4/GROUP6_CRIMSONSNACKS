@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using Microsoft.AspNetCore.Cors;
-using api.database;
 using api.Utilities;
 using api.Interfaces;
 using api.CRUD;
@@ -22,56 +21,60 @@ namespace api.Controllers
         [HttpGet]
         public List<User> Get()
         {
-            List<User> users = new List<User>();
+            System.Console.WriteLine("\nReceived request to get all users...");
 
+            IReadAllUsers readerAll = new ReadUsers();
 
-
-            return users;
+            return readerAll.ReadAllUsers();
         }
 
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUsers")]
-        public string Get(int id)
+        public User Get(int id)
         {
-            return "value";
+            System.Console.WriteLine("\nReceived request to find a user...");
+
+            IReadOneUser readerOne = new ReadUsers();
+
+            return readerOne.ReadOneUser(id);
         }
 
         // POST: api/Users
         [EnableCors("OpenPolicy")]
         [HttpPost]
-        public void Post([FromBody] User value)
+        public void Post([FromBody] User newUser)
         {
-            if (value.FirstName != null)
+            if (newUser.FirstName != null)
             {
-                System.Console.WriteLine("I made it to post");
-                System.Console.WriteLine(value.UserName);
+                System.Console.WriteLine("\nReceived request to create new user...");
+                //System.Console.WriteLine(newUser.UserName);
 
-                System.Console.WriteLine("I made it to post");
-                System.Console.WriteLine(value.UserName);
+                ICreateOneUser creator = new CreateUser();
 
-                ICreateOneUser saveUser = new CreateUser();
-                
-
-                // System.Console.WriteLine(saveUser.temp.EmpName);
-                saveUser.CreateOneUser(value);
+                creator.CreateOneUser(newUser);
             }
-            if (value.FirstName == null)
+            else if (newUser.FirstName == null)
             {
+                System.Console.WriteLine("Received login request...");
+
                 LogInCheck login = new LogInCheck();
-                login.temp.UserName = value.UserName;
-                login.temp.Password = value.Password;
-                login.FindUser();
-
+                // login.temp.UserName = newUser.UserName;
+                // login.temp.Password = newUser.Password;
+                login.Check(newUser);
             }
-
         }
 
         // PUT: api/Users/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] User updatedUser)
         {
+            System.Console.WriteLine("\nReceived request to update user...");
+            //System.Console.WriteLine(updatedDepartment.ToString());
+
+            IUpdateOneUser updater = new UpdateUser();
+            updater.UpdateOneUser(id, updatedUser);
         }
 
         // DELETE: api/Users/5
@@ -79,6 +82,10 @@ namespace api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            System.Console.WriteLine("\nReceived request to delete user...");
+
+            IDeleteOne deleteTool = new DeleteUser();
+            deleteTool.DeleteOne(id);
         }
     }
 }

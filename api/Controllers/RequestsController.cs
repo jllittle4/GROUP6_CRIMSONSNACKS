@@ -6,14 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api.Models;
 using Microsoft.AspNetCore.Cors;
-using api.database;
-using api.Utilities;
 using api.Interfaces;
 using api.CRUD;
 
 namespace api.Controllers
 {
-    //not done
     [Route("api/[controller]")]
     [ApiController]
     public class Requests : ControllerBase
@@ -23,49 +20,47 @@ namespace api.Controllers
         [HttpGet]
         public List<Request> Get()
         {
-            List<Request> requests = new List<Request>();
+            System.Console.WriteLine("\nReceived request to get all time change requests...");
 
+            IReadAllRequests readerAll = new ReadRequests();
 
-
-            return requests;
+            return readerAll.ReadAllRequests();
         }
 
         // GET: api/Requests/5
         [EnableCors("OpenPolicy")]
-        [HttpGet("{id}", Name = "GetRequest")]
-        public string Get(int id)
+        [HttpGet("{id}", Name = "GetRequests")]
+        public Request Get(int id)
         {
-            return "value";
+            System.Console.WriteLine("\nReceived request to find time change request...");
+            
+            IReadOneRequest readerOne = new ReadRequests();
+            
+            return readerOne.ReadOneRequest(id);
         }
 
         // POST: api/Requests
         [EnableCors("OpenPolicy")]
         [HttpPost]
-        public void Post([FromBody] Request value)
-        {
-            if (value.Reason != null)
-            {
-                System.Console.WriteLine("I made it to post");
-                //System.Console.WriteLine(value.UserName);
+        public void Post([FromBody] Request newRequest)
+        {          
+            System.Console.WriteLine("\nReceived request to create new time change request...");
+            //System.Console.WriteLine(newDepartment.ToString());
 
-                System.Console.WriteLine("I made it to post");
-                //System.Console.WriteLine(value.UserName);
-
-                ICreateOneRequest myRequest = new CreateRequest();
-                
-
-                // System.Console.WriteLine(saveUser.temp.EmpName);
-                myRequest.CreateOneRequest(value);
-            }
-            
-
+            ICreateOneRequest creator = new CreateRequest();
+            creator.CreateOneRequest(newRequest);
         }
 
         // PUT: api/Requests/5
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Request updatedRequest)
         {
+            System.Console.WriteLine("\nReceived request to update time change request...");
+            //System.Console.WriteLine(updatedDepartment.ToString());
+
+            IUpdateOneRequest updater = new UpdateRequest();
+            updater.UpdateOneRequest(id, updatedRequest);
         }
 
         // DELETE: api/Requests/5
@@ -73,6 +68,10 @@ namespace api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            System.Console.WriteLine("\nReceived request to delete time change request...");
+
+            IDeleteOne deleteTool = new DeleteRequest();
+            deleteTool.DeleteOne(id);
         }
     }
 }
