@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+
 <body>
-    <form>
-        <div>
-          <label for="date">Date</label>
-          <input type="date" data-date-inline-picker="true" id = 'date' required/>
-        </div>
+  <form>
+    <div>
+      <label for="date">Date</label>
+      <input type="date" data-date-inline-picker="true" id='date' required />
+    </div>
 
-        <div>
-            <label for="dept">Department:</label>
-            <select name="dept" id="dept" required>
-            <option>Choose A Department</option>
-            <option>Shipping</option>
-            <option>Stock</option>
-            <option>Marketing</option>
-            <option>Sales</option>
-            </select>
-        </div>
-       
-        <div>
-            <label for="clockIn">Clock In:</label>
-            
-            <input type="time" id="clockIn" name="clockIn"
-                    min="09:00" max="18:00" required>
-        </div>
+    <div>
+      <label for="dept">Department:</label>
+      <select name="dept" id="dept" required>
+        <option>Choose A Department</option>
+        <option>Shipping</option>
+        <option>Stock</option>
+        <option>Marketing</option>
+        <option>Sales</option>
+      </select>
+    </div>
 
-        
-        <div>
-            <label for="clockOut">Clock Out:</label>
-            <input type="time" id="clockOut" name="clockOut"
-                    min="09:00" max="18:00" required>
-        </div>
-        
+    <div>
+      <label for="clockIn">Clock In:</label>
 
-        <div>
-            <div>
-                <label for="reason">Reason:</label>
-                <input name="reason" id="reason" required = true/>
-              </div>
-            <div>
-          
-        </div>
-      </form>
-        <input type = "button" onclick="onSubmit();" value = 'Submit'></input>
-        <input type = "button" onclick="retToHome();" value = 'Cancel'></input>
-        
+      <input type="time" id="clockIn" name="clockIn" min="09:00" max="18:00" required>
+    </div>
+
+
+    <div>
+      <label for="clockOut">Clock Out:</label>
+      <input type="time" id="clockOut" name="clockOut" min="09:00" max="18:00" required>
+    </div>
+
+
+    <div>
+      <div>
+        <label for="reason">Reason:</label>
+        <input name="reason" id="reason" required=true />
+      </div>
+      <div>
+
+      </div>
+  </form>
+  <input type="button" onclick="onSubmit();" value='Submit'></input>
+  <input type="button" onclick="retToHome();" value='Cancel'></input>
+
 </body>
 <script src="resources/scripts/ReqTimeChange.js"></script>
+
 </html>

@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to Crimson Snacks</title>
 </head>
-<link rel="stylesheet" href="resources/styles/style.css"/>
+<link rel="stylesheet" href="resources/styles/style.css" />
 
 <!-- Include JS File Here -->
 <script src="resources/scripts/LogIn.js"></script>
 </head>
+
 <body onload="handleOnLoad()">
-<div class="container">
-<div class="main">
-<h2>Welcome to Crimson Snacks!</h2>
-<form id="form_id" method="post" name="myform">
-<label>User Name :</label>
-<input type="text" name="username" id="username"/>
-<label>Password :</label>
-<input type="password" name="password" id="password"/>
-<input type="button" value="Login" id="submit" onclick="validate()"/>
+    <div class="container">
+        <div class="main">
+            <h2>Welcome to Crimson Snacks!</h2>
+            <form id="form_id" method="post" name="myform">
+                <label>User Name :</label>
+                <input type="text" name="username" id="username" />
+                <label>Password :</label>
+                <input type="password" name="password" id="password" />
+                <input type="button" value="Login" id="submit" onclick="validate()" />
 
 <input type="button" value="Register" id="signup" onclick="SignUp()"/>
 </form>
 </body>
+
 </html>

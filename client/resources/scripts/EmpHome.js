@@ -1,4 +1,4 @@
-`use strict`
+`use strict`;
 var datetime = new Date();
 console.log(datetime);
 document.getElementById("time").textContent = datetime; //it will print on html page
@@ -9,7 +9,6 @@ header.textContent = 'Welcome, ' + username;
 console.log(username);
 
 
-
 function refreshTime() {
     const timeDisplay = document.getElementById("time");
     const dateString = new Date().toLocaleString();
@@ -18,11 +17,12 @@ function refreshTime() {
   }
     setInterval(refreshTime, 60000);
 
+setInterval(refreshTime, 1000);
+
 
 
 
 function handleClick() {
-
     var btn = document.getElementById("timePunch");
 
     if (btn.value == "Clock In") {
@@ -32,17 +32,15 @@ function handleClick() {
     else {
         btn.value = "Clock In";
         btn.innerHTML = "Clock In";
-
         getDepartment();
     }
-
 }
 
-let btn = document.getElementById("timePunch")
-let modal = document.querySelector(".modal")
-let closeBtn = document.querySelector(".close-btn")
+let btn = document.getElementById("timePunch");
+let modal = document.querySelector(".modal");
+let closeBtn = document.querySelector(".close-btn");
 
-btn.onclick = function(){
+btn.onclick = function () {
     if (btn.value == "Clock In") {
         btn.value = "Clock Out";
         btn.innerHTML = "Clock Out";
@@ -57,22 +55,24 @@ btn.onclick = function(){
     // if(btn.value == "Clock Out"){
     //     modal.style.display = "block";
     // }
-}
-closeBtn.onclick = function(){
-  modal.style.display = "none"
-}
-window.onclick = function(e){
-  if(e.target == modal){
-    modal.style.display = "none"
-  }
-}
+};
+
+closeBtn.onclick = function () {
+    modal.style.display = "none";
+};
+
+window.onclick = function (e) {
+    if (e.target == modal) {
+        modal.style.display = "none";
+    }
+};
 
 // function get () {
 //     // (A) GET THE PARAMETERS
 //     var params = new URLSearchParams(window.location.search),
 //         username = params.get("username");
 //         window.localStorage.getItem('username');
-  
+
 //     // (B) IT WORKS!
 //     console.log(username);  // Foo Bar
 //      // ["Hello", "World"]
@@ -82,27 +82,27 @@ window.onclick = function(e){
 // function getDepartment(){
 //     let dept = prompt("Please enter the Department you worked");
 
-    
+
 
 
 //     switch(dept.toLowerCase()){
 //         case "stocking":
-            
+
 //             console.log(capFirst(dept.toLowerCase()));
 //             alert('I made it');
 //         break;
 //         case "marketing":
-            
+
 //             console.log(capFirst(dept.toLowerCase()));
 //             alert('I made it');
 //         break;
 //         case "ordering":
-            
+
 //             console.log(capFirst(dept.toLowerCase()));
 //             alert('I made it');
 //         break;
 //         case "sales":
-            
+
 //             console.log(capFirst(dept.toLowerCase()));
 //             alert('I made it ');
 //         break;
@@ -115,20 +115,20 @@ window.onclick = function(e){
 //     function capFirst(str) {
 //         return str[0].toUpperCase() + str.slice(1);
 //     }
-    // if (dept = "stocking" || "marketing" || "ordering" || "sales"){
-    //     dept.toUpperCase;
-    //     console.log(dept);
-    //     alert('I made it bitch');
-    // }
-    // else{
-        
-    //     alert('Invalid input. Please enter one of the folowing: \t Stocking, Marketing, Ordering, Sales');
-    //     getDepartment();
-    // }
-    
-   
+// if (dept = "stocking" || "marketing" || "ordering" || "sales"){
+//     dept.toUpperCase;
+//     console.log(dept);
+//     alert('I made it bitch');
+// }
+// else{
 
-    
+//     alert('Invalid input. Please enter one of the folowing: \t Stocking, Marketing, Ordering, Sales');
+//     getDepartment();
+// }
+
+
+
+
 
 // function loadTable(){
 //     let table = document.getElementById('table');
@@ -139,7 +139,7 @@ window.onclick = function(e){
 //     times.forEach((time) => {
 //         let tr = document.createElement('TR');
 //         tableBody.appendChild(tr);
-    
+
 //         let td1 = document.createElement('TD');
 //         td1.width = 300;
 //         td1.appendChild(document.createTextNode(time.date));
@@ -170,7 +170,7 @@ window.onclick = function(e){
 //     }
 //     )}
 
-function retToLogin(){
+function retToLogin() {
     window.location = "LogIn.html";
 }
 // function show_list() {

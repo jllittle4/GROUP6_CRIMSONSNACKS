@@ -1,4 +1,4 @@
-namespace api
+namespace api.database
 {
     public class ConnectionString
     {
