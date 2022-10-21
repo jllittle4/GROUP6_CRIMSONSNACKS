@@ -1,10 +1,10 @@
-
 const baseurl = 'https://localhost:7139/api/';
 postUrl = baseurl + 'users'
 
 
 
 // // Below function Executes on click of login button.
+
 function handleOnLoad(){
 
     //getUsers();
@@ -22,6 +22,7 @@ function handleOnLoad(){
 //         users = json;
 //     })
 // }
+
 function validate(){
    
 
@@ -39,12 +40,12 @@ function validate(){
     //     console.log(users.usernameid)
     
     // }
+
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
     const sendUser ={
         "UserName": username.toLowerCase(),
-        "Password": password,
-    
+        "Password": password
     }
     
     fetch(postUrl, {
@@ -69,7 +70,6 @@ function validate(){
         console.log('response from the save ', response);
     });
 }
-
 
 function SignUp(){
     window.location = "SignUp.html";

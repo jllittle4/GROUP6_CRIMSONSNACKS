@@ -1,14 +1,14 @@
 let times = [
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-    {'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5'},
-]
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+    { 'date': '2022-10-05', 'clockIn': '7:30', 'clockOut': '10:00', 'dept': 'Shipping', 'totalTime': '2.5' },
+];
 
-function loadTable(){
+function loadTable() {
     let table = document.getElementById('table');
     table.border = '1';
     let tableBody = document.createElement('TBODY');
@@ -17,7 +17,7 @@ function loadTable(){
     times.forEach((time) => {
         let tr = document.createElement('TR');
         tableBody.appendChild(tr);
-    
+
         let td1 = document.createElement('TD');
         td1.width = 300;
         td1.appendChild(document.createTextNode(time.date));
@@ -46,7 +46,9 @@ function loadTable(){
         tr.appendChild(td5);
 
     }
-    )}
-    function retToHome(){
-        window.location = "EmpHome.html";
-    }
+    );
+}
+
+function retToHome() {
+    window.location = "EmpHome.html";
+}
