@@ -19,7 +19,7 @@ namespace api.database
 
             con.Open();
 
-            string stm = @"SELECT Id, FName, LName, UserName, Password from employees;";
+            string stm = @"SELECT employeeid, firstname, lastname, username, password FROM employees;";
             // WHERE deleted = '0' ORDER BY hire_date DESC
             using var cmd = new MySqlCommand(stm, con);
 
