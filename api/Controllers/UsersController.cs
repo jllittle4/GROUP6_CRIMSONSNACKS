@@ -31,13 +31,13 @@ namespace api.Controllers
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUsers")]
-        public User Get(int id)
+        public User Get([FromBody] string searchVal)
         {
             System.Console.WriteLine("\nReceived request to find a user...");
 
             IReadOneUser readerOne = new ReadUsers();
 
-            return readerOne.ReadOneUser(id);
+            return readerOne.ReadOneUser(searchVal);
         }
 
         // POST: api/Users
@@ -48,7 +48,6 @@ namespace api.Controllers
             if (newUser.FirstName != null)
             {
                 System.Console.WriteLine("\nReceived request to create new user...");
-                //System.Console.WriteLine(newUser.UserName);
 
                 ICreateOneUser creator = new CreateUser();
 
@@ -59,8 +58,6 @@ namespace api.Controllers
                 System.Console.WriteLine("Received login request...");
 
                 LogInCheck login = new LogInCheck();
-                // login.temp.UserName = newUser.UserName;
-                // login.temp.Password = newUser.Password;
                 login.Check(newUser);
             }
         }

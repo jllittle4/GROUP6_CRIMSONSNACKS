@@ -16,27 +16,28 @@ namespace api.CRUD
         }
         public void CreateOneTimeEvent(TimeEvent temp)
         {
-            //ConnectionString myConnection = new ConnectionString();
-            // Driver temp = new Driver();
-            
-            //string cs = myConnection.cs;
-
             using var con = new MySqlConnection(cs);
 
             con.Open();
-            var stm = "INSERT INTO EMPLOYEES (firstname, lastname, username, password) values (@firstname, @lastname, @username, @password);";
-            using (var cmd = new MySqlCommand(stm, con)){
+            var stm = @"INSERT INTO timekeepingevents (eventid, eventdate, clockinevent, clockoutevent, eventdepartment, eventemployee, clockedoutcheck) 
+                VALUES (default, default, default, default, @eventdepartment, @eventemployee, default);";
+            using var cmd = new MySqlCommand(stm, con);
+        
+            cmd.Parameters.AddWithValue("@eventdepartment", temp.DepartmentId);
+            cmd.Parameters.AddWithValue("@eventemployee", temp.EmployeeId);
+            cmd.Prepare();
 
-                //cmd.CommandText = "INSERT INTO drivers (name, hire_date, rating, deleted) values (@EmpName, @HireDate, @rating, @Deleted);";
-            
-                cmd.Parameters.AddWithValue("@firstname", (temp));
-                cmd.Parameters.AddWithValue("@lastname", (temp));
-                cmd.Parameters.AddWithValue("@username", (temp));
-                cmd.Parameters.AddWithValue("@password", (temp));
-                cmd.Prepare();
+            try
+            {
                 cmd.ExecuteNonQuery();
+                System.Console.WriteLine("The time event has been created.");
             }
-
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Time event creation was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
+            }
             //con.Close();
         }
     }

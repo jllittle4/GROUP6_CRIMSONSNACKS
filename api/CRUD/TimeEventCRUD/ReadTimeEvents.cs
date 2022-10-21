@@ -15,48 +15,43 @@ namespace api.CRUD
         }
         public List<TimeEvent> ReadAllTimeEvents()
         {
-            List<TimeEvent> allUsers = new List<TimeEvent>();
-
-            //ConnectionString myConnection = new ConnectionString();
-            //string cs = myConnection.cs;
+            List<TimeEvent> allTimeEvents = new List<TimeEvent>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT employeeid, firstname, lastname, username, password FROM employees;";
-            // WHERE deleted = '0' ORDER BY hire_date DESC
+            string stm = @"SELECT eventdate, clockinevent, clockoutevent, eventdepartment, (clockoutevent - clockinevent) AS totaltime 
+                FROM timekeepingevents;";
             using var cmd = new MySqlCommand(stm, con);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
 
             while (rdr.Read())
             {
-                TimeEvent temp = new TimeEvent(); //{ UserId = rdr.GetInt32(0), FirstName = rdr.GetString(1), LastName = rdr.GetString(2), UserName = rdr.GetString(3), Password = rdr.GetString(4) };
-                allUsers.Add(temp);
+                TimeEvent temp = new TimeEvent() { TimeEventId = rdr.GetInt32(0), Date = rdr.GetDateTime(1), ClockIn = rdr.GetDateTime(2), ClockOut = rdr.GetDateTime(3), DepartmentId = rdr.GetInt32(4), EmployeeId = rdr.GetInt32(5), TotalTime = rdr.GetDouble(6) };
+                allTimeEvents.Add(temp);
             }
 
             //con.Close();
 
-            return allUsers;
+            return allTimeEvents;
         }
 
         public TimeEvent ReadOneTimeEvent(int id)
         {
-            System.Console.WriteLine("Looking for driver...");
+            System.Console.WriteLine("Looking for time event...");
 
-            TimeEvent myDriver = new TimeEvent();
+            TimeEvent myTimeEvent = new TimeEvent();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT driverid, drivername, driverrating, 
-                DATE_FORMAT(driverhiredate, '%M %e, %Y') 
-                    AS format_driverhiredate 
-                FROM drivers 
-                WHERE driverid = @id";
+            string stm = @"SELECT eventdate, clockinevent, clockoutevent, eventdepartment, (clockoutevent - clockinevent) AS totaltime 
+                FROM timekeepingevents; 
+                WHERE eventid = @eventid";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
             try
@@ -65,22 +60,26 @@ namespace api.CRUD
 
                 while (rdr.Read())
                 {
-                    // myDriver.ID = rdr.GetInt32(0);
-                    // myDriver.Name = rdr.GetString(1);
-                    // myDriver.Rating = rdr.GetDouble(2);
-                    // myDriver.Date = rdr.GetString(3);
-                    // myDriver.Deleted = "n";
+                    myTimeEvent.TimeEventId = rdr.GetInt32(0);
+                    myTimeEvent.Date = rdr.GetDateTime(1);
+                    myTimeEvent.ClockIn = rdr.GetDateTime(2);
+                    myTimeEvent.ClockOut = rdr.GetDateTime(3);
+                    myTimeEvent.DepartmentId = rdr.GetInt32(4);
+                    myTimeEvent.EmployeeId = rdr.GetInt32(5);
+                    myTimeEvent.TotalTime = rdr.GetDouble(6);
                 }
                 System.Console.WriteLine("The result of the search was: ");
-                System.Console.WriteLine(myDriver.ToString());
+                System.Console.WriteLine(myTimeEvent.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("The search was unsuccessful.");
+                System.Console.WriteLine("Time event search was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();
-            return myDriver;
+            return myTimeEvent;
         }
     }
 }

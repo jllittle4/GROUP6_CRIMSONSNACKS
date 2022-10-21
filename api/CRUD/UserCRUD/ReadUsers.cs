@@ -17,9 +17,6 @@ namespace api.CRUD
         {
             List<User> allUsers = new List<User>();
 
-            //ConnectionString myConnection = new ConnectionString();
-            //string cs = myConnection.cs;
-
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -40,23 +37,21 @@ namespace api.CRUD
             return allUsers;
         }
 
-        public User ReadOneUser(int id)
+        public User ReadOneUser(string searchVal)
         {
-            System.Console.WriteLine("Looking for driver...");
+            System.Console.WriteLine("Looking for user...");
 
-            User myDriver = new User();
+            User myUser = new User();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT driverid, drivername, driverrating, 
-                DATE_FORMAT(driverhiredate, '%M %e, %Y') 
-                    AS format_driverhiredate 
-                FROM drivers 
-                WHERE driverid = @id";
+            string stm = @"SELECT employeeid, firstname, lastname, username, password
+                FROM employees 
+                WHERE username = @username";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@username", searchVal);
             cmd.Prepare();
 
             try
@@ -65,22 +60,24 @@ namespace api.CRUD
 
                 while (rdr.Read())
                 {
-                    // myDriver.ID = rdr.GetInt32(0);
-                    // myDriver.Name = rdr.GetString(1);
-                    // myDriver.Rating = rdr.GetDouble(2);
-                    // myDriver.Date = rdr.GetString(3);
-                    // myDriver.Deleted = "n";
+                    myUser.UserId = rdr.GetInt32(0);
+                    myUser.FirstName = rdr.GetString(1);
+                    myUser.LastName = rdr.GetString(2);
+                    myUser.UserName = rdr.GetString(3);
+                    myUser.Password = rdr.GetString(4);
                 }
                 System.Console.WriteLine("The result of the search was: ");
-                System.Console.WriteLine(myDriver.ToString());
+                System.Console.WriteLine(myUser.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("The search was unsuccessful.");
+                System.Console.WriteLine("User search was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();
-            return myDriver;
+            return myUser;
         }
     }
 }
