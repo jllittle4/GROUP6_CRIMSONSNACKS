@@ -1,20 +1,26 @@
 using api.Interfaces;
-
 using MySql.Data.MySqlClient;
 using api.Models;
+using api.database;
 
-namespace api.database
+namespace api.CRUD
 {
-    public class SaveRequest : ISeedRequest
+    public class CreateUser : ICreateOneUser
     {
-        public User? temp {get; set;}
-        public void SeedRequest()
+        //public User? temp {get; set;}
+        private string cs { get; }
+        public CreateUser()
         {
-            ConnectionString myConnection = new ConnectionString();
+            ConnectionString myCS = new ConnectionString();
+            cs = myCS.cs;
+        }
+        public void CreateOneUser(User temp)
+        {
+            //ConnectionString myConnection = new ConnectionString();
             // Driver temp = new Driver();
             
+            //string cs = myConnection.cs;
 
-            string cs = myConnection.cs;
             using var con = new MySqlConnection(cs);
 
             con.Open();
@@ -28,14 +34,10 @@ namespace api.database
                 cmd.Parameters.AddWithValue("@username", (temp.UserName));
                 cmd.Parameters.AddWithValue("@password", (temp.Password));
                 cmd.Prepare();
-            
-
                 cmd.ExecuteNonQuery();
             }
 
-            con.Close();
-            
-
+            //con.Close();
         }
     }
 }

@@ -5,6 +5,7 @@ using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
+using api.CRUD;
 
 
 namespace api.Utilities
@@ -13,7 +14,7 @@ namespace api.Utilities
     {
 
         public bool valid {get; set;}
-        public ViewAllUsers readObject = new ViewAllUsers();
+        public ReadUsers readObject = new ReadUsers();
         // public List<User> users = readObject.GetAllUsers();
 
         public User temp = new User();
@@ -24,7 +25,7 @@ namespace api.Utilities
 
         // }
         public void FindUser(){ //searches for the driver the user inputs
-            List<User> users = readObject.GetAllUsers();
+            List<User> users = readObject.ReadAllUsers();
             User returnVal = new User();
 
             returnVal = users.Find(x => x.UserName == temp.UserName);
@@ -41,7 +42,7 @@ namespace api.Utilities
 
         }
         public void CheckPassword(){
-            List<User> users = readObject.GetAllUsers();
+            List<User> users = readObject.ReadAllUsers();
             //IPasswordHasher<User> myPasswordHasher = new PasswordHasher<User>();
             User returnVal = users.Find(x => x.Password == temp.Password);
             //myPasswordHasher.VerifyHashedPassword(returnVal, temp.Password);
@@ -59,8 +60,4 @@ namespace api.Utilities
 
         }
     }
-
-
-
-
 }
