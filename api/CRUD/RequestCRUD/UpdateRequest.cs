@@ -22,10 +22,12 @@ namespace api.CRUD
             con.Open();
 
             using var cmd = new MySqlCommand();
+
             cmd.Connection = con;
             cmd.CommandText = @"UPDATE requests 
                 SET isapproved = @isapproved 
                 WHERE requestid = @requestid;";
+
             cmd.Parameters.AddWithValue("@isapproved", updatedRequest.Status);
             cmd.Parameters.AddWithValue("@requestid", id);
             cmd.Prepare();
@@ -39,7 +41,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Request update was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

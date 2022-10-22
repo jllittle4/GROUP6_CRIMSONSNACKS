@@ -20,8 +20,6 @@ namespace api.Controllers
         [HttpGet]
         public List<TimeEvent> Get()
         {
-            //List<TimeEvent> users = new List<TimeEvent>();
-            //users.Add(new TimeEvent()); //{FirstName = "Jeremy", LastName = "Little", UserName = "jllittle", Password = "Jman040402$"});
             System.Console.WriteLine("\nReceived request to get all timekeeping events...");
 
             IReadAllTimeEvents readerAll = new ReadTimeEvents();

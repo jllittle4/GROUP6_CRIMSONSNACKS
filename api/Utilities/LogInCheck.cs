@@ -4,84 +4,96 @@ using MySql.Data.MySqlClient;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Identity;
 using api.CRUD;
-
+using System.Security.Cryptography;
+using System.Text;
 
 namespace api.Utilities
 {
     public class LogInCheck
     {
-        public bool valid { get; set; }
-        public IReadAllUsers readerAll { get; set; }
-        public List<User> users = new List<User>();
-        public User returnVal { get; set; }
-        //public User temp = new User();
+        public bool Valid { get; set; }
+        public IReadAllUsers ReaderAll { get; set; }
+        public List<User> MyUsers = new List<User>();
+        public LoginResult MyLoginResult { get; set; }
+        public User ReturnVal { get; set; }
+        public User LoginAttempt { get; set; }
 
-        public void Check(User loginAttempt)
-        { //searches for the driver the user inputs
-            readerAll = new ReadUsers();
-            users = readerAll.ReadAllUsers();
-            returnVal = users.Find(x => x.UserName == loginAttempt.UserName);
+        public LogInCheck(User myUser)
+        {
+            MyLoginResult = new LoginResult();
+            this.LoginAttempt = myUser;
+        }
+        public LoginResult CheckValidUser(User myUser)
+        {
+            ReaderAll = new ReadUsers();
+            MyUsers = ReaderAll.ReadAllUsers();
+            ReturnVal = MyUsers.Find(x => x.UserName == myUser.UserName);
 
-            if (returnVal is null)
+            if (ReturnVal == null)
             {
-                System.Console.WriteLine("User not found.");
-                valid = false;
+                MyLoginResult.CheckUserName = false;
+                return MyLoginResult;
             }
             else
             {
-                //CheckPassword();
-                IPasswordHasher<User> myPasswordHasher = new PasswordHasher<User>();
-                loginAttempt.Password = myPasswordHasher.HashPassword(loginAttempt, loginAttempt.Password);
-                PasswordVerificationResult myResult = myPasswordHasher.VerifyHashedPassword(returnVal, returnVal.Password, loginAttempt.Password);
-
-                if (((int)myResult) == 1)
-                {
-                    System.Console.WriteLine("Correct password");
-                    valid = true;
-                }
-                else
-                {
-                    System.Console.WriteLine("Incorrect password");
-                    valid = false;
-                }
-
+                MyLoginResult.CheckUserName = true;
             }
 
-            // if (returnVal.UserName == temp.UserName)
-            // {
-            //     CheckPassword();
-            // }
-            // else
-            // {
-            //     System.Console.WriteLine("Username not found, please try again");
-
-            //     valid = false;
-
+            CheckValidPassowrd();
+            return MyLoginResult;
         }
 
-        // public void CheckPassword()
-        // {
-        //     readerAll = new ReadUsers();
-        //     users = readerAll.ReadAllUsers();
-        //     //IPasswordHasher<User> myPasswordHasher = new PasswordHasher<User>();
-        //     returnVal = users.Find(x => x.Password == temp.Password);
-        //     //myPasswordHasher.VerifyHashedPassword(returnVal, temp.Password);
+        public void CheckValidPassowrd()
+        {
+            string userInput = ToSHA256(LoginAttempt.Password);
+            //int myResult = returnVal.Password.CompareTo(userInput);
+            MyLoginResult.CheckPassword = CompareCharArrays(ReturnVal.Password, userInput);
+            CheckValidAdmin();
+        }
 
+        public void CheckValidAdmin()
+        {
+            if (ReturnVal.IsManager == 0)
+            {
+                MyLoginResult.IsAdmin = false;
+            }
+            else
+            {
+                MyLoginResult.IsAdmin = true;
+            }
+        }
 
-        //     if (returnVal.Password == temp.Password)
-        //     {
-        //         System.Console.WriteLine("Login Successful");
-        //         valid = true;
-        //     }
-        //     else
-        //     {
-        //         System.Console.WriteLine("Username not found, please try again");
-        //         valid = false;
-        //     }
-        // }
+        public bool CompareCharArrays(string s, string t)
+        {
+            if (s.Length != t.Length)
+            {
+                return false;
+            }
 
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != t[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static string ToSHA256(string s)
+        {
+            using var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(s));
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+
+            return sb.ToString();
+        }
     }
-
 }

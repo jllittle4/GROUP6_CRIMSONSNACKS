@@ -7,7 +7,6 @@ namespace api.CRUD
 {
     public class CreateTimeEvent : ICreateOneTimeEvent
     {
-        //public User? temp {get; set;}
         private string cs { get; }
         public CreateTimeEvent()
         {
@@ -16,11 +15,15 @@ namespace api.CRUD
         }
         public void CreateOneTimeEvent(TimeEvent temp)
         {
-            using var con = new MySqlConnection(cs);
+            System.Console.WriteLine("The following time event will be created...");
+            System.Console.WriteLine(temp.ToString());
 
+            using var con = new MySqlConnection(cs);
             con.Open();
+
             var stm = @"INSERT INTO timekeepingevents (eventid, eventdate, clockinevent, clockoutevent, eventdepartment, eventemployee, clockedoutcheck) 
                 VALUES (default, @eventdate, @clockinevent, @clockoutevent, @eventdepartment, @eventemployee, default);";
+
             using var cmd = new MySqlCommand(stm, con);
         
             cmd.Parameters.AddWithValue("@eventdepartment", temp.DepartmentId);
@@ -39,8 +42,9 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Time event creation was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
+            
             //con.Close();
         }
     }

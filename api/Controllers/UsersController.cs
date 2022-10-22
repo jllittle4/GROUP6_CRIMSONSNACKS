@@ -43,9 +43,11 @@ namespace api.Controllers
         // POST: api/Users
         [EnableCors("OpenPolicy")]
         [HttpPost]
-        public void Post([FromBody] User newUser)
+        public LoginResult Post([FromBody] User newUser)
         {
-            if (newUser.FirstName != null)
+            LoginResult myLoginAttempt = new LoginResult();
+
+            if (newUser.FirstName != "default")
             {
                 System.Console.WriteLine("\nReceived request to create new user...");
 
@@ -53,13 +55,16 @@ namespace api.Controllers
 
                 creator.CreateOneUser(newUser);
             }
-            else if (newUser.FirstName == null)
+            else
             {
-                System.Console.WriteLine("Received login request...");
+                System.Console.WriteLine("\nReceived login request...");
 
-                LogInCheck login = new LogInCheck();
-                login.Check(newUser);
+                LogInCheck login = new LogInCheck(newUser);
+                myLoginAttempt = login.CheckValidUser(newUser);
+                System.Console.WriteLine(myLoginAttempt.ToString());
             }
+
+            return myLoginAttempt;
         }
 
         // PUT: api/Users/5

@@ -15,23 +15,42 @@ namespace api.CRUD
         }
         public List<Department> ReadAllDepartments()
         {
+            System.Console.WriteLine("Reading all departments...");
+
             List<Department> allDepartments = new List<Department>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT * FROM departments ORDER BY departmentid ASC;";
+            string stm = @"SELECT * 
+                FROM departments 
+                ORDER BY departmentid ASC;";
+                
             using var cmd = new MySqlCommand(stm, con);
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                Department temp = new Department(){DepId = rdr.GetInt32(0), DepName = rdr.GetString(1)};
-                allDepartments.Add(temp);
+                using MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Department temp = new Department() 
+                    { 
+                        DepId = rdr.GetInt32(0), 
+                        DepName = rdr.GetString(1) 
+                    };
+                    allDepartments.Add(temp);
+                }
+
+                System.Console.WriteLine("Read all departments successfully.");
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Departments retrieval was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
-            System.Console.WriteLine("Read all drivers successfully.");
             //con.Close();
 
             return allDepartments;
@@ -63,6 +82,7 @@ namespace api.CRUD
                     myDepartment.DepId = rdr.GetInt32(0);
                     myDepartment.DepName = rdr.GetString(1);
                 }
+                
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myDepartment.ToString());
             }
@@ -70,7 +90,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Department search was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

@@ -15,6 +15,8 @@ namespace api.CRUD
         }
         public List<TimeEvent> ReadAllTimeEvents()
         {
+            System.Console.WriteLine("Reading all time events...");
+
             List<TimeEvent> allTimeEvents = new List<TimeEvent>();
 
             using var con = new MySqlConnection(cs);
@@ -27,24 +29,36 @@ namespace api.CRUD
                     eventdepartment, eventemployee,
                     TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime 
                 FROM timekeepingevents;";
+
             using var cmd = new MySqlCommand(stm, con);
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                TimeEvent temp = new TimeEvent() 
-                { 
-                    TimeEventId = rdr.GetInt32(0), 
-                    Date = rdr.GetString(1), 
-                    ClockIn = rdr.GetString(2), 
-                    ClockOut = rdr.GetString(3), 
-                    DepartmentId = rdr.GetInt32(4), 
-                    EmployeeId = rdr.GetInt32(5), 
-                    TotalTime = rdr.GetString(6) 
-                };
+                using MySqlDataReader rdr = cmd.ExecuteReader();
 
-                allTimeEvents.Add(temp);
+                while (rdr.Read())
+                {
+                    TimeEvent temp = new TimeEvent()
+                    {
+                        TimeEventId = rdr.GetInt32(0),
+                        Date = rdr.GetString(1),
+                        ClockIn = rdr.GetString(2),
+                        ClockOut = rdr.GetString(3),
+                        DepartmentId = rdr.GetInt32(4),
+                        EmployeeId = rdr.GetInt32(5),
+                        TotalTime = rdr.GetString(6)
+                    };
+
+                    allTimeEvents.Add(temp);
+
+                    System.Console.WriteLine("Read all time events successfully.");
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Time events retrieval was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             //con.Close();
@@ -71,6 +85,7 @@ namespace api.CRUD
                 WHERE eventid = @eventid;";
 
             using var cmd = new MySqlCommand(stm, con);
+            
             cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
@@ -88,6 +103,7 @@ namespace api.CRUD
                     myTimeEvent.EmployeeId = rdr.GetInt32(5);
                     myTimeEvent.TotalTime = rdr.GetString(6);
                 }
+
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myTimeEvent.ToString());
             }
@@ -95,7 +111,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Time event search was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

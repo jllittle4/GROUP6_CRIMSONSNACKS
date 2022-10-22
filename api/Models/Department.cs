@@ -7,7 +7,7 @@ namespace api.Models
 
         public override string ToString()
         {
-            return $"{this.DepId}\t{this.DepName}";
+            return $"ID\tDepartment\n{this.DepId}\t{this.DepName}";
         }
     }
 }

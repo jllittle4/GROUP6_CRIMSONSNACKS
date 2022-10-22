@@ -15,22 +15,54 @@ namespace api.CRUD
         }
         public List<User> ReadAllUsers()
         {
+            System.Console.WriteLine("Reading all users...");
+
             List<User> allUsers = new List<User>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT employeeid, firstname, lastname, username, password FROM employees;";
-            // WHERE deleted = '0' ORDER BY hire_date DESC
+            string stm = @"SELECT employeeid, firstname, lastname, username, password, ismanager 
+                FROM employees;";
+
             using var cmd = new MySqlCommand(stm, con);
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                User temp = new User() { UserId = rdr.GetInt32(0), FirstName = rdr.GetString(1), LastName = rdr.GetString(2), UserName = rdr.GetString(3), Password = rdr.GetString(4) };
-                allUsers.Add(temp);
+                using MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    User temp = new User();
+
+                    temp.UserId = rdr.GetInt32(0);
+                    temp.FirstName = rdr.GetString(1);
+                    temp.LastName = rdr.GetString(2);
+                    temp.UserName = rdr.GetString(3);
+                    temp.Password = rdr.GetString(4);
+
+                    try
+                    {
+                        temp.IsManager = rdr.GetInt32(5);
+                    }
+                    catch
+                    {
+                        temp.IsManager = 0;
+                    }
+
+                    allUsers.Add(temp);
+                }
+
+                System.Console.WriteLine("Read all users successfully.");
             }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Users retrieval was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
+            }
+
+
 
             //con.Close();
 
@@ -46,11 +78,12 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT employeeid, firstname, lastname, username, password
+            string stm = @"SELECT employeeid, firstname, lastname, username, password, ismanager
                 FROM employees 
                 WHERE employeeid = @employeeid;";
 
             using var cmd = new MySqlCommand(stm, con);
+            
             cmd.Parameters.AddWithValue("@employeeid", id);
             cmd.Prepare();
 
@@ -65,7 +98,17 @@ namespace api.CRUD
                     myUser.LastName = rdr.GetString(2);
                     myUser.UserName = rdr.GetString(3);
                     myUser.Password = rdr.GetString(4);
+
+                    try
+                    {
+                        myUser.IsManager = rdr.GetInt32(5);
+                    }
+                    catch
+                    {
+                        myUser.IsManager = 0;
+                    }
                 }
+
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myUser.ToString());
             }
@@ -73,7 +116,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("User search was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

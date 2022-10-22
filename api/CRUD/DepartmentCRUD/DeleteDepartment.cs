@@ -21,8 +21,11 @@ namespace api.CRUD
             con.Open();
 
             using var cmd = new MySqlCommand();
+            
             cmd.Connection = con;
-            cmd.CommandText = @"DELETE FROM departments WHERE departmentid = @departmentid;";
+            cmd.CommandText = @"DELETE FROM departments 
+                WHERE departmentid = @departmentid;";
+
             cmd.Parameters.AddWithValue("@departmentid", id);
             cmd.Prepare();
 
@@ -35,7 +38,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Department deletion was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

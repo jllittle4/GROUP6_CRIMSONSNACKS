@@ -15,7 +15,10 @@ namespace api.CRUD
         }
         public List<Request> ReadAllRequests()
         {
+            System.Console.WriteLine("Reading all requests...");
+
             List<Request> allRequests = new List<Request>();
+
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -30,23 +33,34 @@ namespace api.CRUD
 
             using var cmd = new MySqlCommand(stm, con);
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                Request temp = new Request()
+                using MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
                 {
-                    RequestId = rdr.GetInt32(0),
-                    Date = rdr.GetString(1),
-                    ClockIn = rdr.GetString(2),
-                    ClockOut = rdr.GetString(3),
-                    Reason = rdr.GetString(4),
-                    DepartmentId = rdr.GetInt32(5),
-                    EmployeeId = rdr.GetInt32(6),
-                    Status = rdr.GetString(7),
-                    TotalTime = rdr.GetString(8)
-                };
-                allRequests.Add(temp);
+                    Request temp = new Request()
+                    {
+                        RequestId = rdr.GetInt32(0),
+                        Date = rdr.GetString(1),
+                        ClockIn = rdr.GetString(2),
+                        ClockOut = rdr.GetString(3),
+                        Reason = rdr.GetString(4),
+                        DepartmentId = rdr.GetInt32(5),
+                        EmployeeId = rdr.GetInt32(6),
+                        Status = rdr.GetString(7),
+                        TotalTime = rdr.GetString(8)
+                    };
+                    allRequests.Add(temp);
+
+                    System.Console.WriteLine("Read all requests successfully.");
+                }
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Requests retrieval was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             //con.Close();
@@ -73,6 +87,7 @@ namespace api.CRUD
                 WHERE requestid = @id;";
 
             using var cmd = new MySqlCommand(stm, con);
+
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
@@ -99,7 +114,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Request search was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

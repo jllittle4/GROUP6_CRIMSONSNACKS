@@ -19,9 +19,11 @@ namespace api.CRUD
             System.Console.WriteLine(newDepartment.ToString());
 
             using var con = new MySqlConnection(cs);
-
             con.Open();
-            var stm = "INSERT INTO departments (departmentid, departmentname) VALUES (default, @departmentname);";
+
+            var stm = @"INSERT INTO departments (departmentid, departmentname) 
+                VALUES (default, @departmentname);";
+                
             using var cmd = new MySqlCommand(stm, con);
 
             cmd.Parameters.AddWithValue("@departmentname", (newDepartment.DepName));
@@ -36,7 +38,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Department creation was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.ToString());
+                System.Console.WriteLine(e.Message);
             }
         }
     }

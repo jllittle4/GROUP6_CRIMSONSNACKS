@@ -16,12 +16,17 @@ namespace api.CRUD
 
         public void CreateOneRequest(Request newRequest)
         {
+            System.Console.WriteLine("The following request will be created...");
+            System.Console.WriteLine(newRequest.ToString());
+
             using var con = new MySqlConnection(cs);
             con.Open();
 
             var stm = @"INSERT INTO requests (requestid, requestdate, requestclockin, requestclockout, reason, requestdepartment, requestemployee, isapproved) 
                     VALUES (default,@requestdate,@requestclockin,@requestclockout,@reason,@requestdepartment,@requestemployee,default);";
+
             using var cmd = new MySqlCommand(stm, con);
+
             cmd.Parameters.AddWithValue("@requestdate", newRequest.Date);
             cmd.Parameters.AddWithValue("@requestclockin", newRequest.ClockIn);
             cmd.Parameters.AddWithValue("@requestclockout", newRequest.ClockOut);
@@ -41,6 +46,7 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.ToString());
             }
+            
             //con.Close();
         }
     }

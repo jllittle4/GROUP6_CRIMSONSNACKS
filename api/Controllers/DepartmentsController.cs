@@ -30,7 +30,6 @@ namespace api.Controllers
         // GET: api/Departments/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetDepartments")]
-        //may have issues finding by departmentname as opposed to departmentid
         public Department Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find department...");
