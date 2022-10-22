@@ -19,7 +19,12 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT *
+            string stm = @"SELECT requestid, 
+                    DATE_FORMAT(requestdate, '%M %e, %Y') AS format_requestdate, 
+                    TIME_FORMAT(requestclockin,'%I:%i %p') AS format_requestclockin, 
+                    TIME_FORMAT(requestclockout,'%I:%i %p') AS format_requestclockout, 
+                    reason, requestdepartment, requestemployee, isapproved,
+                    TIME_FORMAT(TIMEDIFF(requestclockout, requestclockin),'%I:%i') AS totaltime
                 FROM requests
                 ORDER BY requestid DESC;";
 
@@ -29,7 +34,18 @@ namespace api.CRUD
 
             while (rdr.Read())
             {
-                Request temp = new Request() { RequestId = rdr.GetInt32(0), Date = rdr.GetDateTime(1), ClockIn = rdr.GetDateTime(2), ClockOut = rdr.GetDateTime(3), Reason = rdr.GetString(4), DepartmentId = rdr.GetInt32(5), EmployeeId = rdr.GetInt32(6), Status = rdr.GetString(7) };
+                Request temp = new Request()
+                {
+                    RequestId = rdr.GetInt32(0),
+                    Date = rdr.GetString(1),
+                    ClockIn = rdr.GetString(2),
+                    ClockOut = rdr.GetString(3),
+                    Reason = rdr.GetString(4),
+                    DepartmentId = rdr.GetInt32(5),
+                    EmployeeId = rdr.GetInt32(6),
+                    Status = rdr.GetString(7),
+                    TotalTime = rdr.GetString(8)
+                };
                 allRequests.Add(temp);
             }
 
@@ -47,9 +63,14 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT *
+            string stm = @"SELECT requestid, 
+                    DATE_FORMAT(requestdate, '%M %e, %Y') AS format_requestdate, 
+                    TIME_FORMAT(requestclockin,'%I:%i %p') AS format_requestclockin, 
+                    TIME_FORMAT(requestclockout,'%I:%i %p') AS format_requestclockout, 
+                    reason, requestdepartment, requestemployee, isapproved,
+                    TIME_FORMAT(TIMEDIFF(requestclockout, requestclockin),'%I:%i') AS totaltime
                 FROM requests 
-                WHERE requestid = @id";
+                WHERE requestid = @id;";
 
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@id", id);
@@ -62,13 +83,14 @@ namespace api.CRUD
                 while (rdr.Read())
                 {
                     myRequest.RequestId = rdr.GetInt32(0);
-                    myRequest.Date = rdr.GetDateTime(1);
-                    myRequest.ClockIn = rdr.GetDateTime(2);
-                    myRequest.ClockOut = rdr.GetDateTime(3);
+                    myRequest.Date = rdr.GetString(1);
+                    myRequest.ClockIn = rdr.GetString(2);
+                    myRequest.ClockOut = rdr.GetString(3);
                     myRequest.Reason = rdr.GetString(4);
                     myRequest.DepartmentId = rdr.GetInt32(5);
                     myRequest.EmployeeId = rdr.GetInt32(6);
                     myRequest.Status = rdr.GetString(7);
+                    myRequest.TotalTime = rdr.GetString(8);
                 }
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myRequest.ToString());

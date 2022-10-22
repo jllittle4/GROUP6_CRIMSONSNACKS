@@ -23,7 +23,7 @@ namespace api.CRUD
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandText = @"DELETE FROM employees 
-                WHERE employeeid = @employeeid";
+                WHERE employeeid = @employeeid;";
             cmd.Parameters.AddWithValue("@employeeid", id);
             cmd.Prepare();
 

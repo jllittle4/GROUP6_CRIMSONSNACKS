@@ -20,11 +20,14 @@ namespace api.CRUD
 
             con.Open();
             var stm = @"INSERT INTO timekeepingevents (eventid, eventdate, clockinevent, clockoutevent, eventdepartment, eventemployee, clockedoutcheck) 
-                VALUES (default, default, default, default, @eventdepartment, @eventemployee, default);";
+                VALUES (default, @eventdate, @clockinevent, @clockoutevent, @eventdepartment, @eventemployee, default);";
             using var cmd = new MySqlCommand(stm, con);
         
             cmd.Parameters.AddWithValue("@eventdepartment", temp.DepartmentId);
             cmd.Parameters.AddWithValue("@eventemployee", temp.EmployeeId);
+            cmd.Parameters.AddWithValue("@eventdate",temp.Date);
+            cmd.Parameters.AddWithValue("@clockoutevent",temp.ClockOut);
+            cmd.Parameters.AddWithValue("@clockinevent",temp.ClockIn);
             cmd.Prepare();
 
             try

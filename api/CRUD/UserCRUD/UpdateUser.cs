@@ -26,7 +26,7 @@ namespace api.CRUD
             cmd.Connection = con;
             cmd.CommandText = @"UPDATE employees
                 SET ismanager = @ismanager
-                WHERE employeeid = @employeeid";
+                WHERE employeeid = @employeeid;";
             cmd.Parameters.AddWithValue("@ismanager", updatedUser.UserId);
             cmd.Parameters.AddWithValue("@employeeid", id);
             cmd.Prepare();

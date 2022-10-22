@@ -21,7 +21,7 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
 
             con.Open();
-            var stm = "INSERT INTO EMPLOYEES (departmentid, departmentname) VALUES (default, @departmentname);";
+            var stm = "INSERT INTO departments (departmentid, departmentname) VALUES (default, @departmentname);";
             using var cmd = new MySqlCommand(stm, con);
 
             cmd.Parameters.AddWithValue("@departmentname", (newDepartment.DepName));

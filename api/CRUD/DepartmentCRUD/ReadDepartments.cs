@@ -20,7 +20,7 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT * FROM departments;";
+            string stm = @"SELECT * FROM departments ORDER BY departmentid ASC;";
             using var cmd = new MySqlCommand(stm, con);
 
             using MySqlDataReader rdr = cmd.ExecuteReader();
@@ -31,12 +31,13 @@ namespace api.CRUD
                 allDepartments.Add(temp);
             }
 
+            System.Console.WriteLine("Read all drivers successfully.");
             //con.Close();
 
             return allDepartments;
         }
 
-        public Department ReadOneDepartment(string departmentName)
+        public Department ReadOneDepartment(int id)
         {
             System.Console.WriteLine("Looking for department...");
 
@@ -47,10 +48,10 @@ namespace api.CRUD
 
             string stm = @"SELECT * 
                 FROM departments
-                WHERE departmentname LIKE @departmentname";
+                WHERE departmentid = @departmentid;";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@departmentname", departmentName);
+            cmd.Parameters.AddWithValue("@departmentid", id);
             cmd.Prepare();
 
             try

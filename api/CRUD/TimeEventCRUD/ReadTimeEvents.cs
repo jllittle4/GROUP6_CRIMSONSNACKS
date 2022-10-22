@@ -20,7 +20,12 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT eventdate, clockinevent, clockoutevent, eventdepartment, (clockoutevent - clockinevent) AS totaltime 
+            string stm = @"SELECT eventid, 
+                    DATE_FORMAT(eventdate, '%M %e, %Y') AS format_eventdate, 
+                    TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
+                    TIME_FORMAT(clockoutevent,'%I:%i %p') AS format_eventclockout, 
+                    eventdepartment, eventemployee,
+                    TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime 
                 FROM timekeepingevents;";
             using var cmd = new MySqlCommand(stm, con);
 
@@ -28,7 +33,17 @@ namespace api.CRUD
 
             while (rdr.Read())
             {
-                TimeEvent temp = new TimeEvent() { TimeEventId = rdr.GetInt32(0), Date = rdr.GetDateTime(1), ClockIn = rdr.GetDateTime(2), ClockOut = rdr.GetDateTime(3), DepartmentId = rdr.GetInt32(4), EmployeeId = rdr.GetInt32(5), TotalTime = rdr.GetDouble(6) };
+                TimeEvent temp = new TimeEvent() 
+                { 
+                    TimeEventId = rdr.GetInt32(0), 
+                    Date = rdr.GetString(1), 
+                    ClockIn = rdr.GetString(2), 
+                    ClockOut = rdr.GetString(3), 
+                    DepartmentId = rdr.GetInt32(4), 
+                    EmployeeId = rdr.GetInt32(5), 
+                    TotalTime = rdr.GetString(6) 
+                };
+
                 allTimeEvents.Add(temp);
             }
 
@@ -46,9 +61,14 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT eventdate, clockinevent, clockoutevent, eventdepartment, (clockoutevent - clockinevent) AS totaltime 
-                FROM timekeepingevents; 
-                WHERE eventid = @eventid";
+            string stm = @"SELECT eventid, 
+                    DATE_FORMAT(eventdate, '%M %e, %Y') AS format_eventdate, 
+                    TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
+                    TIME_FORMAT(clockoutevent,'%I:%i %p') AS format_eventclockout, 
+                    eventdepartment, eventemployee,
+                    TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime
+                FROM timekeepingevents
+                WHERE eventid = @eventid;";
 
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@eventid", id);
@@ -61,12 +81,12 @@ namespace api.CRUD
                 while (rdr.Read())
                 {
                     myTimeEvent.TimeEventId = rdr.GetInt32(0);
-                    myTimeEvent.Date = rdr.GetDateTime(1);
-                    myTimeEvent.ClockIn = rdr.GetDateTime(2);
-                    myTimeEvent.ClockOut = rdr.GetDateTime(3);
+                    myTimeEvent.Date = rdr.GetString(1);
+                    myTimeEvent.ClockIn = rdr.GetString(2);
+                    myTimeEvent.ClockOut = rdr.GetString(3);
                     myTimeEvent.DepartmentId = rdr.GetInt32(4);
                     myTimeEvent.EmployeeId = rdr.GetInt32(5);
-                    myTimeEvent.TotalTime = rdr.GetDouble(6);
+                    myTimeEvent.TotalTime = rdr.GetString(6);
                 }
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myTimeEvent.ToString());

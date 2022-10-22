@@ -4,6 +4,6 @@ namespace api.Interfaces
 {
     public interface IReadOneUser
     {
-        public User ReadOneUser(string searchVal);
+        public User ReadOneUser(int id);
     }
 }

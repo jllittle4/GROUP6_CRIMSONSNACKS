@@ -31,13 +31,13 @@ namespace api.Controllers
         // GET: api/Users/5
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUsers")]
-        public User Get([FromBody] string searchVal)
+        public User Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find a user...");
 
             IReadOneUser readerOne = new ReadUsers();
 
-            return readerOne.ReadOneUser(searchVal);
+            return readerOne.ReadOneUser(id);
         }
 
         // POST: api/Users

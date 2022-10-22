@@ -25,9 +25,13 @@ namespace api.CRUD
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandText = @"UPDATE timekeepingevents
-                SET clockedoutcheck = 'y''
-                WHERE eventid = @eventid";
+                SET clockedoutcheck = 'y', clockoutevent = @clockoutevent, eventdepartment = @eventdepartment, eventdate = @eventdate, clockinevent = @clockinevent
+                WHERE eventid = @eventid;";
             cmd.Parameters.AddWithValue("@eventid", id);
+            cmd.Parameters.AddWithValue("@clockoutevent", updatedTimeEvent.ClockOut);
+            cmd.Parameters.AddWithValue("@eventdepartment", updatedTimeEvent.DepartmentId);
+            cmd.Parameters.AddWithValue("@eventdate",updatedTimeEvent.Date);
+            cmd.Parameters.AddWithValue("@clockinevent",updatedTimeEvent.ClockIn);
             cmd.Prepare();
 
             try

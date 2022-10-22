@@ -31,13 +31,13 @@ namespace api.Controllers
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetDepartments")]
         //may have issues finding by departmentname as opposed to departmentid
-        public Department Get([FromBody] string departmentName)
+        public Department Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find department...");
             
             IReadOneDepartment readerOne = new ReadDepartments();
             
-            return readerOne.ReadOneDepartment(departmentName);
+            return readerOne.ReadOneDepartment(id);
         }
 
         // POST: api/Departments

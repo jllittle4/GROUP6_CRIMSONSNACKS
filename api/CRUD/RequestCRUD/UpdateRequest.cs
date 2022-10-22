@@ -25,7 +25,7 @@ namespace api.CRUD
             cmd.Connection = con;
             cmd.CommandText = @"UPDATE requests 
                 SET isapproved = @isapproved 
-                WHERE requestid = @requestid";
+                WHERE requestid = @requestid;";
             cmd.Parameters.AddWithValue("@isapproved", updatedRequest.Status);
             cmd.Parameters.AddWithValue("@requestid", id);
             cmd.Prepare();

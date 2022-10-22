@@ -37,7 +37,7 @@ namespace api.CRUD
             return allUsers;
         }
 
-        public User ReadOneUser(string searchVal)
+        public User ReadOneUser(int id)
         {
             System.Console.WriteLine("Looking for user...");
 
@@ -48,10 +48,10 @@ namespace api.CRUD
 
             string stm = @"SELECT employeeid, firstname, lastname, username, password
                 FROM employees 
-                WHERE username = @username";
+                WHERE employeeid = @employeeid;";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@username", searchVal);
+            cmd.Parameters.AddWithValue("@employeeid", id);
             cmd.Prepare();
 
             try

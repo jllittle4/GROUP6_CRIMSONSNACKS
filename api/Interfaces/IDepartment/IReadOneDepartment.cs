@@ -4,6 +4,6 @@ namespace api.Interfaces
 {
     public interface IReadOneDepartment
     {
-        public Department ReadOneDepartment(string departmentName);
+        public Department ReadOneDepartment(int id);
     }
 }

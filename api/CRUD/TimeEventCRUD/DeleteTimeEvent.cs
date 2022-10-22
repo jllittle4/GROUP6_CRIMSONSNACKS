@@ -23,8 +23,8 @@ namespace api.CRUD
             using var cmd = new MySqlCommand();
             cmd.Connection = con;
             cmd.CommandText = @"DELETE FROM timekeepingevents 
-                WHERE eventid = @eventid";
-            cmd.Parameters.AddWithValue("@driverid", id);
+                WHERE eventid = @eventid;";
+            cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
             try
