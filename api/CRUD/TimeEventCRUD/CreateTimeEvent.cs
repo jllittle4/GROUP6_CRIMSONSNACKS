@@ -13,10 +13,10 @@ namespace api.CRUD
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
-        public void CreateOneTimeEvent(TimeEvent temp)
+        public void CreateOneTimeEvent(TimeEvent clockInEvent)
         {
             System.Console.WriteLine("The following time event will be created...");
-            System.Console.WriteLine(temp.ToString());
+            System.Console.WriteLine(clockInEvent.ToString());
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -26,11 +26,11 @@ namespace api.CRUD
 
             using var cmd = new MySqlCommand(stm, con);
         
-            cmd.Parameters.AddWithValue("@eventdepartment", temp.DepartmentId);
-            cmd.Parameters.AddWithValue("@eventemployee", temp.EmployeeId);
-            cmd.Parameters.AddWithValue("@eventdate",temp.Date);
-            cmd.Parameters.AddWithValue("@clockoutevent",temp.ClockOut);
-            cmd.Parameters.AddWithValue("@clockinevent",temp.ClockIn);
+            cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
+            cmd.Parameters.AddWithValue("@eventemployee", clockInEvent.EmployeeId);
+            cmd.Parameters.AddWithValue("@eventdate",clockInEvent.Date);
+            cmd.Parameters.AddWithValue("@clockoutevent",clockInEvent.ClockOut);
+            cmd.Parameters.AddWithValue("@clockinevent",clockInEvent.ClockIn);
             cmd.Prepare();
 
             try

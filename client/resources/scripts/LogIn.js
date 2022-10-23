@@ -8,9 +8,8 @@ postUrl = baseurl + 'users'
 function handleOnLoad(){
 
     //getUsers();
-    
-        
 }
+
 // function getUsers(){
 //     const allTaskUrl = baseurl + 'users';
 
@@ -25,8 +24,6 @@ function handleOnLoad(){
 
 function validate(){
    
-
-
     // const users = {firstname: 'Jeremy', lastname: 'Little', usernameid: 'jllittle4', passwordid: 'Jman040402$'};
 
     // if ( username == users.usernameid && password == users.passwordid){
@@ -43,31 +40,45 @@ function validate(){
 
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value;
-    const sendUser ={
+    const sendUser = {
+        "UserId": 0,
+        "FirstName": 'default',
+        "LastName": 'default',
         "UserName": username.toLowerCase(),
-        "Password": password
+        "Password": password,
+        "IsManager": 0,
     }
     
     fetch(postUrl, {
         method: 'POST',
-                headers: {
-        "Accept": 'application/json',
-        "Content-Type": 'application/json'
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json'
         },
         body: JSON.stringify(sendUser)
     }).then((response)=> {
         console.log(sendUser);
-        if(response.status == 200){
+        console.log(response);
+        return response.json();
+        
+    }).then(function (json) {
+        console.log(json);
+        if(json.checkUserName && json.checkPassword && json.isAdmin){
             window.alert('Login is valid');
             window.localStorage.setItem('username', username);
-    
-            window.location = "EmpHome.html"; // Redirecting to other page.
+            window.location = "AdminHome.html"; // Redirecting to other page.
 
+        } else if (json.checkUserName && json.checkPassword){
+            window.alert('Login is valid');
+            window.localStorage.setItem('username', username);
+            window.location = "EmpHome.html";
+        }else if (!json.checkUserName) {
+            window.alert('Incorrect username. Please try again');
         }
-        else{
-            window.alert('Login credentials were invalid, plase try again')
+        else if (!json.checkPassword) {
+            window.alert('Incorrect password. Please try again')
         }
-        console.log('response from the save ', response);
+        //console.log('response from the save ', response);
     });
 }
 

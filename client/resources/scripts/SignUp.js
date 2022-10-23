@@ -93,14 +93,15 @@ function RettoLogin() {
     };
 
     const postUrl = baseurl + 'users';
-    // const putUrl = baseurl + 'todos/' + todo.id;
 
-
+    //sam
     const sendUser = {
+        "UserId": 0,
         "FirstName": user.userfname,
         "LastName": user.userlname,
         "UserName": user.userid.toLowerCase(),
         "Password": user.pass,
+        "IsManager": 0
     };
 
     fetch(postUrl, {
@@ -112,7 +113,7 @@ function RettoLogin() {
         body: JSON.stringify(sendUser)
     }).then((response) => {
         if (response.status == 200) {
-            window.alert('User has been saved');
+            window.alert('Your account has been created!');
         }
         console.log('response from the save ', response);
     });

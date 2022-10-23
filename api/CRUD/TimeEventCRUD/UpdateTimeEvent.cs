@@ -53,5 +53,41 @@ namespace api.CRUD
 
             // con.Close();
         }
+
+        public void ClockingOut(int id, TimeEvent updatedTimeEvent)
+        {
+            System.Console.WriteLine($"The time event with an ID of {id} will be marked as clocked out.");
+
+            //double myRating = double.Parse(rating);
+            using var con = new MySqlConnection(cs);
+            con.Open();
+
+            using var cmd = new MySqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = @"UPDATE timekeepingevents
+                SET clockedoutcheck = 'y', 
+                    clockoutevent = @clockoutevent, 
+                    eventdepartment = @eventdepartment
+                WHERE eventid = @eventid;";
+
+            cmd.Parameters.AddWithValue("@eventid", id);
+            cmd.Parameters.AddWithValue("@clockoutevent", updatedTimeEvent.ClockOut);
+            cmd.Parameters.AddWithValue("@eventdepartment", updatedTimeEvent.DepartmentId);
+            cmd.Prepare();
+
+            try
+            {
+                cmd.ExecuteNonQuery();
+                System.Console.WriteLine("Time event update was successful!");
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Time event update was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
+            }
+
+            // con.Close();
+        }
     }
 }

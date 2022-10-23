@@ -11,7 +11,7 @@ namespace api.Models
 
         public override string ToString()
         {
-            return "ID\tFirst Name\tLast Name\tUser Name\tAdmin?" + 
+            return "ID\tFirst Name\tLast Name\tUser Name\tAdmin?\n" + 
                 $"{this.UserId}\t{this.FirstName}\t{this.LastName}\t{this.UserName}\t{this.IsManager}";
         }
     }

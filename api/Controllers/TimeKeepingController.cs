@@ -33,9 +33,9 @@ namespace api.Controllers
         public TimeEvent Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find timekeeping event...");
-            
+
             IReadOneTimeEvent readerOne = new ReadTimeEvents();
-            
+
             return readerOne.ReadOneTimeEvent(id);
         }
 
@@ -59,8 +59,19 @@ namespace api.Controllers
             System.Console.WriteLine("\nReceived request to update timekeeping event...");
             //System.Console.WriteLine(updatedDepartment.ToString());
 
-            IUpdateOneTimeEvent updater = new UpdateTimeEvent();
-            updater.UpdateOneTimeEvent(id, updatedTimeEvent);
+            if (updatedTimeEvent.TotalTime == "clock-out")
+            {
+                //System.Console.WriteLine(id);
+                //System.Console.WriteLine("made it here");
+                UpdateTimeEvent updater = new UpdateTimeEvent();
+                updater.ClockingOut(id, updatedTimeEvent);
+            }
+            else if(updatedTimeEvent.TotalTime == "update-from-request")
+            {
+                IUpdateOneTimeEvent updater = new UpdateTimeEvent();
+                updater.UpdateOneTimeEvent(id, updatedTimeEvent);
+            }
+
         }
 
         // DELETE: api/TimeKeeping/5
