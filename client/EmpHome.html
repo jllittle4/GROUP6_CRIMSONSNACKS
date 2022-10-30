@@ -9,10 +9,10 @@
   <title>Dashboard</title>
 </head>
 
-<body>
+<body onload="handleButtonLoad()">
   <h1 name='welcome' id='welcome'></h1>
   <text id="time"></text>
-  <input type="button" id='timePunch' value="Clock In" onclick="handleClick()"></input>
+  <input type="button" id='timePunch' onclick="handleClick()" ></input>
   <div class="modal">
     <div class="modal-header">
       <span class="close-btn">&times;</span>
