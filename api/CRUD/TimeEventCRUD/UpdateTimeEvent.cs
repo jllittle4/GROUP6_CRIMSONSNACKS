@@ -71,7 +71,7 @@ namespace api.CRUD
                 WHERE eventid = @eventid;";
 
             cmd.Parameters.AddWithValue("@eventid", id);
-            cmd.Parameters.AddWithValue("@clockoutevent", updatedTimeEvent.ClockOut);
+            cmd.Parameters.AddWithValue("@clockoutevent", DateTime.Now.ToString("HH:mm:ss"));
             cmd.Parameters.AddWithValue("@eventdepartment", updatedTimeEvent.DepartmentId);
             cmd.Prepare();
 

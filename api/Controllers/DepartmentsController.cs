@@ -20,6 +20,8 @@ namespace api.Controllers
         [HttpGet]
         public List<Department> Get()
         {
+            // string myDate = DateTime.Now.ToString("HH:mm:ss");
+            // System.Console.WriteLine(myDate);
             System.Console.WriteLine("\nReceived request to get all departments...");
 
             IReadAllDepartments readerAll = new ReadDepartments();

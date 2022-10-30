@@ -35,10 +35,11 @@ namespace api.CRUD
                     DATE_FORMAT(eventdate, '%Y-%m-%d') AS format_eventdate,
                     TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
                     TIME_FORMAT(clockoutevent,'%I:%i %p') AS format_eventclockout, 
-                    eventdepartment, eventemployee,
-                    TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime 
-                FROM timekeepingevents
-                ORDER BY eventid DESC;";
+                    departmentname, eventemployee,
+                    ROUND(TIMESTAMPDIFF(minute, clockinevent, clockoutevent)/60,2) AS totaltime,
+                    clockedoutcheck 
+                FROM timekeepingevents tke LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid)
+                ORDER BY eventdate DESC, clockinevent DESC;";
 
             using var cmd = new MySqlCommand(stm, con);
 
@@ -49,24 +50,34 @@ namespace api.CRUD
                 while (rdr.Read())
                 {
                     TimeEvent temp = new TimeEvent();
-                    
+
                     temp.TimeEventId = rdr.GetInt32(0);
                     temp.Date = rdr.GetString(1);
                     temp.ClockIn = rdr.GetString(2);
                     temp.ClockOut = rdr.GetString(3);
+                    //temp.DepartmentId = rdr.GetInt32(4);
+
+                    // try
+                    // {
+                    //     temp.DepartmentId = rdr.GetInt32(4);
+                    // }
+                    // catch
+                    // {
+                    //     temp.DepartmentId = -1;
+                    // }
 
                     try
                     {
-                        temp.DepartmentId = rdr.GetInt32(4);
+                        temp.Department = rdr.GetString(4);
                     }
                     catch
                     {
-                        temp.DepartmentId = -1;
+                        temp.Department = "n/a";
                     }
-
                     temp.EmployeeId = rdr.GetInt32(5);
                     temp.TotalTime = rdr.GetString(6);
-                    
+                    temp.ClockedOutCheck = rdr.GetString(7);
+
 
                     allTimeEvents.Add(temp);
 
@@ -98,13 +109,14 @@ namespace api.CRUD
                     DATE_FORMAT(eventdate, '%M %e, %Y') AS format_eventdate, 
                     TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
                     TIME_FORMAT(clockoutevent,'%I:%i %p') AS format_eventclockout, 
-                    eventdepartment, eventemployee,
-                    TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime
-                FROM timekeepingevents
+                    departmentname, eventemployee,
+                    TIMESTAMPDIFF(minute, clockoutevent, clockinevent)/60 AS totaltime,
+                    clockedoutcheck
+                FROM timekeepingevents tke LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid)
                 WHERE eventid = @eventid;";
 
             using var cmd = new MySqlCommand(stm, con);
-            
+
             cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
@@ -118,9 +130,35 @@ namespace api.CRUD
                     myTimeEvent.Date = rdr.GetString(1);
                     myTimeEvent.ClockIn = rdr.GetString(2);
                     myTimeEvent.ClockOut = rdr.GetString(3);
-                    myTimeEvent.DepartmentId = rdr.GetInt32(4);
-                    myTimeEvent.EmployeeId = rdr.GetInt32(5);
+
+                    //myTimeEvent.DepartmentId = rdr.GetInt32(4);
+                    // try
+                    // {
+                    //     myTimeEvent.DepartmentId = rdr.GetInt32(4);
+                    // }
+                    // catch
+                    // {
+                    //     myTimeEvent.DepartmentId = -1;
+                    // }
+                    try
+                    {
+                        myTimeEvent.Department = rdr.GetString(4);
+                    }
+                    catch
+                    {
+                        myTimeEvent.Department = "n/a";
+                    }
+                    //myTimeEvent.EmployeeId = rdr.GetInt32(5);
+                    try
+                    {
+                        myTimeEvent.EmployeeId = rdr.GetInt32(5);
+                    }
+                    catch
+                    {
+                        myTimeEvent.EmployeeId = -1;
+                    }
                     myTimeEvent.TotalTime = rdr.GetString(6);
+                    myTimeEvent.ClockedOutCheck = rdr.GetString(7);
                 }
 
                 System.Console.WriteLine("The result of the search was: ");
@@ -130,7 +168,7 @@ namespace api.CRUD
             {
                 System.Console.WriteLine("Time event search was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.Message);
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();

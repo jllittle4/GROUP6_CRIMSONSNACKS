@@ -2,8 +2,7 @@
 var datetime = new Date();
 let timeeventtime = new Date().toLocaleTimeString();
 let timeeventdate = new Date().toLocaleDateString();
-
-//console.log(timeeventdate);
+console.log(timeeventtime);
 timeeventdate = timeeventdate.slice(6, 10) + '-' + timeeventdate.slice(0, 2) + '-' + timeeventdate.slice(3, 5);
 //console.log(timeeventdate);
 //console.log(datetime);
@@ -16,10 +15,13 @@ let username = window.localStorage.getItem('username');
 let header = document.getElementById('welcome');
 header.textContent = 'Welcome, ' + username;
 //console.log(username);
+
+//sam
 let empid = getEmployeeID();
 let timeeventid = 0;
 let departmentid = 0;
 let allDeps = [];
+
 
 function refreshTime() {
     const timeDisplay = document.getElementById("time");
@@ -34,23 +36,75 @@ setInterval(refreshTime, 1000);
 getAllDepartments();
 
 
-function handleClick() {
-    var btn = document.getElementById("timePunch");
-    //getAllDepartments();
-    if (btn.value == "Clock In") {
-        btn.value = "Clock Out";
-        btn.innerHTML = "Clock Out";
-        //getAllDepartments();
-        //createTimeEvent(); //sam
-    }
-    else {
-        btn.value = "Clock In";
-        btn.innerHTML = "Clock In";
+function handleButtonLoad() {
+    let clockedout = '';
 
-        // getDepartment();
-        //closeTimeEvent();
-    }
+    var btn = document.getElementById("timePunch");
+    console.log('made it here');
+    getEmployeeID();
+    // getTimeEventId();
+    const timeUrl1 = baseUrl + 'TimeKeeping';
+
+    //console.log('made it here again again again');
+    // findeventiddate = new Date().toDateString();
+    // console.log(timeeventdate);
+    fetch(timeUrl1).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        //console.log(json[0]);
+        for (var i = 0; i < json.length; i++) {
+            if (json[i].date == timeeventdate && json[i].employeeId == empid) {
+                timeeventid = json[i].timeEventId + 1;
+                console.log(timeeventid);
+                break;
+            }
+        }
+    }).then(function () {
+        const timeUrl2 = baseUrl + 'TimeKeeping/' + (timeeventid - 1);
+
+        //console.log('made it here again again again');
+        // findeventiddate = new Date().toDateString();
+        // console.log(timeeventdate);
+        fetch(timeUrl2).then(function (response) {
+            console.log(response);
+            //console.log(timeeventid + 'in the getonetimeevent');
+            return response.json();
+        }).then(function (json) {
+            console.log(json);
+            clockedout = json.clockedOutCheck;
+            console.log(clockedout);
+        }).then(function () {
+            if (clockedout == 'n') {
+                //console.log(clockedout);
+                btn.value = 'Clock Out';
+                //btn.innerHTML = 'Clock Out';
+            } else if (clockedout == 'y') {
+                //console.log(clockedout);
+                btn.value = 'Clock In';
+                //btn.innerHTML = 'Clock In';
+            };
+        });
+    });
+
 }
+
+// function handleClick() {
+//     var btn = document.getElementById("timePunch");
+//     //getAllDepartments();
+//     if (btn.value == "Clock In") {
+//         btn.value = "Clock Out";
+//         btn.innerHTML = "Clock Out";
+//         //getAllDepartments();
+//         //createTimeEvent(); //sam
+//     }
+//     else {
+//         btn.value = "Clock In";
+//         btn.innerHTML = "Clock In";
+
+//         // getDepartment();
+//         //closeTimeEvent();
+//     }
+// }
 
 //sam
 function createTimeEvent() {
@@ -60,6 +114,7 @@ function createTimeEvent() {
     // let employeeid = getEmployeeID();
     //console.log(empid);
     //console.log(driver);
+    timeeventtime = new Date().toLocaleTimeString();
     if (empid != -1) {
         //console.log('this was true');
         const sendEvent = {
@@ -67,7 +122,7 @@ function createTimeEvent() {
             "Date": timeeventdate,
             "ClockIn": timeeventtime,
             "ClockOut": timeeventtime,
-            "DepartmentId": null,
+            "DepartmentId": 0,
             "EmployeeId": empid,
             "TotalTime": null
         };
@@ -118,22 +173,60 @@ function getEmployeeID() {
 function getTimeEventId() {
     const timeUrl = baseUrl + 'TimeKeeping';
 
-    console.log('made it here again again again');
-    findeventiddate = new Date().toDateString();
-    console.log(timeeventdate);
+    //console.log('made it here again again again');
+    // findeventiddate = new Date().toDateString();
+    // console.log(timeeventdate);
     fetch(timeUrl).then(function (response) {
         return response.json();
     }).then(function (json) {
-        console.log(json);
+        console.log(json[0]);
         for (var i = 0; i < json.length; i++) {
             if (json[i].date == timeeventdate && json[i].employeeId == empid) {
-                timeeventid = json[i].timeEventId;
-                console.log(json[i].timeEventId);
+                timeeventid = json[i].timeEventId + 1;
+                console.log(timeeventid);
                 break;
             }
         }
     });
 }
+
+// function getOneTimeEvent() {
+//     const timeUrl1 = baseUrl + 'TimeKeeping';
+
+//     //console.log('made it here again again again');
+//     // findeventiddate = new Date().toDateString();
+//     // console.log(timeeventdate);
+//     fetch(timeUrl1).then(function (response) {
+//         return response.json();
+//     }).then(function (json) {
+//         console.log(json[0]);
+//         for (var i = 0; i < json.length; i++) {
+//             if (json[i].date == timeeventdate && json[i].employeeId == empid) {
+//                 timeeventid = json[i].timeEventId + 1;
+//                 console.log(timeeventid);
+//                 break;
+//             }
+//         }
+//     }).then(function () {
+//         const timeUrl2 = baseUrl + 'TimeKeeping/' + (timeeventid - 1);
+
+//         //console.log('made it here again again again');
+//         // findeventiddate = new Date().toDateString();
+//         // console.log(timeeventdate);
+//         fetch(timeUrl2).then(function (response) {
+//             console.log(response);
+//             //console.log(timeeventid + 'in the getonetimeevent');
+//             return response.json();
+//         }).then(function (json) {
+//             console.log(json);
+//             clockedout = json.clockedOutCheck;
+//             console.log(json.clockedOutCheck);
+//         });
+//     });
+
+
+
+// }
 
 function getDepartment() {
     let selection = document.getElementById('ratingInput');
@@ -151,9 +244,10 @@ function closeTimeEvent() {
     //getTimeEventId();
     getDepartment();
     console.log(timeeventid);
+    timeeventtime = new Date().toLocaleTimeString();
     //console.log(timeeventid,timeeventdate,timeeventtime,departmentid,empid);
     const sendEvent = {
-        "TimeEventId": timeeventid,
+        "TimeEventId": (timeeventid - 1),
         "Date": timeeventdate,
         "ClockIn": timeeventtime,
         "ClockOut": timeeventtime,
@@ -163,7 +257,7 @@ function closeTimeEvent() {
     };
 
 
-    const putUrl = baseUrl + 'TimeKeeping/' + timeeventid;
+    const putUrl = baseUrl + 'TimeKeeping/' + (timeeventid - 1);
 
     fetch(putUrl, {
         method: 'PUT',
@@ -177,6 +271,8 @@ function closeTimeEvent() {
             window.alert(`You have successfully clocked out.`);
         }
         //console.log('Response from the update', response);
+    }).then(function () {
+        location.reload();
     });
 }
 
@@ -185,6 +281,7 @@ let modal = document.querySelector(".modal");
 let closeBtn = document.querySelector(".close-btn");
 
 btn.onclick = function () {
+    console.log('called this function');
     if (btn.value == "Clock In") {
         btn.value = "Clock Out";
         btn.innerHTML = "Clock Out";
@@ -322,7 +419,7 @@ function retToLogin() {
 function getAllDepartments() {
     const depUrl = baseUrl + 'Departments';
 
-    console.log('made it here');
+    //console.log('made it here');
     fetch(depUrl).then(function (response) {
         //console.log(response);
         return response.json();
