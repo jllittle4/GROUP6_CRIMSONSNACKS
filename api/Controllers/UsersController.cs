@@ -16,6 +16,7 @@ namespace api.Controllers
     [ApiController]
     public class Users : ControllerBase
     {
+        public static User loggedIn = new User();
         // GET: api/Users
         [EnableCors("OpenPolicy")]
         [HttpGet]
@@ -59,9 +60,26 @@ namespace api.Controllers
             {
                 System.Console.WriteLine("\nReceived login request...");
 
-                LogInCheck login = new LogInCheck(newUser);
-                myLoginAttempt = login.CheckValidUser(newUser);
-                System.Console.WriteLine(myLoginAttempt.ToString());
+                IFindUserByUsername myFinder = new FindUserByUsername();
+                User tempUser = myFinder.Find(newUser.UserName);
+
+                try
+                {
+                    LogInCheck login = new LogInCheck(tempUser);
+                    myLoginAttempt = login.CheckValidPassword(newUser.Password);
+                    System.Console.WriteLine("\n" + myLoginAttempt.ToString());
+
+                    if (myLoginAttempt.CheckUserName && myLoginAttempt.CheckPassword)
+                    {
+                        loggedIn = tempUser;
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Console.WriteLine("Invalid username. \n");
+                    System.Console.WriteLine(myLoginAttempt.ToString());
+                    System.Console.WriteLine(e.ToString());
+                }
             }
 
             return myLoginAttempt;
