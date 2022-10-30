@@ -2,35 +2,60 @@ using api.Controllers;
 using api.Interfaces;
 using api.Models;
 using api.CRUD;
+using api.database;
+using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
     
-    public class FindDepartmentByName
+    public class FindDepartmentByName : IReadDepByName
     {
-        public Department myDep { get; set; }
-
-        public int Find(string departmentname)
+        public Department myDep = new Department();
+        private string cs { get; }
+        public FindDepartmentByName()
         {
-            System.Console.WriteLine("\nLooking for department by name...");
+            ConnectionString connectionString = new ConnectionString();
+            this.cs = connectionString.cs;
+        }
 
-            IReadAllDepartments allUsers = new ReadDepartments();
-            List<Department> myList = allUsers.ReadAllDepartments();
+        public Department Find(string depname)
+        {
+            System.Console.WriteLine("Looking for department id...\n");
 
-            myDep = myList.Find(x => x.DepName == departmentname);
+            using var con = new MySqlConnection(cs);
+            con.Open();
+
+            string stm = @"SELECT *
+                FROM departments
+                WHERE departmentname = @departmentname;";
+
+            using var cmd = new MySqlCommand(stm, con);
+
+            cmd.Parameters.AddWithValue("@departmentname", depname);
+            cmd.Prepare();
 
             try
             {
-                System.Console.WriteLine("Found department.");
-                return myDep.DepId;
+                using MySqlDataReader rdr = cmd.ExecuteReader();
 
+                while (rdr.Read())
+                {
+                    myDep.DepId = rdr.GetInt32(0);
+                    myDep.DepName = rdr.GetString(1);
+                }
+
+                System.Console.WriteLine("The result of the search was: \n");
+                System.Console.WriteLine(myDep.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("Could not find department.");
+                System.Console.WriteLine("Department search was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
-            return -1;
+            // con.Close();
+            return myDep;
         }
     }
 }

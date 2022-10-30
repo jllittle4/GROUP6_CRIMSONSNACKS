@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using api.Models;
 using api.database;
 using api.Utilities;
+using api.Controllers;
 
 namespace api.CRUD
 {
@@ -53,9 +54,6 @@ namespace api.CRUD
         {
             System.Console.WriteLine("Clocking in...");
 
-            FindUserByUsername myFinder = new FindUserByUsername();
-            User myUser = myFinder.Find();
-
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -65,7 +63,7 @@ namespace api.CRUD
             using var cmd = new MySqlCommand(stm, con);
         
             //cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
-            cmd.Parameters.AddWithValue("@eventemployee", myUser.UserId);
+            cmd.Parameters.AddWithValue("@eventemployee", Users.loggedIn.UserId);
             cmd.Parameters.AddWithValue("@eventdate",DateTime.Now.ToString("yyyy-MM-dd"));
             cmd.Parameters.AddWithValue("@clockoutevent",DateTime.Now.ToString("HH:mm:ss"));
             cmd.Parameters.AddWithValue("@clockinevent",DateTime.Now.ToString("HH:mm:ss"));

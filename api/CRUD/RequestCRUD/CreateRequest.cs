@@ -2,6 +2,7 @@ using api.Interfaces;
 using api.database;
 using MySql.Data.MySqlClient;
 using api.Models;
+using api.Controllers;
 
 namespace api.CRUD
 {
@@ -31,8 +32,8 @@ namespace api.CRUD
             cmd.Parameters.AddWithValue("@requestclockin", newRequest.ClockIn);
             cmd.Parameters.AddWithValue("@requestclockout", newRequest.ClockOut);
             cmd.Parameters.AddWithValue("@reason", newRequest.Reason);
-            cmd.Parameters.AddWithValue("@requestdepartment", newRequest.DepartmentId);
-            cmd.Parameters.AddWithValue("@requestemployee", newRequest.EmployeeId);
+            cmd.Parameters.AddWithValue("@requestdepartment", newRequest.Department);
+            cmd.Parameters.AddWithValue("@requestemployee", Users.loggedIn.UserId);
             cmd.Prepare();
 
             try

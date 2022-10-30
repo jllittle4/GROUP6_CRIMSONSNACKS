@@ -43,36 +43,6 @@ function passid_validation(passid, mx, my) {
 }
 
 
-
-
-// function createUser(user){
-//     const postUrl = baseurl + 'users';
-//     // const putUrl = baseurl + 'todos/' + todo.id;
-//     console.log(user);
-
-//     const sendUser ={
-//         "FirstName": user.ufname,
-//         "LastName": user.ulname,
-//         "UserId": user.uid,
-//         "Password": user.passid,
-
-//     }
-
-//     fetch(postUrl, {
-//         method: 'POST',
-//                 headers: {
-//         "Accept": 'application/json',
-//         "Content-Type": 'application/json'
-//         },
-//         body: JSON.stringify(sendUser)
-//     }).then((response)=> {
-//         if(response.status == 200){
-//             window.alert('User has been saved')
-//         }
-//         console.log('response from the save ', response);
-//     })
-// }
-
 function RettoLogin() {
     alert('Form Succesfully Submitted');
     // form.addEventListener('submit', function(e){ //e i sa parameter

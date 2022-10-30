@@ -14,8 +14,8 @@ namespace api.Models
 
         public override string ToString()
         {
-            return "ID\tDate\t\tClockIn\t\tClockOut\tDepID\tEmpID\tNet Time\n" + 
-                $"{this.TimeEventId}\t{this.Date}\t{this.ClockIn}\t{this.ClockOut}\t{this.Department}\t{this.EmployeeId}";
+            return "ID\tDate\t\t\tClockIn\t\tClockOut\tDepartment\tEmpID\tNet Time\tClocked Out?\n" + 
+                $"{this.TimeEventId}\t{this.Date}\t{this.ClockIn}\t{this.ClockOut}\t{this.Department}\t{this.EmployeeId}\t{this.TotalTime}\t\t{this.ClockedOutCheck}";
         }
     }
 }

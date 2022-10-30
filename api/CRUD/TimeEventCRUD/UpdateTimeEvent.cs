@@ -19,7 +19,6 @@ namespace api.CRUD
             System.Console.WriteLine($"The time event with an ID of {id} will be updated to match the following details: ");
             System.Console.WriteLine(updatedTimeEvent.ToString());
 
-            //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -59,13 +58,10 @@ namespace api.CRUD
         {
             System.Console.WriteLine("Clocking out...");
 
-            FindMostRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
+            IFindRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
             
-            FindDepartmentByName myDepFinder = new FindDepartmentByName();
+            IReadDepByName myDepFinder = new FindDepartmentByName();
 
-            //System.Console.WriteLine($"The time event with an ID of {id} will be marked as clocked out.");
-
-            //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -81,7 +77,7 @@ namespace api.CRUD
             cmd.Parameters.AddWithValue("@eventid", myFinder.FindTimeEvent().TimeEventId);
             cmd.Parameters.AddWithValue("@clockoutevent", DateTime.Now.ToString("HH:mm:ss"));
             cmd.Parameters.AddWithValue("@eventdate", DateTime.Now.ToString("yyyy-MM-dd"));
-            cmd.Parameters.AddWithValue("@eventdepartment", myDepFinder.Find(updatedTimeEvent.Department));
+            cmd.Parameters.AddWithValue("@eventdepartment", myDepFinder.Find(updatedTimeEvent.Department).DepId);
             cmd.Prepare();
 
             try

@@ -1,9 +1,5 @@
 using api.Interfaces;
-using api.database;
-using MySql.Data.MySqlClient;
 using api.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cors;
 using api.CRUD;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,11 +8,7 @@ namespace api.Utilities
 {
     public class LogInCheck
     {
-        public bool Valid { get; set; }
-        public IReadAllUsers ReaderAll { get; set; }
-        public List<User> MyUsers = new List<User>();
         public LoginResult MyLoginResult { get; set; }
-        public User ReturnVal { get; set; }
         public User LoginAttempt { get; set; }
 
         public LogInCheck(User myUser)
@@ -24,37 +16,21 @@ namespace api.Utilities
             MyLoginResult = new LoginResult();
             this.LoginAttempt = myUser;
         }
-        public LoginResult CheckValidUser(User myUser)
+
+        public LoginResult CheckValidPassword(string userInput)
         {
-            ReaderAll = new ReadUsers();
-            MyUsers = ReaderAll.ReadAllUsers();
-            ReturnVal = MyUsers.Find(x => x.UserName == myUser.UserName);
+            MyLoginResult.CheckUserName = true;
 
-            if (ReturnVal == null)
-            {
-                MyLoginResult.CheckUserName = false;
-                return MyLoginResult;
-            }
-            else
-            {
-                MyLoginResult.CheckUserName = true;
-            }
+            userInput = ToSHA256(userInput);
+            MyLoginResult.CheckPassword = CompareCharArrays(LoginAttempt.Password, userInput);
 
-            CheckValidPassowrd();
-            return MyLoginResult;
-        }
-
-        public void CheckValidPassowrd()
-        {
-            string userInput = ToSHA256(LoginAttempt.Password);
-            //int myResult = returnVal.Password.CompareTo(userInput);
-            MyLoginResult.CheckPassword = CompareCharArrays(ReturnVal.Password, userInput);
             CheckValidAdmin();
+            return MyLoginResult;
         }
 
         public void CheckValidAdmin()
         {
-            if (ReturnVal.IsManager == 0)
+            if (LoginAttempt.IsManager == 0)
             {
                 MyLoginResult.IsAdmin = false;
             }

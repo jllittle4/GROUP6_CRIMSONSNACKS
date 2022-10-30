@@ -94,6 +94,8 @@ function createTimeEvent() {
     }).then((response) => {
         if (response.status == 200) {
             window.alert(`You have successfully clocked in.`);
+        } else {
+            window.alert('There was an error clocking in.')
         }
     });
 }
@@ -125,6 +127,8 @@ function closeTimeEvent() {
     }).then((response) => {
         if (response.status == 200) {
             window.alert(`You have successfully clocked out.`);
+        } else {
+            window.alert('There was an error clocking out.')
         }
     }).then(function () {
         location.reload();

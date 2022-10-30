@@ -22,15 +22,6 @@ namespace api.CRUD
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            // string stm = @"SELECT eventid, 
-            //         DATE_FORMAT(eventdate, '%M %e, %Y') AS format_eventdate, 
-            //         TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
-            //         TIME_FORMAT(clockoutevent,'%I:%i %p') AS format_eventclockout, 
-            //         eventdepartment, eventemployee,
-            //         TIME_FORMAT(TIMEDIFF(clockoutevent, clockinevent),'%I:%i') AS totaltime 
-            //     FROM timekeepingevents
-            //     ;";
-
             string stm = @"SELECT eventid, 
                     DATE_FORMAT(eventdate, '%Y-%m-%d') AS format_eventdate,
                     TIME_FORMAT(clockinevent,'%I:%i %p') AS format_eventclockin, 
@@ -38,7 +29,8 @@ namespace api.CRUD
                     departmentname, eventemployee,
                     ROUND(TIMESTAMPDIFF(minute, clockinevent, clockoutevent)/60,2) AS totaltime,
                     clockedoutcheck 
-                FROM timekeepingevents tke LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid)
+                FROM timekeepingevents tke 
+                    LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid)
                 ORDER BY eventdate DESC, clockinevent DESC;";
 
             using var cmd = new MySqlCommand(stm, con);

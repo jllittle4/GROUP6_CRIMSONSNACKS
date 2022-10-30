@@ -23,9 +23,9 @@ namespace api.Controllers
         {
             System.Console.WriteLine("\nReceived request to get all timekeeping events...");
 
-            FindTimeEventsByEmp myFinder = new FindTimeEventsByEmp();
+            IReadAllTimeEvents myFinder = new FindTimeEventsByEmp();
             
-            return myFinder.Find();
+            return myFinder.ReadAllTimeEvents();
         }
 
         // GET: api/TimeKeeping/5
@@ -34,13 +34,12 @@ namespace api.Controllers
         public TimeEvent Get(int id)
         {
             TimeEvent myTimeEvent = new TimeEvent();
-            //System.Console.WriteLine("\nReceived request to find timekeeping event...");
 
             if (id == 0)
             {
                 System.Console.WriteLine("\nRequest to find timekeeping event without id...");
 
-                FindMostRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
+                IFindRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
                 myTimeEvent = myFinder.FindTimeEvent();
             }
             else
@@ -60,7 +59,6 @@ namespace api.Controllers
         public void Post([FromBody] TimeEvent newTimeEvent)
         {
             System.Console.WriteLine("\nReceived request to clock in...");
-            //System.Console.WriteLine(newDepartment.ToString());
 
             CreateTimeEvent creator = new CreateTimeEvent();
             creator.ClockingIn();
@@ -71,13 +69,8 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] TimeEvent updatedTimeEvent)
         {
-            // System.Console.WriteLine("\nReceived request to update timekeeping event...");
-            //System.Console.WriteLine(updatedDepartment.ToString());
-
             if (id == 0)
             {
-                //System.Console.WriteLine(id);
-                //System.Console.WriteLine("made it here");
                 System.Console.WriteLine("\nReceived request to clock out...");
                 UpdateTimeEvent updater = new UpdateTimeEvent();
                 updater.ClockingOut(updatedTimeEvent);
