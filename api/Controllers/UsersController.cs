@@ -16,6 +16,7 @@ namespace api.Controllers
     [ApiController]
     public class Users : ControllerBase
     {
+        public static User loggedIn { get; set; }
         // GET: api/Users
         [EnableCors("OpenPolicy")]
         [HttpGet]
@@ -61,7 +62,13 @@ namespace api.Controllers
 
                 LogInCheck login = new LogInCheck(newUser);
                 myLoginAttempt = login.CheckValidUser(newUser);
-                System.Console.WriteLine(myLoginAttempt.ToString());
+                System.Console.WriteLine("\n" + myLoginAttempt.ToString());
+
+                if(myLoginAttempt.CheckUserName && myLoginAttempt.CheckPassword)
+                {
+                    loggedIn = newUser;
+                    System.Console.WriteLine("\n" + loggedIn.ToString());
+                }
             }
 
             return myLoginAttempt;

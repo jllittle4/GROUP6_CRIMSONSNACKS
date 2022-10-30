@@ -2,6 +2,7 @@ using api.Interfaces;
 using api.Models;
 using api.database;
 using MySql.Data.MySqlClient;
+using api.Utilities;
 
 namespace api.CRUD
 {
@@ -54,9 +55,15 @@ namespace api.CRUD
             // con.Close();
         }
 
-        public void ClockingOut(int id, TimeEvent updatedTimeEvent)
+        public void ClockingOut(TimeEvent updatedTimeEvent)
         {
-            System.Console.WriteLine($"The time event with an ID of {id} will be marked as clocked out.");
+            System.Console.WriteLine("Clocking out...");
+
+            FindMostRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
+            
+            FindDepartmentByName myDepFinder = new FindDepartmentByName();
+
+            //System.Console.WriteLine($"The time event with an ID of {id} will be marked as clocked out.");
 
             //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
@@ -67,12 +74,14 @@ namespace api.CRUD
             cmd.CommandText = @"UPDATE timekeepingevents
                 SET clockedoutcheck = 'y', 
                     clockoutevent = @clockoutevent, 
-                    eventdepartment = @eventdepartment
+                    eventdepartment = @eventdepartment,
+                    eventdate = @eventdate
                 WHERE eventid = @eventid;";
 
-            cmd.Parameters.AddWithValue("@eventid", id);
+            cmd.Parameters.AddWithValue("@eventid", myFinder.FindTimeEvent().TimeEventId);
             cmd.Parameters.AddWithValue("@clockoutevent", DateTime.Now.ToString("HH:mm:ss"));
-            cmd.Parameters.AddWithValue("@eventdepartment", updatedTimeEvent.DepartmentId);
+            cmd.Parameters.AddWithValue("@eventdate", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("@eventdepartment", myDepFinder.Find(updatedTimeEvent.Department));
             cmd.Prepare();
 
             try
