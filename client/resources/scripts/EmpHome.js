@@ -17,7 +17,7 @@ function refreshTime() {
   }
     setInterval(refreshTime, 60000);
 
-setInterval(refreshTime, 1000);
+setInterval(refreshTime, 60000);
 
 
 

@@ -13,13 +13,14 @@
 
 
 let employees = []
-const baseurl = 'https://localhost:7246/api/'; /// ENTER BASE URL HERE
+const baseurl = 'https://localhost:7139/api/'; /// ENTER BASE URL HERE
 const allTaskUrl = baseurl + 'Users';
 let clicked = "";
 let dropDown = "";
 
 var ran = 0;
-let run = 1;
+var run = 0;
+
 
 
 function handleOnLoad(){
@@ -37,14 +38,21 @@ function handleOnLoad(){
     dropDown.add(defaultOption);
 
     dropDown.selectedIndex = 0;
-    getEmployees();
-    ran ++;
-    }
-    return ran
     
+    getEmployees();
+
+    ran ++;
+    
+
+
+    
+    }
+    var myTable = document.getElementById('table');
+    myTable.innerHTML = "";
+    myTable.style.display = 'none';
+    run = 1;
+    return run;
 }
-
-
    
 
 
@@ -55,27 +63,30 @@ function getEmployees(){ //SIMPLY POPULATING FORM FOR DROPDOWN TO SELECT AN EMPL
     let dropDown = document.getElementById('arr');
 
 
-    fetch(allTaskUrl).then(function(response){
-    console.log(response);
-        return response.json();
-    }).then(function(json){
-        console.log(json);
-        employees = json;
-    })
-    let option = '';
-    for(let i = 0; i < employees.length; i++) {
-        option = document.createElement('option');
-        option.text = employees[i].empName;
-        option.value = employees[i].empId;  // MAY NEED TO CHANGE THESE DEPENDING ON THE DATA YOU GET
-       
-
+        fetch(allTaskUrl).then(function(response){
+            console.log(response);
+                return response.json();
+            }).then(function(json){
+                console.log(json);
+                employees = json;
+                console.log(employees);
+            })
+            let option = '';
+            for(let i = 0; i < employees.length; i++) {
+                option = document.createElement('option');
+                option.text = employees[i].firstName +" " + employees[i].lastName;
+                option.value = employees[i].userId;  // MAY NEED TO CHANGE THESE DEPENDING ON THE DATA YOU GET
+            
         
-      dropDown.appendChild(option);
+                
+            dropDown.appendChild(option);
+            console.log(option);
+        
+            
 
-      run = 1;
+            }
+        
 
-      
-    };
     
 
     return dropDown;
@@ -83,6 +94,8 @@ function getEmployees(){ //SIMPLY POPULATING FORM FOR DROPDOWN TO SELECT AN EMPL
 
 
 }
+
+
 
 
 
@@ -94,6 +107,11 @@ function retToHome(){
 
 
 function handleTableLoad(){
+
+    var myTable = document.getElementById('table');
+    myTable.innerHTML = "";
+    myTable.style.display = 'none';
+    
     if(run <= 1){
 
     loadTable();
@@ -101,6 +119,38 @@ function handleTableLoad(){
     }
     return run
     
+}
+
+
+function sendEmployee(){
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    const sendUser ={
+        "UserName": username.toLowerCase(),
+        "Password": password
+    }
+
+    fetch(postUrl, {    
+        method: 'POST',
+                headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(sendUser)
+    }).then((response)=> {
+        console.log(sendUser);
+        if(response.status == 200){
+            window.alert('Login is valid');
+            window.localStorage.setItem('username', username);
+
+            window.location = "EmpHome.html"; // Redirecting to other page.
+
+        }
+        else{
+            window.alert('Login credentials were invalid, plase try again')
+        }
+        console.log('response from the save ', response);
+    });
 }
 
 
