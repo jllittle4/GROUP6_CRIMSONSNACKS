@@ -1,4 +1,7 @@
 `use strict`;
+
+//everything below is jeremy's work, sam just put it in its own js file
+
 var datetime = new Date();
 document.getElementById("time").textContent = datetime;
 

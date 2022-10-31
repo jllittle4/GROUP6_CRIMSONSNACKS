@@ -1,14 +1,16 @@
-const baseUrl = "https://localhost:7139/api/"; //sam
+//base url -jeremy
+const baseUrl = "https://localhost:7139/api/";
 let username = window.localStorage.getItem('username');
 
 let allDeps = [];
 getAllDepartments();
 
-
+//return to employee home -jeremy
 function retToHome() {
     window.location = 'EmpHome.html';
 }
 
+//submit request  form -sam, jeremy
 function onSubmit() {
     const postUrl = baseUrl + 'Requests';
 
@@ -18,8 +20,8 @@ function onSubmit() {
     let clockOut = document.getElementById('clockOut');
     let reason = document.getElementById('reason');
 
-
-    //console.log(date.value, dept.value, clockIn.value, clockOut.value, reason.value);
+    //see Request.cs
+    //the only fields required to be filled are "date","department","clockIn","clockOut","reason",and "status"
 
     const sendReq = {
         "requestId": -1,
@@ -32,10 +34,11 @@ function onSubmit() {
         "reason": reason.value,
         "status": 'Pending',
         "totalTime": 'default'
-
     };
-    console.log(clockIn.value, reason.value);
-    if(reason.value != '' && clockIn.value != '' && clockOut.value != '' && date.value != '' && dept.value != 'Choose A Department'){
+
+    //make sure that no field is blank
+    if (reason.value != '' && clockIn.value != '' && clockOut.value != '' && date.value != '' && dept.value != 'Choose A Department') {
+        //call requests controller post method
         fetch(postUrl, {
             method: 'POST',
             headers: {
@@ -48,31 +51,30 @@ function onSubmit() {
                 window.alert('User has been saved');
             }
             console.log('response from the save ', response);
-        }).then(function() {
+        }).then(function () {
+            //once user has submitted request, they are returned to their home page
             retToHome();
         });
     } else {
-        alert('All fields are required')
+        alert('All fields are required');
     }
-
-    
 }
 
+//get list of departments for departments selector - sam
 function getAllDepartments() {
+    //departments controller api
     const depUrl = baseUrl + 'Departments';
 
-    //console.log('made it here');
+    //call departments controller get method
     fetch(depUrl).then(function (response) {
-        //console.log(response);
         return response.json();
     }).then(function (json) {
-       
-
         addDepOptions(json);
         allDeps = json;
     });
 }
 
+//populate departments selector -sam, jeremy
 function addDepOptions(json) {
     let selector = document.getElementById('dept');
 
@@ -81,5 +83,4 @@ function addDepOptions(json) {
         depOption.appendChild(document.createTextNode(department.depName));
         selector.appendChild(depOption);
     });
-
 }

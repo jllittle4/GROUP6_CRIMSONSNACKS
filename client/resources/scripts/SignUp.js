@@ -1,3 +1,5 @@
+//all this work is jeremy's, except for sam's api call to create user
+
 let users = [];
 const baseurl = 'https://localhost:7139/api/';
 var uid = document.getElementById('userid');
@@ -6,12 +8,8 @@ var ufname = document.getElementById('userfname');
 var ulname = document.getElementById('userlname');
 
 
-function formValidation() {
-    // var uid = document.registration.userid;
-    // var passid = document.registration.passid;
-    // var ufname = document.registration.userfname;
-    // var ulname = document.registration.userlname;
 
+function formValidation() {
     if (userid_validation(uid, 5, 12)) {
         if (passid_validation(passid, 7, 12)) {
 
@@ -19,7 +17,6 @@ function formValidation() {
         }
     }
     return false;
-
 }
 
 function userid_validation(uid, mx, my) {
@@ -45,16 +42,8 @@ function passid_validation(passid, mx, my) {
 
 function RettoLogin() {
     alert('Form Succesfully Submitted');
-    // form.addEventListener('submit', function(e){ //e i sa parameter
-    //     e.preventDefault(); //dont refresh the page
-    console.log('submitted');
 
     let user = {
-        // ufname = document.getElementById('userfname').value,
-        // ulname = document.getElementById('userlname').value,
-        // uid = document.getElementById('userid').value,
-        // passid = document.getElementById('passid').value,
-
         userid: document.getElementById('userid').value,
         pass: document.getElementById('passid').value,
         userfname: document.getElementById('userfname').value,
@@ -62,9 +51,11 @@ function RettoLogin() {
 
     };
 
-    const postUrl = baseurl + 'users';
+    //users controller api
+    const postUrl = baseurl + 'Users';
 
-    //sam
+    //see User.cs
+    //all fields are required except "UserId" and "IsManager"
     const sendUser = {
         "UserId": 0,
         "FirstName": user.userfname,
@@ -74,6 +65,7 @@ function RettoLogin() {
         "IsManager": 0
     };
 
+    //call user controller post method
     fetch(postUrl, {
         method: 'POST',
         headers: {
@@ -90,4 +82,3 @@ function RettoLogin() {
 
     window.location = 'LogIn.html';
 }
-
