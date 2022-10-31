@@ -7,6 +7,12 @@ namespace api.Models
         public string LastName { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        //will check ismanager when doing admin login check, default 'n'
+        public int IsManager { get; set; }
+
+        public override string ToString()
+        {
+            return "ID\tFirst Name\tLast Name\tUser Name\tAdmin?\n" + 
+                $"{this.UserId}\t{this.FirstName}\t{this.LastName}\t{this.UserName}\t{this.IsManager}";
+        }
     }
 }

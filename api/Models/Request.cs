@@ -1,19 +1,24 @@
-namespace api.Models
+    namespace api.Models
 {
     public class Request
     {
-        public string RequestId { get; set; }
-        //public string UserName { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime ClockIn { get; set; }
-        public DateTime ClockOut { get; set; }
+        public int RequestId { get; set; }
+        public string Date { get; set; }
+        public string ClockIn { get; set; }
+        public string ClockOut { get; set; }
         public string Reason { get; set; }
-        //not sure if we'll find this in the front end or the back end yet, probably back
         public int DepartmentId { get; set; }
-        //same for this one
+        public string Department { get; set; }
         public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
+        public string Status { get; set; }
+        public string TotalTime { get; set; }
 
-        //will check whether request is completed when querying, default is 'n'
+        public override string ToString()
+        {
+            return "ID\tDate\tClockIn\tClockOut\tReason\tDepartment\tEmployee\tStatus\tNet Hours\n" +
+                $"{this.RequestId}\t{this.Date}\t{this.ClockIn}\t{this.ClockOut}\t{this.Reason.Substring(0, 6)}\t{this.Department}\t{this.EmployeeName}\t{this.Status}\t{TotalTime}";
+        }
 
     }
 }

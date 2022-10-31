@@ -1,12 +1,13 @@
 `use strict`;
 var datetime = new Date();
-console.log(datetime);
 document.getElementById("time").textContent = datetime; //it will print on html page
 
+const baseUrl = 'https://localhost:7139/api/';
 let username = window.localStorage.getItem('username');
+
 let header = document.getElementById('welcome');
 header.textContent = 'Welcome, ' + username;
-console.log(username);
+
 
 
 function refreshTime() {
@@ -14,27 +15,159 @@ function refreshTime() {
     const dateString = new Date().toLocaleString();
     const formattedString = dateString.replace(", ", " - ");
     timeDisplay.textContent = formattedString;
-  }
-    setInterval(refreshTime, 60000);
+}
 
 setInterval(refreshTime, 60000);
+setInterval(refreshTime, 1000);
+
+//all of the above work is jeremy
 
 
 
+getAllDepartments();
 
-function handleClick() {
+//get list of departments for departments selector - sam
+function getAllDepartments() {
+    //departments controller api
+    const depUrl = baseUrl + 'Departments';
+
+    //call departments controller get method
+    fetch(depUrl).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        addDepOptions(json);
+    });
+}
+
+//populate departments selector -sam, jeremy
+function addDepOptions(json) {
+    let selector = document.getElementById('ratingInput');
+
+    json.forEach((department) => {
+        let depOption = document.createElement('option');
+        depOption.appendChild(document.createTextNode(department.depName));
+        selector.appendChild(depOption);
+    });
+}
+
+
+
+//determine whether button should display clock in or clock out - sam, jeremy
+function handleButtonLoad() {
     var btn = document.getElementById("timePunch");
 
-    if (btn.value == "Clock In") {
-        btn.value = "Clock Out";
-        btn.innerHTML = "Clock Out";
-    }
-    else {
-        btn.value = "Clock In";
-        btn.innerHTML = "Clock In";
-        getDepartment();
-    }
+    //clocking time controller api
+    //id of 0 to tell controller to find most recent time event for logged in employee (handled completely in the backend)
+    const timeUrl = baseUrl + 'ClockingTime/0';
+
+    //call clocking time controller get/id method
+    fetch(timeUrl).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        //"json" one time event objects
+        //the fields currently being returned (which are also in TimeEvent.cs) are...
+
+        // TimeEventId
+        // Date
+        // ClockIn
+        // ClockOut
+        // Department                  
+        // EmployeeId
+        // TotalTime
+        // ClockedOutCheck
+
+        let clockedout = json.clockedOutCheck;
+        return clockedout;
+    }).then(function (clockedout) {
+        if (clockedout == 'n') {
+            btn.value = 'Clock Out';
+        } else {
+            btn.value = 'Clock In';
+        };
+    });
 }
+
+
+
+//clocking in - sam
+function createTimeEvent() {
+    //clocking time controller api
+    const postUrl = baseUrl + 'ClockingTime';
+
+    //see TimeEvent.cs in models
+    //this is just a generic clock in event for the logged in employee, so no fields  are required, (ids, dates, times, etc. handled completely in the backend)
+
+    const sendEvent = {
+        "TimeEventId": 0,
+        "Date": 'default',
+        "ClockIn": 'default',
+        "ClockOut": 'default',
+        "DepartmentId": 0,
+        "EmployeeId": 0,
+        "TotalTime": 'default'
+    };
+
+    //call clocking time controller post method
+    fetch(postUrl, {
+        method: 'POST',
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(sendEvent)
+    }).then((response) => {
+        if (response.status == 200) {
+            window.alert(`You have successfully clocked in.`);
+        } else {
+            window.alert('There was an error clocking in.');
+        }
+    });
+}
+
+
+
+//clocking out - sam
+function closeTimeEvent() {
+    //clocking time controller api
+    //id of 0 because time event id is not needed, it will clock out the most recent time event for that employee (handled completely in the backend)
+    const putUrl = baseUrl + 'ClockingTime/0';
+
+    //see TimeEvent.cs in models
+    //only department field is required, since the department is submitted on clock out, no ids, times, or dates needed (handled completely in the backend)
+
+    const sendEvent = {
+        "TimeEventId": 0,
+        "Date": 'default',
+        "ClockIn": 'default',
+        "ClockOut": 'default',
+        "Department": document.getElementById('ratingInput').value,
+        "EmployeeId": 0,
+        "TotalTime": 'default'
+    };
+
+    //call clockingtime controller put method
+
+    fetch(putUrl, {
+        method: 'PUT',
+        headers: {
+            "Accept": 'application/json',
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(sendEvent)
+    }).then((response) => {
+        if (response.status == 200) {
+            window.alert(`You have successfully clocked out.`);
+        } else {
+            window.alert('There was an error clocking out.');
+        }
+    }).then(function () {
+        //currently reloading page after clockout request submitted to get rid of modal, maybe you don't need this, jeremy?
+
+        location.reload();
+    });
+}
+
+//all of the below work is jeremy
 
 let btn = document.getElementById("timePunch");
 let modal = document.querySelector(".modal");
@@ -44,17 +177,13 @@ btn.onclick = function () {
     if (btn.value == "Clock In") {
         btn.value = "Clock Out";
         btn.innerHTML = "Clock Out";
+        createTimeEvent(); //sam's clockin function
     }
     else {
         btn.value = "Clock In";
         btn.innerHTML = "Clock In";
         modal.style.display = "block";
-
-        // getDepartment();
     }
-    // if(btn.value == "Clock Out"){
-    //     modal.style.display = "block";
-    // }
 };
 
 closeBtn.onclick = function () {
@@ -67,128 +196,6 @@ window.onclick = function (e) {
     }
 };
 
-// function get () {
-//     // (A) GET THE PARAMETERS
-//     var params = new URLSearchParams(window.location.search),
-//         username = params.get("username");
-//         window.localStorage.getItem('username');
-
-//     // (B) IT WORKS!
-//     console.log(username);  // Foo Bar
-//      // ["Hello", "World"]
-//      return username;
-//   }
-
-// function getDepartment(){
-//     let dept = prompt("Please enter the Department you worked");
-
-
-
-
-//     switch(dept.toLowerCase()){
-//         case "stocking":
-
-//             console.log(capFirst(dept.toLowerCase()));
-//             alert('I made it');
-//         break;
-//         case "marketing":
-
-//             console.log(capFirst(dept.toLowerCase()));
-//             alert('I made it');
-//         break;
-//         case "ordering":
-
-//             console.log(capFirst(dept.toLowerCase()));
-//             alert('I made it');
-//         break;
-//         case "sales":
-
-//             console.log(capFirst(dept.toLowerCase()));
-//             alert('I made it ');
-//         break;
-//         default:
-//             alert('Invalid input. Please enter one of the folowing: \t Stocking, Marketing, Ordering, Sales');
-//             getDepartment();
-//         break;
-
-//     }
-//     function capFirst(str) {
-//         return str[0].toUpperCase() + str.slice(1);
-//     }
-// if (dept = "stocking" || "marketing" || "ordering" || "sales"){
-//     dept.toUpperCase;
-//     console.log(dept);
-//     alert('I made it bitch');
-// }
-// else{
-
-//     alert('Invalid input. Please enter one of the folowing: \t Stocking, Marketing, Ordering, Sales');
-//     getDepartment();
-// }
-
-
-
-
-
-// function loadTable(){
-//     let table = document.getElementById('table');
-//     table.border = '1';
-//     let tableBody = document.createElement('TBODY');
-//     tableBody.id = 'TableBody';
-//     table.appendChild(tableBody);
-//     times.forEach((time) => {
-//         let tr = document.createElement('TR');
-//         tableBody.appendChild(tr);
-
-//         let td1 = document.createElement('TD');
-//         td1.width = 300;
-//         td1.appendChild(document.createTextNode(time.date));
-//         tr.appendChild(td1);
-
-
-//         let td2 = document.createElement('TD');
-//         td2.width = 500;
-//         td2.appendChild(document.createTextNode(time.clockIn));
-//         tr.appendChild(td2);
-
-
-//         let td3 = document.createElement('TD');
-//         td3.width = 150;
-//         td3.appendChild(document.createTextNode(time.clockOut));
-//         tr.appendChild(td3);
-
-//         let td4 = document.createElement('TD');
-//         td4.width = 150;
-//         td4.appendChild(document.createTextNode(time.dept));
-//         tr.appendChild(td4);
-
-//         let td5 = document.createElement('TD');
-//         td5.width = 150;
-//         td5.appendChild(document.createTextNode(time.totalTime));
-//         tr.appendChild(td5);
-
-//     }
-//     )}
-
 function retToLogin() {
     window.location = "LogIn.html";
 }
-// function show_list() {
-//     var courses = document.getElementById("courses_id");
-
-//     if (courses.style.display == "block") {
-//         courses.style.display = "none";
-//     } else {
-//         courses.style.display = "block";
-//     }
-// }
-// window.onclick = function (event) {
-//     if (!event.target.matches('.dropdown_button')) {
-//         document.getElementById('courses_id')
-//             .style.display = "none";
-//     }
-// }   
-
-
-
-

@@ -13,22 +13,24 @@ namespace api.CRUD
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
-        public void UpdateOneDepartment(int id, Department updatedUser)
+        public void UpdateOneDepartment(int id, Department updatedDepartment)
         {
-            System.Console.WriteLine($"The driver with an ID of {id} will be updated to match the following details: ");
-            System.Console.WriteLine(updatedUser.ToString());
+            System.Console.WriteLine($"The department with an ID of {id} will be updated to match the following details: ");
+            System.Console.WriteLine(updatedDepartment.ToString());
 
             //double myRating = double.Parse(rating);
             using var con = new MySqlConnection(cs);
             con.Open();
 
             using var cmd = new MySqlCommand();
+            
             cmd.Connection = con;
-            cmd.CommandText = @"UPDATE drivers 
-                SET driverrating = @driverrating 
-                WHERE driverid = @driverid";
-            cmd.Parameters.AddWithValue("@driverrating", updatedUser);
-            cmd.Parameters.AddWithValue("@driverid", id);
+            cmd.CommandText = @"UPDATE departments 
+                SET departmentname = @departmentname
+                WHERE departmentid = @departmentid;";
+
+            cmd.Parameters.AddWithValue("@departmentname", updatedDepartment.DepName);
+            cmd.Parameters.AddWithValue("@departmentid", id);
             cmd.Prepare();
 
             try
@@ -36,9 +38,11 @@ namespace api.CRUD
                 cmd.ExecuteNonQuery();
                 System.Console.WriteLine("Update was successful!");
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("Update was unsuccessful.");
+                System.Console.WriteLine("Department update was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();

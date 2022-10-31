@@ -2,17 +2,20 @@ namespace api.Models
 {
     public class TimeEvent
     {
-        //public User User = new User();
-
         public int TimeEventId { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime ClockIn { get; set; }
-        public DateTime ClockOut { get; set; }
-        //not sure if we'll find this in the front end or the back end yet, probably back
+        public string Date { get; set; }
+        public string ClockIn { get; set; }
+        public string ClockOut { get; set; }
         public int DepartmentId { get; set; }
-        //same for this one
+        public string Department { get; set; }
         public int EmployeeId { get; set; }
+        public string TotalTime { get; set; }
+        public string ClockedOutCheck { get; set; }
 
-
+        public override string ToString()
+        {
+            return "ID\tDate\t\t\tClockIn\t\tClockOut\tDepartment\tEmpID\tNet Time\tClocked Out?\n" + 
+                $"{this.TimeEventId}\t{this.Date}\t{this.ClockIn}\t{this.ClockOut}\t{this.Department}\t{this.EmployeeId}\t{this.TotalTime}\t\t{this.ClockedOutCheck}";
+        }
     }
 }

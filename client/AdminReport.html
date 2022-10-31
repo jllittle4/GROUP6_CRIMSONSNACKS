@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports</title>
 </head>
+
 <body>
     <h1> Reports of Departments and Employees for the Month:</h1>
     <label for="date">Select a Date:</label>
@@ -20,8 +22,35 @@
         </tr>
     </table>
 
+    </div>
+    <div>
+        <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'">
+    </div>
+    <div>
+        <h1>Department Stats</h1>
+        <table id="department-table" border="1">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Total Time (hrs)</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <h1>Employee Stats</h1>
+        <table id="employee-table" border="1">
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Total Time (hrs)</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
-    <input type="button" value="Return to Dashboard" onclick = "window.location = 'AdminHome.html'">
 </body>
-<link rel="stylesheet" href="resources/styles/EmpHome.css" />
+
+<script src="./resources/scripts/AdminReport.js"></script>
+
 </html>

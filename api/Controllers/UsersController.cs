@@ -16,15 +16,14 @@ namespace api.Controllers
     [ApiController]
     public class Users : ControllerBase
     {
+        //public static User loggedIn = new User();
         // GET: api/Users
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<User> Get()
         {
             System.Console.WriteLine("\nReceived request to get all users...");
-
             IReadAllUsers readerAll = new ReadUsers();
-
             return readerAll.ReadAllUsers();
         }
 
@@ -34,35 +33,20 @@ namespace api.Controllers
         public User Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find a user...");
-
             IReadOneUser readerOne = new ReadUsers();
-
             return readerOne.ReadOneUser(id);
         }
 
         // POST: api/Users
         [EnableCors("OpenPolicy")]
         [HttpPost]
-        public void Post([FromBody] User newUser)
+        public LoginResult Post([FromBody] User newUser)
         {
-            if (newUser.FirstName != null)
-            {
-                System.Console.WriteLine("\nReceived request to create new user...");
-                //System.Console.WriteLine(newUser.UserName);
-
-                ICreateOneUser creator = new CreateUser();
-
-                creator.CreateOneUser(newUser);
-            }
-            else if (newUser.FirstName == null)
-            {
-                System.Console.WriteLine("Received login request...");
-
-                LogInCheck login = new LogInCheck();
-                // login.temp.UserName = newUser.UserName;
-                // login.temp.Password = newUser.Password;
-                login.Check(newUser);
-            }
+            LoginResult myLoginAttempt = new LoginResult();
+            System.Console.WriteLine("\nReceived request to create new user...");
+            ICreateOneUser creator = new CreateUser();
+            creator.CreateOneUser(newUser);
+            return myLoginAttempt;
         }
 
         // PUT: api/Users/5
@@ -83,7 +67,6 @@ namespace api.Controllers
         public void Delete(int id)
         {
             System.Console.WriteLine("\nReceived request to delete user...");
-
             IDeleteOne deleteTool = new DeleteUser();
             deleteTool.DeleteOne(id);
         }

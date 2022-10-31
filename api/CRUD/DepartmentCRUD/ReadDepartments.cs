@@ -15,48 +15,62 @@ namespace api.CRUD
         }
         public List<Department> ReadAllDepartments()
         {
-            List<Department> allUsers = new List<Department>();
+            System.Console.WriteLine("Reading all departments...");
 
-            //ConnectionString myConnection = new ConnectionString();
-            //string cs = myConnection.cs;
+            List<Department> allDepartments = new List<Department>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT employeeid, firstname, lastname, username, password FROM employees;";
-            // WHERE deleted = '0' ORDER BY hire_date DESC
+            string stm = @"SELECT * 
+                FROM departments 
+                ORDER BY departmentid ASC;";
+                
             using var cmd = new MySqlCommand(stm, con);
 
-            using MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                Department temp = new Department(); //{ UserId = rdr.GetInt32(0), FirstName = rdr.GetString(1), LastName = rdr.GetString(2), UserName = rdr.GetString(3), Password = rdr.GetString(4) };
-                allUsers.Add(temp);
+                using MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    Department temp = new Department() 
+                    { 
+                        DepId = rdr.GetInt32(0), 
+                        DepName = rdr.GetString(1) 
+                    };
+                    allDepartments.Add(temp);
+                }
+
+                System.Console.WriteLine("Read all departments successfully.");
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("Departments retrieval was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             //con.Close();
 
-            return allUsers;
+            return allDepartments;
         }
 
         public Department ReadOneDepartment(int id)
         {
-            System.Console.WriteLine("Looking for driver...");
+            System.Console.WriteLine("Looking for department...");
 
-            Department myDriver = new Department();
+            Department myDepartment = new Department();
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT driverid, drivername, driverrating, 
-                DATE_FORMAT(driverhiredate, '%M %e, %Y') 
-                    AS format_driverhiredate 
-                FROM drivers 
-                WHERE driverid = @id";
+            string stm = @"SELECT * 
+                FROM departments
+                WHERE departmentid = @departmentid;";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Parameters.AddWithValue("@departmentid", id);
             cmd.Prepare();
 
             try
@@ -65,22 +79,22 @@ namespace api.CRUD
 
                 while (rdr.Read())
                 {
-                    // myDriver.ID = rdr.GetInt32(0);
-                    // myDriver.Name = rdr.GetString(1);
-                    // myDriver.Rating = rdr.GetDouble(2);
-                    // myDriver.Date = rdr.GetString(3);
-                    // myDriver.Deleted = "n";
+                    myDepartment.DepId = rdr.GetInt32(0);
+                    myDepartment.DepName = rdr.GetString(1);
                 }
+                
                 System.Console.WriteLine("The result of the search was: ");
-                System.Console.WriteLine(myDriver.ToString());
+                System.Console.WriteLine(myDepartment.ToString());
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("The search was unsuccessful.");
+                System.Console.WriteLine("Department search was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             // con.Close();
-            return myDriver;
+            return myDepartment;
         }
     }
 }

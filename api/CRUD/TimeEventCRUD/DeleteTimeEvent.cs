@@ -15,27 +15,30 @@ namespace api.CRUD
         }
         public void DeleteOne(int id)
         {
-            System.Console.WriteLine($"The driver with an ID of {id} will be deleted");
+            System.Console.WriteLine($"The time event with an ID of {id} will be deleted");
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
             using var cmd = new MySqlCommand();
+            
             cmd.Connection = con;
-            cmd.CommandText = @"UPDATE drivers 
-                SET driverdeleted = 'y' 
-                WHERE driverid = @driverid";
-            cmd.Parameters.AddWithValue("@driverid", id);
+            cmd.CommandText = @"DELETE FROM timekeepingevents 
+                WHERE eventid = @eventid;";
+
+            cmd.Parameters.AddWithValue("@eventid", id);
             cmd.Prepare();
 
             try
             {
                 cmd.ExecuteNonQuery();
-                System.Console.WriteLine("Driver has been deleted");
+                System.Console.WriteLine("The time event has been deleted.");
             }
-            catch
+            catch (Exception e)
             {
-                System.Console.WriteLine("Deletion was unsuccessful.");
+                System.Console.WriteLine("Event deletion was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.ToString());
             }
 
             // con.Close();

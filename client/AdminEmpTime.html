@@ -1,28 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Time</title>
 </head>
+
 <body onload="handleOnLoad();">
-    <div style = "padding-block-end: 40px ;padding-top: 10px; ">
-        <select id="arr" type="button" onclick = "handleOnLoad();" 
-        style = "width: 400px">Select an Employee</select>
-    <input type = "button" id = 'submit' value = "Submit" onclick="handleTableLoad();"></input>
-    <table id = "table"
-    style = "display: none">
-        <tr>
-            <th>Date:</th>
-            <th>Clock In:</th>
-            <th>Clock Out:</th>
-            <th>Department:</th>
-            <th>Total Time:</th>
-        </tr>
-    </table>
-    <input type = "button" value = 'Return To Dashboard'  onclick="retToHome();"></input>
+    <div>
+        <h1>Reports by Employee</h1>
+    </div>
+    <div>
+        <select id="payroll" type="button" style="width:400px;">
+            <option value="0">Choose a Payroll Period</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+    </div>
+    <div style="padding-block-end: 40px ;padding-top: 10px; ">
+        <select id="arr" type="button" style="width: 400px">Select an Employee</select>
+    </div>
+    <div>
+        <input type="button" id='submit' value="Submit" onclick="handleTableLoad();"></input>
+
+    </div>
+    
+    <div>
+        <table id="table" style="display: none">
+            <tr>
+                <th>Date:</th>
+                <th>Clock In:</th>
+                <th>Clock Out:</th>
+                <th>Department:</th>
+                <th>Total Time:</th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <input type="button" value='Clear Report' onclick="reLoad()"></input>
+
+    </div>
+    <div>
+        <input type="button" value='Return To Dashboard' onclick="retToHome();"></input>
+
+    </div>
 </body>
 <script src="resources/scripts/AdminEmpTime.js"></script>
-<link rel="stylesheet" href="resources/styles/EmpHome.css" />
+
 </html>

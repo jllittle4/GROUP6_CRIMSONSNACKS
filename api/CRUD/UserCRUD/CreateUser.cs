@@ -3,12 +3,12 @@ using MySql.Data.MySqlClient;
 using api.Models;
 using api.database;
 using Microsoft.AspNetCore.Identity;
+using api.Utilities;
 
 namespace api.CRUD
 {
     public class CreateUser : ICreateOneUser
     {
-        //public User? temp {get; set;}
         private string cs { get; }
         public CreateUser()
         {
@@ -17,26 +17,35 @@ namespace api.CRUD
         }
         public void CreateOneUser(User createdUser)
         {
-            //ConnectionString myConnection = new ConnectionString();
-            // Driver temp = new Driver();
+            System.Console.WriteLine("The following user will be created...");
+            System.Console.WriteLine(createdUser.ToString());
 
-            //string cs = myConnection.cs;
-
-            IPasswordHasher<User> myHasher = new PasswordHasher<User>();
-            createdUser.Password = myHasher.HashPassword(createdUser, createdUser.Password);
+            createdUser.Password = LogInCheck.ToSHA256(createdUser.Password);
 
             using var con = new MySqlConnection(cs);
-
             con.Open();
-            var stm = "INSERT INTO EMPLOYEES (firstname, lastname, username, password) values (@firstname, @lastname, @username, @password);";
-            using (var cmd = new MySqlCommand(stm, con))
+
+            var stm = @"INSERT INTO employees (employeeid, firstname, lastname, username, password, ismanager) 
+                VALUES (default, @firstname, @lastname, @username, @password, default);";
+
+            using var cmd = new MySqlCommand(stm, con);
+
+            cmd.Parameters.AddWithValue("@firstname", (createdUser.FirstName));
+            cmd.Parameters.AddWithValue("@lastname", (createdUser.LastName));
+            cmd.Parameters.AddWithValue("@username", (createdUser.UserName));
+            cmd.Parameters.AddWithValue("@password", (createdUser.Password));
+            cmd.Prepare();
+
+            try
             {
-                cmd.Parameters.AddWithValue("@firstname", (createdUser.FirstName));
-                cmd.Parameters.AddWithValue("@lastname", (createdUser.LastName));
-                cmd.Parameters.AddWithValue("@username", (createdUser.UserName));
-                cmd.Parameters.AddWithValue("@password", (createdUser.Password));
-                cmd.Prepare();
                 cmd.ExecuteNonQuery();
+                System.Console.WriteLine("User has been created.");
+            }
+            catch (Exception e)
+            {
+                System.Console.WriteLine("User creation was unsuccessful.");
+                System.Console.WriteLine("The following error was returned...");
+                System.Console.WriteLine(e.Message);
             }
 
             //con.Close();

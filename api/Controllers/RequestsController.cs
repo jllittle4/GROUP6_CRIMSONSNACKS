@@ -21,9 +21,7 @@ namespace api.Controllers
         public List<Request> Get()
         {
             System.Console.WriteLine("\nReceived request to get all time change requests...");
-
             IReadAllRequests readerAll = new ReadRequests();
-
             return readerAll.ReadAllRequests();
         }
 
@@ -33,9 +31,7 @@ namespace api.Controllers
         public Request Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find time change request...");
-            
             IReadOneRequest readerOne = new ReadRequests();
-            
             return readerOne.ReadOneRequest(id);
         }
 
