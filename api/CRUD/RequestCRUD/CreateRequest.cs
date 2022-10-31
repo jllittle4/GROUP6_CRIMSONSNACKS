@@ -33,7 +33,7 @@ namespace api.CRUD
             cmd.Parameters.AddWithValue("@requestclockout", newRequest.ClockOut);
             cmd.Parameters.AddWithValue("@reason", newRequest.Reason);
             cmd.Parameters.AddWithValue("@requestdepartment", newRequest.Department);
-            cmd.Parameters.AddWithValue("@requestemployee", Users.loggedIn.UserId);
+            cmd.Parameters.AddWithValue("@requestemployee", LoggingIn.loggedIn.UserId);
             cmd.Prepare();
 
             try

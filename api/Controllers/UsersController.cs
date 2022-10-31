@@ -16,16 +16,14 @@ namespace api.Controllers
     [ApiController]
     public class Users : ControllerBase
     {
-        public static User loggedIn = new User();
+        //public static User loggedIn = new User();
         // GET: api/Users
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<User> Get()
         {
             System.Console.WriteLine("\nReceived request to get all users...");
-
             IReadAllUsers readerAll = new ReadUsers();
-
             return readerAll.ReadAllUsers();
         }
 
@@ -35,9 +33,7 @@ namespace api.Controllers
         public User Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find a user...");
-
             IReadOneUser readerOne = new ReadUsers();
-
             return readerOne.ReadOneUser(id);
         }
 
@@ -47,41 +43,9 @@ namespace api.Controllers
         public LoginResult Post([FromBody] User newUser)
         {
             LoginResult myLoginAttempt = new LoginResult();
-
-            if (newUser.FirstName != "default")
-            {
-                System.Console.WriteLine("\nReceived request to create new user...");
-
-                ICreateOneUser creator = new CreateUser();
-
-                creator.CreateOneUser(newUser);
-            }
-            else
-            {
-                System.Console.WriteLine("\nReceived login request...");
-
-                IFindUserByUsername myFinder = new FindUserByUsername();
-                User tempUser = myFinder.Find(newUser.UserName);
-
-                try
-                {
-                    LogInCheck login = new LogInCheck(tempUser);
-                    myLoginAttempt = login.CheckValidPassword(newUser.Password);
-                    System.Console.WriteLine("\n" + myLoginAttempt.ToString());
-
-                    if (myLoginAttempt.CheckUserName && myLoginAttempt.CheckPassword)
-                    {
-                        loggedIn = tempUser;
-                    }
-                }
-                catch (Exception e)
-                {
-                    System.Console.WriteLine("Invalid username. \n");
-                    System.Console.WriteLine(myLoginAttempt.ToString());
-                    System.Console.WriteLine(e.ToString());
-                }
-            }
-
+            System.Console.WriteLine("\nReceived request to create new user...");
+            ICreateOneUser creator = new CreateUser();
+            creator.CreateOneUser(newUser);
             return myLoginAttempt;
         }
 
@@ -103,7 +67,6 @@ namespace api.Controllers
         public void Delete(int id)
         {
             System.Console.WriteLine("\nReceived request to delete user...");
-
             IDeleteOne deleteTool = new DeleteUser();
             deleteTool.DeleteOne(id);
         }

@@ -9,12 +9,11 @@
 // ];
 
 const baseUrl = "https://localhost:7139/api/"; //sam
-let username = window.localStorage.getItem("username");
-getTimeKeepingEventsByEmpID();
+getEmpTimeEvents();
 
 
-function getTimeKeepingEventsByEmpID() {
-  const timeUrl = baseUrl + 'TimeKeeping';
+function getEmpTimeEvents() {
+  const timeUrl = baseUrl + 'ClockingTime';
 
   fetch(timeUrl)
     .then(function (response) {

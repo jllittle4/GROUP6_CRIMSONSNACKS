@@ -51,7 +51,7 @@ function addDepOptions(json) {
 //determine whether button should display clock in or clock out - sam
 function handleButtonLoad() {
     var btn = document.getElementById("timePunch");
-    const timeUrl = baseUrl + 'TimeKeeping/0';
+    const timeUrl = baseUrl + 'ClockingTime/0';
 
     fetch(timeUrl).then(function (response) {
         return response.json();
@@ -71,7 +71,7 @@ function handleButtonLoad() {
 
 //clocking in - sam
 function createTimeEvent() {
-    const postUrl = baseUrl + 'TimeKeeping';
+    const postUrl = baseUrl + 'ClockingTime';
 
 
     const sendEvent = {
@@ -104,7 +104,7 @@ function createTimeEvent() {
 
 //clocking out - sam
 function closeTimeEvent() {
-    const putUrl = baseUrl + 'TimeKeeping/0';
+    const putUrl = baseUrl + 'ClockingTime/0';
 
     
     const sendEvent = {

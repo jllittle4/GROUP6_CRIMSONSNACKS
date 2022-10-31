@@ -39,7 +39,7 @@ namespace api.Utilities
 
             using var cmd = new MySqlCommand(stm, con);
 
-            cmd.Parameters.AddWithValue("@username", Users.loggedIn.UserName);
+            cmd.Parameters.AddWithValue("@username", LoggingIn.loggedIn.UserName);
             cmd.Prepare();
 
             try

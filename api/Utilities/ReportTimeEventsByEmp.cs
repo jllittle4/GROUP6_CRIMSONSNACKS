@@ -1,26 +1,23 @@
-using api.Controllers;
-using api.Interfaces;
 using api.Models;
+using api.Interfaces;
 using api.database;
 using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
-
-    public class FindTimeEventsByEmp : IReadAllTimeEvents
+    public class ReportTimeEventsByEmp : IReportTimeEvents
     {
-        public List<TimeEvent> mySingleUserList = new List<TimeEvent>();
+        public List<TimeEvent> myList = new List<TimeEvent>();
         private string cs { get; }
-        public FindTimeEventsByEmp()
+        public ReportTimeEventsByEmp()
         {
             ConnectionString connectionString = new ConnectionString();
             this.cs = connectionString.cs;
         }
-
-        public List<TimeEvent> ReadAllTimeEvents()
+        public List<TimeEvent> Find(ReportRequest myReportRequest)
         {
             System.Console.WriteLine("Reading time events for an employee...");
-
+            //System.Console.WriteLine(myReportRequest.Employee + "attempt to read employee id");
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -34,12 +31,12 @@ namespace api.Utilities
                     clockedoutcheck 
                 FROM timekeepingevents tke 
                     LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid)
-                    JOIN employees e ON(tke.eventemployee = e.employeeid)
-                WHERE username = @username
+                WHERE eventemployee = @eventemployee AND MONTH(eventdate) = @eventdate
                 ORDER BY eventdate DESC, clockinevent DESC;";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@username", LoggingIn.loggedIn.UserName);
+            cmd.Parameters.AddWithValue("@eventemployee", myReportRequest.Employee);
+            cmd.Parameters.AddWithValue("@eventdate", myReportRequest.PayrollPeriod);
             cmd.Prepare();
 
             try
@@ -67,11 +64,12 @@ namespace api.Utilities
                     temp.ClockedOutCheck = rdr.GetString(7);
 
 
-                    mySingleUserList.Add(temp);
+                    myList.Add(temp);
 
                 }
 
                 System.Console.WriteLine("Read time events by employee successfully.");
+                //System.Console.WriteLine(myList[0].ToString());
             }
             catch (Exception e)
             {
@@ -81,8 +79,7 @@ namespace api.Utilities
             }
 
             //con.Close();
-
-            return mySingleUserList;
+            return myList;
         }
     }
 }

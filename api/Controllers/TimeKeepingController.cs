@@ -22,9 +22,7 @@ namespace api.Controllers
         public List<TimeEvent> Get()
         {
             System.Console.WriteLine("\nReceived request to get all timekeeping events...");
-
-            IReadAllTimeEvents myFinder = new FindTimeEventsByEmp();
-            
+            IReadAllTimeEvents myFinder = new ReadTimeEvents();
             return myFinder.ReadAllTimeEvents();
         }
 
@@ -33,24 +31,9 @@ namespace api.Controllers
         [HttpGet("{id}", Name = "GetTimeKeeping")]
         public TimeEvent Get(int id)
         {
-            TimeEvent myTimeEvent = new TimeEvent();
-
-            if (id == 0)
-            {
-                System.Console.WriteLine("\nRequest to find timekeeping event without id...");
-
-                IFindRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
-                myTimeEvent = myFinder.FindTimeEvent();
-            }
-            else
-            {
-                System.Console.WriteLine("\nReceived request to find timekeeping event...");
-
-                IReadOneTimeEvent readerOne = new ReadTimeEvents();
-                myTimeEvent = readerOne.ReadOneTimeEvent(id);
-            }
-
-            return myTimeEvent;
+            System.Console.WriteLine("\nReceived request to find timekeeping event...");
+            IReadOneTimeEvent readerOne = new ReadTimeEvents();
+            return readerOne.ReadOneTimeEvent(id);
         }
 
         // POST: api/TimeKeeping
@@ -58,10 +41,9 @@ namespace api.Controllers
         [HttpPost]
         public void Post([FromBody] TimeEvent newTimeEvent)
         {
-            System.Console.WriteLine("\nReceived request to clock in...");
-
-            CreateTimeEvent creator = new CreateTimeEvent();
-            creator.ClockingIn();
+            System.Console.WriteLine("\nReceived request to create timekeeping event...");
+            ICreateOneTimeEvent creator = new CreateTimeEvent();
+            creator.CreateOneTimeEvent(newTimeEvent);
         }
 
         // PUT: api/TimeKeeping/5
@@ -69,19 +51,9 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] TimeEvent updatedTimeEvent)
         {
-            if (id == 0)
-            {
-                System.Console.WriteLine("\nReceived request to clock out...");
-                UpdateTimeEvent updater = new UpdateTimeEvent();
-                updater.ClockingOut(updatedTimeEvent);
-            }
-            else 
-            {
-                System.Console.WriteLine("\nReceived request to update timekeeping event...");
-                IUpdateOneTimeEvent updater = new UpdateTimeEvent();
-                updater.UpdateOneTimeEvent(id, updatedTimeEvent);
-            }
-
+            System.Console.WriteLine("\nReceived request to update timekeeping event...");
+            IUpdateOneTimeEvent updater = new UpdateTimeEvent();
+            updater.UpdateOneTimeEvent(id, updatedTimeEvent);
         }
 
         // DELETE: api/TimeKeeping/5
@@ -90,7 +62,6 @@ namespace api.Controllers
         public void Delete(int id)
         {
             System.Console.WriteLine("\nReceived request to delete timekeeping event...");
-
             IDeleteOne deleteTool = new DeleteTimeEvent();
             deleteTool.DeleteOne(id);
         }

@@ -26,9 +26,11 @@ namespace api.CRUD
                     DATE_FORMAT(requestdate, '%M %e, %Y') AS format_requestdate, 
                     TIME_FORMAT(requestclockin,'%I:%i %p') AS format_requestclockin, 
                     TIME_FORMAT(requestclockout,'%I:%i %p') AS format_requestclockout, 
-                    reason, requestdepartment, requestemployee, isapproved,
-                    TIME_FORMAT(TIMEDIFF(requestclockout, requestclockin),'%I:%i') AS totaltime
-                FROM requests
+                    reason, requestdepartment, requestemployee, isapproved, 
+                    TIME_FORMAT(TIMEDIFF(requestclockout, requestclockin),'%I:%i') AS totaltime,
+                    departmentname, 
+                    CONCAT(firstname, ' ', lastname) AS fullname
+                FROM requests r JOIN employees e ON(r.requestemployee = e.employeeid) JOIN departments d ON(r.requestdepartment = d.departmentid)
                 ORDER BY requestid DESC;";
 
             using var cmd = new MySqlCommand(stm, con);
@@ -49,12 +51,16 @@ namespace api.CRUD
                         DepartmentId = rdr.GetInt32(5),
                         EmployeeId = rdr.GetInt32(6),
                         Status = rdr.GetString(7),
-                        TotalTime = rdr.GetString(8)
+                        TotalTime = rdr.GetString(8),
+                        Department = rdr.GetString(9),
+                        EmployeeName = rdr.GetString(10)
                     };
                     allRequests.Add(temp);
 
-                    System.Console.WriteLine("Read all requests successfully.");
                 }
+                System.Console.WriteLine("Read all requests successfully.");
+                System.Console.WriteLine(allRequests[0].ToString());
+
             }
             catch (Exception e)
             {

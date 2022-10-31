@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Requests</title>
+</head>
+
+<body onload="handleOnLoad()">
+    <script src="./resources/scripts/ViewRequests.js"></script>
+
+    <div id="return-button">
+        <input type="button" value='Return To Dashboard' onclick="retToHome()"></input>
+
+    </div>
+    <div >
+        <div>
+            <h1>Pending Requests</h1>
+        </div>
+        <table id="pending">
+            <thead>
+                <th>Employee:</th>
+                <th>For Date:</th>
+                <th>New Clock In:</th>
+                <th>New Clock Out:</th>
+                <th>New Department:</th>
+                <th>Reason:</th>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <div>
+            <h1>Approved Requests</h1>
+        </div>
+        <table id="approved">
+            <thead>
+                <th>Employee:</th>
+                <th>For Date:</th>
+                <th>New Clock In:</th>
+                <th>New Clock Out:</th>
+                <th>New Department:</th>
+                <th>Reason:</th>
+            </thead>
+        </table>
+    </div>
+    <div>
+        <div>
+            <h1>Denied Requests</h1>
+        </div>
+        <table id="denied">
+            <thead>
+                <th>Employee:</th>
+                <th>For Date:</th>
+                <th>New Clock In:</th>
+                <th>New Clock Out:</th>
+                <th>New Department:</th>
+                <th>Reason:</th>
+            </thead>
+        </table>
+    </div>
+</body>
+
+</html>
