@@ -2,6 +2,11 @@
 const baseUrl = "https://localhost:7139/api/";
 //requests controller api -sam
 const requestsUrl = baseUrl + 'Requests';
+let pendingReq = [];
+
+let clickedBtn = '';
+
+// let approve = document.createElement('input');
 
 //load all three tables when page loads
 function handleOnLoad() {
@@ -63,6 +68,7 @@ function loadTable(type) {
 //add data to each table -sam, jeremy
 //"type" argument allows the function to find the table body id, "request" argument is the object to add to the table
 function addRow(type, request) {
+
     let tableId = `${type}-tbody`;
     let tableBody = document.getElementById(tableId);
     let tr = document.createElement("TR");
@@ -97,9 +103,58 @@ function addRow(type, request) {
     td6.width = 400;
     td6.appendChild(document.createTextNode(request.reason));
     tr.appendChild(td6);
+    if (type == 'pending'){
+            pendingReq.push(request);
+            console.log(request);
+        
+        let td7 = document.createElement("TD");
+        td7.id = 'check';
+        td7.width = 400;
+       
+        let approve = document.createElement('input');
+        approve.type = 'button';
+        approve.value = 'Approve';
+        approve.style = 'margin: 10px;';
+        approve.id = request.requestId;
+        approve.addEventListener("click", first, false);
+        
+        let deny = document.createElement('input');
+        deny.type = 'button';
+        deny.value = 'Deny';
+        deny.style = 'margin: 10px;'
+        deny.id = request.requestId;
+        deny.addEventListener("click", second, false);
+        td7.appendChild(approve);
+        td7.appendChild(deny);
+
+        tr.appendChild(td7);
+
+    }
 }
+function first(e){ //function that logs the APPROVE
+    console.log(e.target.id);
+    updateView();
+}
+function second(e){ //function that logs the DENY
+    console.log(e.target.id);
+    updateView();
+}
+
+
+function submitRequest(x){
+    console.log(x);
+}
+
+
 
 //return to admin dashboard -jeremy
 function retToHome() {
     window.location = 'AdminHome.html';
+}
+
+function updateView(){ // reloads the page so the requests can go where they belong after they have been handled
+    setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    
 }

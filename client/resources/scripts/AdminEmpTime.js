@@ -22,7 +22,8 @@ let clicked = "";
 let dropDown = "";
 
 var ran = 0;
-let run = 1;
+var run = 0;
+
 
 //dropdown -jeremy
 function handleOnLoad() {
@@ -141,6 +142,38 @@ function handleTableLoad() {
 // ];
 
 //^^dummy data -jeremy
+
+function sendEmployee(){
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+    const sendUser ={
+        "UserName": username.toLowerCase(),
+        "Password": password
+    }
+
+    fetch(postUrl, {    
+        method: 'POST',
+                headers: {
+        "Accept": 'application/json',
+        "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(sendUser)
+    }).then((response)=> {
+        console.log(sendUser);
+        if(response.status == 200){
+            window.alert('Login is valid');
+            window.localStorage.setItem('username', username);
+
+            window.location = "EmpHome.html"; // Redirecting to other page.
+
+        }
+        else{
+            window.alert('Login credentials were invalid, plase try again')
+        }
+        console.log('response from the save ', response);
+    });
+}
+
 
 
 //append report data -jeremy

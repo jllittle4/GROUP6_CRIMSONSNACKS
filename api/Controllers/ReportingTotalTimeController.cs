@@ -39,12 +39,12 @@ namespace api.Controller
             if(myReport.Type == "department-total-time")
             {
                 IReportTotalTime myReporter = new ReportTotalTimeByDep();
-                return myReporter.Find(int.Parse(myReport.PayrollPeriod));
+                return myReporter.Find((myReport.PayrollPeriod));
             }
             else if(myReport.Type == "employee-total-time")
             {
                 IReportTotalTime myReporter = new ReportTotalTimeByEmp();
-                return myReporter.Find(int.Parse(myReport.PayrollPeriod));
+                return myReporter.Find((myReport.PayrollPeriod));
             }
 
             return new List<Report>();

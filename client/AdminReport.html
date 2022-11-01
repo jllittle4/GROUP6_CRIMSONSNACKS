@@ -10,38 +10,28 @@
 
 <body>
     <h1> Reports of Departments and Employees for the Month:</h1>
-    <!-- <label for="date">Select a Date:</label>
-    <input type="date" data-date-inline-picker="true" id='date' required /> -->
-    <div>
-        <select id="payroll" type="button" style="width:400px;">
-            <option value="0">Choose a Payroll Period</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-        </select>
-    </div>
-    <div>
-        <input type="button" value="Submit" onclick="makeTables();">
-    </div>
-    <div>
-        <input type="button" value='Clear Report' onclick="reLoad()"></input>
+    <label for="date">Select a Date:</label>
+          <input type="date" data-date-inline-picker="true" id = 'date' required/>
+
+    <input type="button" value="Submit" onclick="makeTables();">
+    <table id = "deptTable"
+    style = "display: none">
+        <tr>
+            <th>Department:</th>
+            <th>Total Time:</th>
+        </tr>
+    </table>
 
     </div>
     <div>
         <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'">
     </div>
     <div>
-        <h1>Department Stats</h1>
-        <table id="department-table" border="1">
+        <h1 id = "h1"
+        style = "display: none;">
+        Department Stats</h1>
+        <table id="department-table" border="1"
+        style = "display: none;">
             <thead>
                 <tr>
                     <th>Department</th>
@@ -51,8 +41,11 @@
         </table>
     </div>
     <div>
-        <h1>Employee Stats</h1>
-        <table id="employee-table" border="1">
+        <h1 id="h2"
+        style = "display: none;">
+        Employee Stats</h1>
+        <table id="employee-table" border="1"
+        style = "display: none;">
             <thead>
                 <tr>
                     <th>Employee</th>
@@ -64,6 +57,6 @@
 
 </body>
 
-<script src="./resources/scripts/AdminReport.js"></script>
+<script src="./resources/scripts/AdminReportSam.js"></script>
 
 </html>

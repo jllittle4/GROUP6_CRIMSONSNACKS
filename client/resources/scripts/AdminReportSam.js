@@ -13,6 +13,7 @@ function getTablesData(type, tableid) {
   //reporting total time controller -sam
   //different from the report time controller
   const timeUrl = baseUrl + "ReportingTotalTime";
+  let dateSend = document.getElementById("date").value.split("-",2);
 
   //see ReportRequest.cs in models
   //note the "type" field, this tells the controller what type of report to return
@@ -21,11 +22,12 @@ function getTablesData(type, tableid) {
   const sendReportRequest = {
     "Department": 'default',
     "Employee": 'default',
-    "PayrollPeriod": document.getElementById("payroll").value,
+    "PayrollPeriod": dateSend[1],
     "StartDate": 'default',
     "EndDate": 'default',
     "Type": type,
   };
+  console.log(dateSend[1]),
 
   //call reporting total time controller post method
 
@@ -62,6 +64,15 @@ function getTablesData(type, tableid) {
 //"tableid" argument is the html element id for the table
 //"reports" is a list of report objects described above in get tables data function
 function loadTable(tableid, reports) {
+  var h1 = document.getElementById('h1');
+  var h2 = document.getElementById('h2');
+  var deptTable = document.getElementById('department-table');
+  var empTable = document.getElementById('employee-table');
+  h1.style = "display: block;"
+  h2.style = "display: block;"
+  deptTable.style = "display: block;"
+  empTable.style = "display: block;"
+
   var myTable = document.getElementById(tableid);
   myTable.style.display = 'block';
 
