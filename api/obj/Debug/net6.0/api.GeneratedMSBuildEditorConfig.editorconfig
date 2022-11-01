@@ -8,17 +8,9 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = api
 build_property.RootNamespace = api
-<<<<<<< HEAD
 build_property.ProjectDir = /Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api/
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /Users/jeremylittle/Desktop/CODE/repos321/GROUP6_CRIMSONSNACKS/api
-=======
-build_property.ProjectDir = C:\Users\samth\source\repos\fall_2022\group_project\GROUP6_CRIMSONSNACKS\api\
-build_property.RazorLangVersion = 6.0
-build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\samth\source\repos\fall_2022\group_project\GROUP6_CRIMSONSNACKS\api
->>>>>>> 650f9a4b3f41e4a6fe75bc0da5c949fc2e32cb8a
 build_property._RazorSourceGeneratorDebug = 

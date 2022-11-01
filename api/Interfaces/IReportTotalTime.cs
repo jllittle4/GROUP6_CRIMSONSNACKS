@@ -4,6 +4,6 @@ namespace api.Interfaces
 {
     public interface IReportTotalTime
     {
-        public List<Report> Find(int id);
+        public List<Report> Find(string date);
     }
 }

@@ -16,7 +16,7 @@ namespace api.Utilities
             this.cs = connectionString.cs;
         }
 
-        public List<Report> Find(int id)
+        public List<Report> Find(string date)
         {
             System.Console.WriteLine("Reading time events for an employee...");
             //System.Console.WriteLine(myReportRequest.Employee + "attempt to read employee id");
@@ -31,7 +31,7 @@ namespace api.Utilities
                 GROUP BY d.departmentid;";
 
             using var cmd = new MySqlCommand(stm, con);
-            cmd.Parameters.AddWithValue("@eventdate", id);
+            cmd.Parameters.AddWithValue("@eventdate", date);
             cmd.Prepare();
 
             try
