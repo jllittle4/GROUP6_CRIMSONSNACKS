@@ -48,9 +48,9 @@ function onSubmit() {
             body: JSON.stringify(sendReq)
         }).then((response) => {
             if (response.status == 200) {
-                window.alert('User has been saved');
+                window.alert('Request successfully submitted!');
             }
-            console.log('response from the save ', response);
+            //console.log('response from the save ', response);
         }).then(function () {
             //once user has submitted request, they are returned to their home page
             retToHome();

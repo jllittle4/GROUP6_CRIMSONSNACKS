@@ -4,12 +4,14 @@ using api.Models;
 using api.database;
 using api.Utilities;
 using api.Controllers;
+using System.Globalization;
 
 namespace api.CRUD
 {
     public class CreateTimeEvent : ICreateOneTimeEvent
     {
         private string cs { get; }
+        public DateTime myDT { get; set; }
         public CreateTimeEvent()
         {
             ConnectionString myCS = new ConnectionString();
@@ -20,6 +22,23 @@ namespace api.CRUD
             System.Console.WriteLine("The following time event will be created...");
             System.Console.WriteLine(newEvent.ToString());
 
+            try
+            {
+                myDT = DateTime.ParseExact(newEvent.Date, "MMMM d, yyyy", new CultureInfo("en-US"));
+                newEvent.Date = myDT.ToString("yyyy-MM-dd");
+            }
+            catch
+            {
+                System.Console.WriteLine("Date did not need to be formatted.");
+            }
+
+            myDT = DateTime.ParseExact(newEvent.ClockIn, "hh:mm tt", new CultureInfo("en-US"));
+            newEvent.ClockIn = myDT.ToString("HH:mm");
+
+            myDT = DateTime.ParseExact(newEvent.ClockOut, "hh:mm tt", new CultureInfo("en-US"));
+            newEvent.ClockOut = myDT.ToString("HH:mm");
+
+
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -27,13 +46,13 @@ namespace api.CRUD
                 VALUES (default, @eventdate, @clockinevent, @clockoutevent, @eventdepartment, @eventemployee, 'y');";
 
             using var cmd = new MySqlCommand(stm, con);
-        
+
             //cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
             cmd.Parameters.AddWithValue("@eventemployee", newEvent.EmployeeId);
-            cmd.Parameters.AddWithValue("@eventdate",newEvent.Date);
-            cmd.Parameters.AddWithValue("@clockoutevent",newEvent.ClockOut);
-            cmd.Parameters.AddWithValue("@clockinevent",newEvent.ClockIn);
-            cmd.Parameters.AddWithValue("@eventdepartment",newEvent.DepartmentId);
+            cmd.Parameters.AddWithValue("@eventdate", newEvent.Date);
+            cmd.Parameters.AddWithValue("@clockoutevent", newEvent.ClockOut);
+            cmd.Parameters.AddWithValue("@clockinevent", newEvent.ClockIn);
+            cmd.Parameters.AddWithValue("@eventdepartment", newEvent.DepartmentId);
             cmd.Prepare();
 
             try
@@ -47,7 +66,7 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-            
+
             //con.Close();
         }
 
@@ -62,12 +81,12 @@ namespace api.CRUD
                 VALUES (default, @eventdate, @clockinevent, @clockoutevent, null, @eventemployee, default);";
 
             using var cmd = new MySqlCommand(stm, con);
-        
+
             //cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
             cmd.Parameters.AddWithValue("@eventemployee", LoggingIn.loggedIn.UserId);
-            cmd.Parameters.AddWithValue("@eventdate",DateTime.Now.ToString("yyyy-MM-dd"));
-            cmd.Parameters.AddWithValue("@clockoutevent",DateTime.Now.ToString("HH:mm:ss"));
-            cmd.Parameters.AddWithValue("@clockinevent",DateTime.Now.ToString("HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@eventdate", DateTime.Now.ToString("yyyy-MM-dd"));
+            cmd.Parameters.AddWithValue("@clockoutevent", DateTime.Now.ToString("HH:mm:ss"));
+            cmd.Parameters.AddWithValue("@clockinevent", DateTime.Now.ToString("HH:mm:ss"));
             cmd.Prepare();
 
             try
@@ -81,7 +100,7 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-            
+
             //con.Close();
         }
     }

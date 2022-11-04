@@ -6,16 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Requests</title>
+    <style src="./resources/styles/EmpHome.css"></style>
 </head>
 
 <body onload="handleOnLoad()">
     <script src="./resources/scripts/ViewRequests.js"></script>
-
+    <div class="modal">
+        <div class="modal-header">
+            <span class="close-btn">&times;</span>
+            <p>There are times that conflict with this request. Do you want to overwrite these time events?</p>
+        </div>
+        <div class="modal-content">
+            <input id="secondApproveButton" type="button" value="Confirm" onclick="secondApprove()"></input>
+            <input id="secondDenyButton" type="button" value="Deny" onclick="secondDeny()"></input>
+        </div>
+    </div>
     <div id="return-button">
         <input type="button" value='Return To Dashboard' onclick="retToHome()"></input>
 
     </div>
-    <div >
+    <div>
         <div>
             <h1>Pending Requests</h1>
         </div>
@@ -27,6 +37,7 @@
                 <th>New Clock Out:</th>
                 <th>New Department:</th>
                 <th>Reason:</th>
+                <th>Approve/Deny:</th>
             </thead>
         </table>
     </div>

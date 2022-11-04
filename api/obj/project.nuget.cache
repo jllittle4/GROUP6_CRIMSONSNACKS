@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7c28cJpZLL+kgKCGKjh/6qs8X5qLb/zVfYgq+Vm5qZJVkQ6A0GDOB9J+FQt2Bx71vqdf4ixorH5lnh0iHeEXLQ==",
+  "dgSpecHash": "HXkjt1Tddn3CAxmR1jOART6AbS52cICWT2ccBxxUk2IDjCVGHbJf0voNV1dNVoW3lh51lMZ7GLH1M35Q1kZUzg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\group6_crimsonsnacks\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\samth\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
     "C:\\Users\\samth\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
@@ -171,12 +171,5 @@
     "C:\\Users\\samth\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\samth\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file c:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

@@ -3,12 +3,14 @@ using api.Models;
 using api.database;
 using MySql.Data.MySqlClient;
 using api.Utilities;
+using System.Globalization;
 
 namespace api.CRUD
 {
     public class UpdateTimeEvent : IUpdateOneTimeEvent
     {
         private string cs;
+        public DateTime myDT { get; set; }
         public UpdateTimeEvent()
         {
             ConnectionString connectionString = new ConnectionString();
@@ -18,6 +20,22 @@ namespace api.CRUD
         {
             System.Console.WriteLine($"The time event with an ID of {id} will be updated to match the following details: ");
             System.Console.WriteLine(updatedTimeEvent.ToString());
+
+            try
+            {
+                myDT = DateTime.ParseExact(updatedTimeEvent.Date, "MMMM d, yyyy", new CultureInfo("en-US"));
+                updatedTimeEvent.Date = myDT.ToString("yyyy-MM-dd");
+            }
+            catch
+            {
+                System.Console.WriteLine("Date did not need to be formatted.");
+            }
+
+            myDT = DateTime.ParseExact(updatedTimeEvent.ClockIn, "hh:mm tt", new CultureInfo("en-US"));
+            updatedTimeEvent.ClockIn = myDT.ToString("HH:mm");
+
+            myDT = DateTime.ParseExact(updatedTimeEvent.ClockOut, "hh:mm tt", new CultureInfo("en-US"));
+            updatedTimeEvent.ClockOut = myDT.ToString("HH:mm");
 
             using var con = new MySqlConnection(cs);
             con.Open();

@@ -3,6 +3,7 @@ using api.database;
 using MySql.Data.MySqlClient;
 using api.Models;
 using api.Controllers;
+using api.Utilities;
 
 namespace api.CRUD
 {
@@ -20,6 +21,8 @@ namespace api.CRUD
             System.Console.WriteLine("The following request will be created...");
             System.Console.WriteLine(newRequest.ToString());
 
+            IReadDepByName myDepFinder = new FindDepartmentByName();
+
             using var con = new MySqlConnection(cs);
             con.Open();
 
@@ -32,7 +35,7 @@ namespace api.CRUD
             cmd.Parameters.AddWithValue("@requestclockin", newRequest.ClockIn);
             cmd.Parameters.AddWithValue("@requestclockout", newRequest.ClockOut);
             cmd.Parameters.AddWithValue("@reason", newRequest.Reason);
-            cmd.Parameters.AddWithValue("@requestdepartment", newRequest.Department);
+            cmd.Parameters.AddWithValue("@requestdepartment", myDepFinder.Find(newRequest.Department).DepId);
             cmd.Parameters.AddWithValue("@requestemployee", LoggingIn.loggedIn.UserId);
             cmd.Prepare();
 
