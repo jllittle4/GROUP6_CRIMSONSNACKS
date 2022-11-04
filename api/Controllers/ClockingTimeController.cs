@@ -17,43 +17,47 @@ namespace api.Controllers
     public class ClockingTime : ControllerBase
     {
         // GET: api/ClockingTime
+        //returns list of all time events based on the logged in user
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<TimeEvent> Get()
         {
             System.Console.WriteLine("\nReceived request to get all timekeeping events...");
-            IReadAllTimeEvents myFinder = new FindTimeEventsByEmp();
-            return myFinder.ReadAllTimeEvents();
+            IReadAllTimeEvents finder = new FindTimeEventsByEmp();
+            return finder.ReadAllTimeEvents();
         }
 
         // GET: api/ClockingTime/5
+        //returns most recent time event for clockedoutcheck
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetClockingTime")]
         public TimeEvent Get(int id)
         {
             System.Console.WriteLine("\nRequest to find timekeeping event without id...");
-            IFindRecentTimeEvent myFinder = new FindMostRecentTimeEvent();
-            return myFinder.FindTimeEvent();
+            IFindRecentTimeEvent finder = new FindMostRecentTimeEvent();
+            return finder.FindTimeEvent();
         }
 
         // POST: api/ClockingTime
+        //creates time event for logged in user, marked as a clockin
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public void Post([FromBody] TimeEvent myTimeEvent)
         {
             System.Console.WriteLine("\nReceived request to clock in...");
-            CreateTimeEvent creator = new CreateTimeEvent();
-            creator.ClockingIn();
+            IClockIn clocker = new ClockIn();
+            clocker.ClockingIn();
         }
 
         // PUT: api/ClockingTime/5
+        //updates a time event for logged in user, marked as a clockout
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] TimeEvent updatedTimeEvent)
         {
             System.Console.WriteLine("\nReceived request to clock out...");
-            UpdateTimeEvent updater = new UpdateTimeEvent();
-            updater.ClockingOut(updatedTimeEvent);
+            IClockOut clocker = new ClockOut();
+            clocker.ClockingOut(updatedTimeEvent);
         }
 
         // DELETE: api/ClockingTime/5

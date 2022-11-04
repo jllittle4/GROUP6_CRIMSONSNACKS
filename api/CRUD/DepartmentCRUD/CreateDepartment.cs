@@ -1,18 +1,23 @@
 using api.Interfaces;
 using MySql.Data.MySqlClient;
 using api.Models;
-using api.database;
+using api.Database;
 
 namespace api.CRUD
 {
     public class CreateDepartment : ICreateOneDepartment
     {
+        //connection string to mysql database
         private string cs { get; }
+        
         public CreateDepartment()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //creates one department
+        //currently not used, but potential for admin feature to add more departments, all parts of the application will automatically update list of departments
         public void CreateOneDepartment(Department newDepartment)
         {
             System.Console.WriteLine("The following department will be created...");

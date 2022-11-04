@@ -1,23 +1,27 @@
-using MySql.Data.MySqlClient;
 using api.Models;
 using api.Interfaces;
-using api.database;
+using api.Database;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class ReadDepartments : IReadAllDepartments, IReadOneDepartment
     {
+        //connection string to mysql database
         private string cs { get; }
+        public List<Department> allDepartments = new List<Department>();
+        public Department myDepartment = new Department();
+        
         public ReadDepartments()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //returns list of all departments to populate dropdowns
         public List<Department> ReadAllDepartments()
         {
             System.Console.WriteLine("Reading all departments...");
-
-            List<Department> allDepartments = new List<Department>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -25,7 +29,7 @@ namespace api.CRUD
             string stm = @"SELECT * 
                 FROM departments 
                 ORDER BY departmentid ASC;";
-                
+
             using var cmd = new MySqlCommand(stm, con);
 
             try
@@ -34,10 +38,10 @@ namespace api.CRUD
 
                 while (rdr.Read())
                 {
-                    Department temp = new Department() 
-                    { 
-                        DepId = rdr.GetInt32(0), 
-                        DepName = rdr.GetString(1) 
+                    Department temp = new Department()
+                    {
+                        DepId = rdr.GetInt32(0),
+                        DepName = rdr.GetString(1)
                     };
                     allDepartments.Add(temp);
                 }
@@ -51,16 +55,14 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-            //con.Close();
-
             return allDepartments;
         }
 
+        //returns one department
+        //currently not used
         public Department ReadOneDepartment(int id)
         {
             System.Console.WriteLine("Looking for department...");
-
-            Department myDepartment = new Department();
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -82,7 +84,7 @@ namespace api.CRUD
                     myDepartment.DepId = rdr.GetInt32(0);
                     myDepartment.DepName = rdr.GetString(1);
                 }
-                
+
                 System.Console.WriteLine("The result of the search was: ");
                 System.Console.WriteLine(myDepartment.ToString());
             }
@@ -93,7 +95,6 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-            // con.Close();
             return myDepartment;
         }
     }

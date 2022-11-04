@@ -1,5 +1,6 @@
-    namespace api.Models
+namespace api.Models
 {
+    //model for "requests" table in database
     public class Request
     {
         public int RequestId { get; set; }

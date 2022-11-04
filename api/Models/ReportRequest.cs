@@ -1,5 +1,6 @@
 namespace api.Models
 {
+    //model for front end request for report type
     public class ReportRequest
     {
         public string Department { get; set; }

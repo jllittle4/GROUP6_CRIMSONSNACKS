@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using api.Interfaces;
 using api.Models;
-using api.CRUD;
 using api.Utilities;
 
 namespace api.Controllers
@@ -16,9 +15,11 @@ namespace api.Controllers
     [ApiController]
     public class LoggingIn : ControllerBase
     {
+        //keeps track of logged in user
         public static User loggedIn = new User();
 
         // GET: api/LoggingIn
+        //get empty list of login results...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<LoginResult> Get()
@@ -27,6 +28,7 @@ namespace api.Controllers
         }
 
         // GET: api/LoggingIn/5
+        //get one empty login result...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetLoggingIn")]
         public LoginResult Get(int id)
@@ -35,6 +37,9 @@ namespace api.Controllers
         }
 
         // POST: api/LoggingIn
+        //attempt to login employee
+        //returns loginresult object to tell frontend whether user had correct credentials
+        //if employee successfully logs in, sets static user object to be called by other classes
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public LoginResult Post([FromBody] User newUser)
@@ -43,8 +48,8 @@ namespace api.Controllers
 
             System.Console.WriteLine("\nReceived login request...");
 
-            IFindUserByUsername myFinder = new FindUserByUsername();
-            User tempUser = myFinder.Find(newUser.UserName);
+            IFindUserByUsername finder = new FindUserByUsername();
+            User tempUser = finder.Find(newUser.UserName);
 
             try
             {

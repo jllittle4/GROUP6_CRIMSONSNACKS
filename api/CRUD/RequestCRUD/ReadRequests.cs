@@ -1,23 +1,27 @@
-using MySql.Data.MySqlClient;
 using api.Models;
 using api.Interfaces;
-using api.database;
+using api.Database;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class ReadRequests : IReadAllRequests, IReadOneRequest
     {
+        //connection string to mysql database
         private string cs { get; }
+        public List<Request> allRequests = new List<Request>();
+
         public ReadRequests()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //returns list of all requests for admin "view time change requests" page
+        //does NOT filter requests by status
         public List<Request> ReadAllRequests()
         {
             System.Console.WriteLine("Reading all requests...");
-
-            List<Request> allRequests = new List<Request>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -30,7 +34,8 @@ namespace api.CRUD
                     TIME_FORMAT(TIMEDIFF(requestclockout, requestclockin),'%I:%i') AS totaltime,
                     departmentname, 
                     CONCAT(firstname, ' ', lastname) AS fullname
-                FROM requests r JOIN employees e ON(r.requestemployee = e.employeeid) JOIN departments d ON(r.requestdepartment = d.departmentid)
+                FROM requests r JOIN employees e ON(r.requestemployee = e.employeeid) 
+                    JOIN departments d ON(r.requestdepartment = d.departmentid)
                 ORDER BY requestid DESC;";
 
             using var cmd = new MySqlCommand(stm, con);
@@ -55,9 +60,11 @@ namespace api.CRUD
                         Department = rdr.GetString(9),
                         EmployeeName = rdr.GetString(10)
                     };
+
                     allRequests.Add(temp);
 
                 }
+
                 System.Console.WriteLine("Read all requests successfully.");
                 System.Console.WriteLine(allRequests[0].ToString());
 
@@ -69,11 +76,11 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-            //con.Close();
-
             return allRequests;
         }
 
+        //returns one request
+        //currently not used
         public Request ReadOneRequest(int id)
         {
             System.Console.WriteLine("Looking for request...");
@@ -123,7 +130,6 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-            // con.Close();
             return myRequest;
         }
     }

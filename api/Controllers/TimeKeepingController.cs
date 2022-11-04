@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using api.Models;
 using Microsoft.AspNetCore.Cors;
+using api.Models;
 using api.Interfaces;
 using api.CRUD;
-using api.Utilities;
 
 namespace api.Controllers
 {
@@ -17,26 +16,29 @@ namespace api.Controllers
     public class TimeKeeping : ControllerBase
     {
         // GET: api/TimeKeeping
+        //return list of all time events...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<TimeEvent> Get()
         {
             System.Console.WriteLine("\nReceived request to get all timekeeping events...");
-            IReadAllTimeEvents myFinder = new ReadTimeEvents();
-            return myFinder.ReadAllTimeEvents();
+            IReadAllTimeEvents finder = new ReadTimeEvents();
+            return finder.ReadAllTimeEvents();
         }
 
         // GET: api/TimeKeeping/5
+        //return one time event
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetTimeKeeping")]
         public TimeEvent Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find timekeeping event...");
-            IReadOneTimeEvent readerOne = new ReadTimeEvents();
-            return readerOne.ReadOneTimeEvent(id);
+            IReadOneTimeEvent reader = new ReadTimeEvents();
+            return reader.ReadOneTimeEvent(id);
         }
 
         // POST: api/TimeKeeping
+        //create time event...currently not used by frontend
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public void Post([FromBody] TimeEvent newTimeEvent)
@@ -47,6 +49,7 @@ namespace api.Controllers
         }
 
         // PUT: api/TimeKeeping/5
+        //update time event...currnetly not used by frontend
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] TimeEvent updatedTimeEvent)
@@ -57,6 +60,7 @@ namespace api.Controllers
         }
 
         // DELETE: api/TimeKeeping/5
+        //delete time event...currently not used
         [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
         public void Delete(int id)

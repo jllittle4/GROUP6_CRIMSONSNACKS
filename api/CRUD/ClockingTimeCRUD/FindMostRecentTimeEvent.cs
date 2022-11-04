@@ -1,37 +1,27 @@
 using api.Models;
-using MySql.Data.MySqlClient;
 using api.Interfaces;
-using api.database;
+using api.Database;
 using api.Controllers;
-using System.Globalization;
+using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
-    public class FindTimeEventByDate : IFindTimeEventByDate
+    public class FindMostRecentTimeEvent : IFindRecentTimeEvent
     {
-        public List<TimeEvent> myTimeEventsList = new List<TimeEvent>();
-        public TimeEvent myTimeEvent = new TimeEvent();
+        //connection string to mysql database
         private string cs { get; }
-        public FindTimeEventByDate()
+        public TimeEvent myTimeEvent = new TimeEvent();
+        
+        public FindMostRecentTimeEvent()
         {
             ConnectionString connectionString = new ConnectionString();
             this.cs = connectionString.cs;
         }
-        public List<TimeEvent> Find(Request myRequest)
+
+        //tool to find and return most recent time event for the currently loggedin employee
+        public TimeEvent FindTimeEvent()
         {
             System.Console.WriteLine("Looking for most recent time event...\n");
-
-            try
-            {
-                DateTime myDT = DateTime.ParseExact(myRequest.Date, "MMMM d, yyyy", new CultureInfo("en-US"));
-                myRequest.Date = myDT.ToString("yyyy-MM-dd");
-            }
-            catch
-            {
-                System.Console.WriteLine("Date did not need to be formatted.");
-            }
-
-
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -46,13 +36,13 @@ namespace api.Utilities
                 FROM timekeepingevents tke 
                     LEFT JOIN departments d ON(tke.eventdepartment = d.departmentid) 
                     JOIN employees e ON(tke.eventemployee = e.employeeid)
-                WHERE eventemployee = @eventemployee AND eventdate = @eventdate
-                ORDER BY eventdate DESC, clockinevent DESC;";
+                WHERE username = @username
+                ORDER BY eventdate DESC, clockinevent DESC
+                LIMIT 1;";
 
             using var cmd = new MySqlCommand(stm, con);
 
-            cmd.Parameters.AddWithValue("@eventemployee", myRequest.EmployeeId);
-            cmd.Parameters.AddWithValue("@eventdate", myRequest.Date);
+            cmd.Parameters.AddWithValue("@username", LoggingIn.loggedIn.UserName);
             cmd.Prepare();
 
             try
@@ -86,12 +76,10 @@ namespace api.Utilities
 
                     myTimeEvent.TotalTime = rdr.GetString(6);
                     myTimeEvent.ClockedOutCheck = rdr.GetString(7);
-
-                    myTimeEventsList.Add(myTimeEvent);
                 }
 
                 System.Console.WriteLine("The result of the search was: \n");
-                System.Console.WriteLine(myTimeEventsList[0].ToString());
+                System.Console.WriteLine(myTimeEvent.ToString());
             }
             catch (Exception e)
             {
@@ -100,8 +88,7 @@ namespace api.Utilities
                 System.Console.WriteLine(e.ToString());
             }
 
-            // con.Close();
-            return myTimeEventsList;
+            return myTimeEvent;
         }
     }
 }

@@ -1,5 +1,6 @@
 namespace api.Models
 {
+    //model for "employees" table from database
     public class User
     {
         public int UserId { get; set; }

@@ -4,18 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 using api.Models;
 using api.Interfaces;
 using api.Utilities;
-using Microsoft.AspNetCore.Cors;
 
-namespace api.Controller
+namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ReportingTotalTime : ControllerBase
     {
         // GET: api/ReportingTotalTime
+        //returns empty list of report objects...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<Report> Get()
@@ -24,6 +25,7 @@ namespace api.Controller
         }
 
         // GET: api/ReportingTotalTime/5
+        //returns empty report object...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetReportingTotalTime")]
         public Report Get(int id)
@@ -32,6 +34,8 @@ namespace api.Controller
         }
 
         // POST: api/ReportingTotalTime
+        //returns list of report objects based on requested report criteria in reportrequest object
+        //designed with capability for more types of total reports
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public List<Report> Post([FromBody] ReportRequest myReport)

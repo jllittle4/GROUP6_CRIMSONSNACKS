@@ -1,18 +1,21 @@
 using api.Interfaces;
-using api.Models;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class DeleteRequest : IDeleteOne
     {
+        //connection string to mysql database
         private string cs;
         public DeleteRequest()
         {
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
+
+        //deletes time change request
+        //currently not used
         public void DeleteOne(int id)
         {
             System.Console.WriteLine($"The request with an ID of {id} will be deleted");
@@ -40,8 +43,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-
-            // con.Close();
         }
     }
 }

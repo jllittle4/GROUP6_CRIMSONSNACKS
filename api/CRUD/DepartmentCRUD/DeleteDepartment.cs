@@ -1,18 +1,23 @@
 using api.Interfaces;
 using api.Models;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class DeleteDepartment : IDeleteOne
     {
+        //connection string to mysql database
         private string cs;
+        
         public DeleteDepartment()
         {
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
+
+        //delete a department
+        //currently not used, but potential for admin to remove a department if organization is restructured, all parts of application will automatically update list of departments
         public void DeleteOne(int id)
         {
             System.Console.WriteLine($"The department with an ID of {id} will be deleted");

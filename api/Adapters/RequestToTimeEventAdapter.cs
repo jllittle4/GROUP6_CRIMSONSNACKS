@@ -2,6 +2,7 @@ using api.Models;
 
 namespace api.Adapters
 {
+    //adapter from request to time event
     public class RequestToTimeEventAdapter : TimeEvent
     {
         public RequestToTimeEventAdapter(Request myRequest)

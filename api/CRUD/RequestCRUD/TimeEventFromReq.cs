@@ -10,19 +10,26 @@ namespace api.Utilities
     {
         public List<TimeEvent> myList = new List<TimeEvent>();
         public RequestToTimeEventAdapter myAdapter { get; set; }
+        public IFindTimeEventByDate myFinder = new FindTimeEventByDate();
+        public ICreateOneTimeEvent myCreator = new CreateTimeEvent();
+        public IUpdateOneTimeEvent myUpdater = new UpdateTimeEvent();
         public Request returnRequest = new Request();
+        public bool noConflicts { get; set; }
+        public int isOneEqual { get; set; }
+
+        //if time change request is approved, checks that time change request won't conflict with other time events for that date for that employee
+        //if it doesn't, it creates time event or updates time event
+        //returns status
         public Request FindRequest(Request myRequest)
         {
             myAdapter = new RequestToTimeEventAdapter(myRequest);
             returnRequest = myRequest;
 
-            IFindTimeEventByDate myFinder = new FindTimeEventByDate();
             myList = myFinder.Find(myRequest);
 
             if (myList.Count == 0)
             {
                 System.Console.WriteLine("No time events were found.");
-                ICreateOneTimeEvent myCreator = new CreateTimeEvent();
                 myCreator.CreateOneTimeEvent(myAdapter);
                 returnRequest.Status = "created";
             }
@@ -30,38 +37,35 @@ namespace api.Utilities
             {
                 System.Console.WriteLine("Searching through returned time events...");
 
-                bool noConflicts = CheckNoConflicts();
+                noConflicts = CheckNoConflicts();
 
                 if (noConflicts)
                 {
-                    ICreateOneTimeEvent myCreator = new CreateTimeEvent();
                     myCreator.CreateOneTimeEvent(myAdapter);
                     returnRequest.Status = "created";
                 }
                 else
                 {
-                    int isOneEqual = IsOneEqual();
+                    isOneEqual = IsOneEqual();
 
                     if (isOneEqual != -1)
                     {
-                        IUpdateOneTimeEvent myUpdater = new UpdateTimeEvent();
                         myUpdater.UpdateOneTimeEvent(isOneEqual, myAdapter);
                         returnRequest.Status = "updated";
                     }
                     else
                     {
                         returnRequest.Status = "warning";
-                        //in the front end, prompt for a confirm or deny 
-                        //if confirm, delete all requests which have a conflict in the check no conflicts method, and then create a new time event
-                        //if deny, deny request
                     }
                 }
             }
+
             System.Console.WriteLine("Returning the request...");
             return returnRequest;
         }
 
-        public bool CheckNoConflicts()
+        //checks that time change request parameters don't fall between times that the employee is already as marked as clocked in on date of the time change request
+        private bool CheckNoConflicts()
         {
             foreach (TimeEvent x in myList)
             {
@@ -83,11 +87,15 @@ namespace api.Utilities
                     return false;
                 }
             }
+
             System.Console.WriteLine("No time conflicts found.");
             return true;
         }
 
-        public int IsOneEqual()
+        //determines whether to create new event or update old event
+        //if a clock in or clock out is the same as a time event already on that date, a time event will be updated
+        //otherwise, a time event will be created
+        private int IsOneEqual()
         {
             foreach (TimeEvent x in myList)
             {
@@ -100,7 +108,6 @@ namespace api.Utilities
                 {
                     return x.TimeEventId;
                 }
-
             }
 
             return -1;

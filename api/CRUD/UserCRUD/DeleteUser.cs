@@ -1,18 +1,22 @@
 using api.Interfaces;
-using api.Models;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class DeleteUser : IDeleteOne
     {
-        private string cs;
+        //connection to mysql database
+        private string cs { get; set; }
+
         public DeleteUser()
         {
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
+
+        //deletes a user
+        //currently not used, but potential for admin functionality to remove users from application
         public void DeleteOne(int id)
         {
             System.Console.WriteLine($"The user with an ID of {id} will be deleted.");
@@ -40,8 +44,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-
-            // con.Close();
         }
     }
 }

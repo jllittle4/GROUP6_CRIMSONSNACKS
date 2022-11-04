@@ -1,20 +1,23 @@
 using api.Interfaces;
-using MySql.Data.MySqlClient;
 using api.Models;
-using api.database;
-using Microsoft.AspNetCore.Identity;
+using api.Database;
 using api.Utilities;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class CreateUser : ICreateOneUser
     {
+        //connection to mysql database
         private string cs { get; }
+
         public CreateUser()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //registers a new user
         public void CreateOneUser(User createdUser)
         {
             System.Console.WriteLine("The following user will be created...");
@@ -47,8 +50,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-
-            //con.Close();
         }
     }
 }

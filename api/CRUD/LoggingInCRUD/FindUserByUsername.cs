@@ -1,23 +1,23 @@
-using api.Controllers;
 using api.Interfaces;
 using api.Models;
-using api.CRUD;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
-    
     public class FindUserByUsername : IFindUserByUsername
     {
-        public User myUser = new User();
+        //connection string to mysql database
         private string cs { get; }
+        public User myUser = new User();
+        
         public FindUserByUsername()
         {
             ConnectionString connectionString = new ConnectionString();
             this.cs = connectionString.cs;
         }
 
+        //finds a user by username, since all usernames have to be unique
         public User Find(string username)
         {
             System.Console.WriteLine("Looking for an employee...");
@@ -61,11 +61,7 @@ namespace api.Utilities
             catch
             {
                 System.Console.WriteLine("Couldn't find employee.");
-                // System.Console.WriteLine("The following error was returned...");
-                // System.Console.WriteLine(e.ToString());
             }
-
-            //con.Close();
 
             return myUser;
         }

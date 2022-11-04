@@ -1,9 +1,8 @@
 using api.Models;
 using api.Adapters;
-using api.Controllers;
 using api.Interfaces;
-using System.Globalization;
 using api.CRUD;
+using System.Globalization;
 
 namespace api.Utilities
 {
@@ -11,27 +10,30 @@ namespace api.Utilities
     {
         public List<TimeEvent> myList = new List<TimeEvent>();
         public RequestToTimeEventAdapter myAdapter { get; set; }
-        public Request myRequest { get; set; }
+        public IFindTimeEventByDate myFinder = new FindTimeEventByDate();
+        public ICreateOneTimeEvent myCreator = new CreateTimeEvent();
+        public IDeleteOne deleteTool = new DeleteTimeEvent();
+
+        //deletes time events that conflict with the time change request parameters, then creates new time event based on time change request parameters
+        //returns status
         public Request FindRequest(Request myRequest)
         {
             myAdapter = new RequestToTimeEventAdapter(myRequest);
 
-            IFindTimeEventByDate myFinder = new FindTimeEventByDate();
             myList = myFinder.Find(myRequest);
 
             DeleteConflicts();
 
-            ICreateOneTimeEvent myCreator = new CreateTimeEvent();
             myCreator.CreateOneTimeEvent(myAdapter);
             myRequest.Status = "created";
 
             return myRequest;
         }
 
+        //deletes time events on date of time change request that will conflict with the time change request parameters
+        //a "conflict" happens when a clockin and/or clockout time on a time change request falls between a time period in a time event already in the database for that employee for that date (implying the employee was already clocked in at that time)
         public void DeleteConflicts()
-        {
-            IDeleteOne deleteTool = new DeleteTimeEvent();
-            
+        {            
             foreach (TimeEvent x in myList)
             {
                 DateTime reqClockIn = DateTime.ParseExact(myAdapter.ClockIn, "hh:mm tt", new CultureInfo("en-US"));

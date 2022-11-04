@@ -1,18 +1,22 @@
-using MySql.Data.MySqlClient;
 using api.Models;
 using api.Interfaces;
-using api.database;
+using api.Database;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class ReadTimeEvents : IReadAllTimeEvents, IReadOneTimeEvent
     {
+        //connection to mysql database
         private string cs { get; }
         public ReadTimeEvents()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //returns list of all time events 
+        //currently not used
         public List<TimeEvent> ReadAllTimeEvents()
         {
             System.Console.WriteLine("Reading all time events...");
@@ -47,17 +51,7 @@ namespace api.CRUD
                     temp.Date = rdr.GetString(1);
                     temp.ClockIn = rdr.GetString(2);
                     temp.ClockOut = rdr.GetString(3);
-                    //temp.DepartmentId = rdr.GetInt32(4);
-
-                    // try
-                    // {
-                    //     temp.DepartmentId = rdr.GetInt32(4);
-                    // }
-                    // catch
-                    // {
-                    //     temp.DepartmentId = -1;
-                    // }
-
+                    
                     try
                     {
                         temp.Department = rdr.GetString(4);
@@ -72,8 +66,6 @@ namespace api.CRUD
 
 
                     allTimeEvents.Add(temp);
-
-                    //System.Console.WriteLine("Read all time events successfully.");
                 }
             }
             catch (Exception e)
@@ -83,11 +75,10 @@ namespace api.CRUD
                 System.Console.WriteLine(e.ToString());
             }
 
-            //con.Close();
-
             return allTimeEvents;
         }
 
+        //returns one time event
         public TimeEvent ReadOneTimeEvent(int id)
         {
             System.Console.WriteLine("Looking for time event...");
@@ -123,15 +114,6 @@ namespace api.CRUD
                     myTimeEvent.ClockIn = rdr.GetString(2);
                     myTimeEvent.ClockOut = rdr.GetString(3);
 
-                    //myTimeEvent.DepartmentId = rdr.GetInt32(4);
-                    // try
-                    // {
-                    //     myTimeEvent.DepartmentId = rdr.GetInt32(4);
-                    // }
-                    // catch
-                    // {
-                    //     myTimeEvent.DepartmentId = -1;
-                    // }
                     try
                     {
                         myTimeEvent.Department = rdr.GetString(4);
@@ -140,7 +122,7 @@ namespace api.CRUD
                     {
                         myTimeEvent.Department = "n/a";
                     }
-                    //myTimeEvent.EmployeeId = rdr.GetInt32(5);
+
                     try
                     {
                         myTimeEvent.EmployeeId = rdr.GetInt32(5);
@@ -149,6 +131,7 @@ namespace api.CRUD
                     {
                         myTimeEvent.EmployeeId = -1;
                     }
+
                     myTimeEvent.TotalTime = rdr.GetString(6);
                     myTimeEvent.ClockedOutCheck = rdr.GetString(7);
                 }
@@ -163,7 +146,6 @@ namespace api.CRUD
                 System.Console.WriteLine(e.ToString());
             }
 
-            // con.Close();
             return myTimeEvent;
         }
     }

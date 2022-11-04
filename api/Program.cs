@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//add cors policy
 builder.Services.AddCors(options =>
 { 
     options.AddPolicy("OpenPolicy",

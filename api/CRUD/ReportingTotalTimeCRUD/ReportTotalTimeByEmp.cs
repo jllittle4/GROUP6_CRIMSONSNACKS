@@ -1,34 +1,36 @@
 using api.Models;
-using api.database;
-using MySql.Data.MySqlClient;
+using api.Database;
 using api.Interfaces;
 using api.Adapters;
+using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
-    public class ReportTotalTimeByDep : IReportTotalTime
+    public class ReportTotalTimeByEmp : IReportTotalTime
     {
-        public List<Report> myList = new List<Report>();
+        //connection string to mysql database
         private string cs { get; }
-        public ReportTotalTimeByDep()
+        public List<Report> myList = new List<Report>();
+        
+        public ReportTotalTimeByEmp()
         {
             ConnectionString connectionString = new ConnectionString();
             this.cs = connectionString.cs;
         }
 
+        //returns
         public List<Report> Find(string date)
         {
             System.Console.WriteLine("Reading time events for an employee...");
-            //System.Console.WriteLine(myReportRequest.Employee + "attempt to read employee id");
 
             using var con = new MySqlConnection(cs);
             con.Open();
 
-            string stm = @"SELECT departmentname, 
+            string stm = @"SELECT CONCAT(firstname, ' ', lastname) as employee_name, 
                     SUM(ROUND(TIMESTAMPDIFF(minute, clockinevent, clockoutevent)/60,2)) AS sum_hours
-                FROM timekeepingevents tke JOIN departments d ON(tke.eventdepartment = d.departmentid)
-                WHERE month(eventdate) = @eventdate
-                GROUP BY d.departmentid;";
+                FROM timekeepingevents tke JOIN employees e ON(tke.eventemployee = e.employeeid)
+                WHERE MONTH(eventdate) = @eventdate
+                GROUP BY e.employeeid;";
 
             using var cmd = new MySqlCommand(stm, con);
             cmd.Parameters.AddWithValue("@eventdate", date);
@@ -40,26 +42,24 @@ namespace api.Utilities
 
                 while (rdr.Read())
                 {
-                    DepartmentReport temp = new DepartmentReport();
+                    EmployeeReport temp = new EmployeeReport();
 
-                    temp.DepartmentName = rdr.GetString(0);
+                    temp.FullName = rdr.GetString(0);
                     temp.TotalHours = rdr.GetDouble(1);
 
-                    Report myAdapter = new DepartmentReportAdapter(temp);
+                    Report myAdapter = new EmployeeReportAdapter(temp);
                     myList.Add(myAdapter);
                 }
 
-                System.Console.WriteLine("Read time events by employee successfully.");
-                //System.Console.WriteLine(myList[0].ToString());
+                System.Console.WriteLine("Read total time by employee report successfully.");
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("Time events retrieval was unsuccessful.");
+                System.Console.WriteLine("Total time by employee report was unsuccessful.");
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.ToString());
             }
 
-            //con.Close();
             return myList;
         }
     }

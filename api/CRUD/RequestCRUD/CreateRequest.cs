@@ -1,27 +1,29 @@
 using api.Interfaces;
-using api.database;
-using MySql.Data.MySqlClient;
+using api.Database;
 using api.Models;
 using api.Controllers;
 using api.Utilities;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class CreateRequest : ICreateOneRequest
     {
+        //connection string to mysql database
         private string cs { get; }
+        public IReadDepByName myDepFinder = new FindDepartmentByName();
+
         public CreateRequest()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
 
+        //creates new request with auto incremented request id, date for requested change, requested clock in change, requested clockout change, requested department change, reason for change, and currently logged in user id
         public void CreateOneRequest(Request newRequest)
         {
             System.Console.WriteLine("The following request will be created...");
             System.Console.WriteLine(newRequest.ToString());
-
-            IReadDepByName myDepFinder = new FindDepartmentByName();
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -50,8 +52,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.ToString());
             }
-            
-            //con.Close();
         }
     }
 }

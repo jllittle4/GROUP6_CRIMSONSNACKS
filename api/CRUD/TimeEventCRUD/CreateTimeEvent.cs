@@ -1,43 +1,32 @@
 using api.Interfaces;
-using MySql.Data.MySqlClient;
 using api.Models;
-using api.database;
-using api.Utilities;
-using api.Controllers;
+using api.Database;
 using System.Globalization;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
-    public class CreateTimeEvent : ICreateOneTimeEvent
+    public class CreateTimeEvent : ICreateOneTimeEvent, IFormatDate
     {
+        //connection to mysql database
         private string cs { get; }
         public DateTime myDT { get; set; }
+        public TimeEvent myTimeEvent { get; set; }
+        
         public CreateTimeEvent()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //create time event based on incoming time event parameters
+        //used primarily for creating new time events from time change requests
         public void CreateOneTimeEvent(TimeEvent newEvent)
         {
+            myTimeEvent = newEvent;
+
             System.Console.WriteLine("The following time event will be created...");
             System.Console.WriteLine(newEvent.ToString());
-
-            try
-            {
-                myDT = DateTime.ParseExact(newEvent.Date, "MMMM d, yyyy", new CultureInfo("en-US"));
-                newEvent.Date = myDT.ToString("yyyy-MM-dd");
-            }
-            catch
-            {
-                System.Console.WriteLine("Date did not need to be formatted.");
-            }
-
-            myDT = DateTime.ParseExact(newEvent.ClockIn, "hh:mm tt", new CultureInfo("en-US"));
-            newEvent.ClockIn = myDT.ToString("HH:mm");
-
-            myDT = DateTime.ParseExact(newEvent.ClockOut, "hh:mm tt", new CultureInfo("en-US"));
-            newEvent.ClockOut = myDT.ToString("HH:mm");
-
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -47,7 +36,6 @@ namespace api.CRUD
 
             using var cmd = new MySqlCommand(stm, con);
 
-            //cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
             cmd.Parameters.AddWithValue("@eventemployee", newEvent.EmployeeId);
             cmd.Parameters.AddWithValue("@eventdate", newEvent.Date);
             cmd.Parameters.AddWithValue("@clockoutevent", newEvent.ClockOut);
@@ -66,42 +54,26 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-
-            //con.Close();
         }
 
-        public void ClockingIn()
+        //formats date of incoming time events to match required database formats
+        public void FormatDate()
         {
-            System.Console.WriteLine("Clocking in...");
-
-            using var con = new MySqlConnection(cs);
-            con.Open();
-
-            var stm = @"INSERT INTO timekeepingevents (eventid, eventdate, clockinevent, clockoutevent, eventdepartment, eventemployee, clockedoutcheck) 
-                VALUES (default, @eventdate, @clockinevent, @clockoutevent, null, @eventemployee, default);";
-
-            using var cmd = new MySqlCommand(stm, con);
-
-            //cmd.Parameters.AddWithValue("@eventdepartment", clockInEvent.DepartmentId);
-            cmd.Parameters.AddWithValue("@eventemployee", LoggingIn.loggedIn.UserId);
-            cmd.Parameters.AddWithValue("@eventdate", DateTime.Now.ToString("yyyy-MM-dd"));
-            cmd.Parameters.AddWithValue("@clockoutevent", DateTime.Now.ToString("HH:mm:ss"));
-            cmd.Parameters.AddWithValue("@clockinevent", DateTime.Now.ToString("HH:mm:ss"));
-            cmd.Prepare();
-
             try
             {
-                cmd.ExecuteNonQuery();
-                System.Console.WriteLine("User was successfully clocked in.");
+                myDT = DateTime.ParseExact(myTimeEvent.Date, "MMMM d, yyyy", new CultureInfo("en-US"));
+                myTimeEvent.Date = myDT.ToString("yyyy-MM-dd");
             }
-            catch (Exception e)
+            catch
             {
-                System.Console.WriteLine("User couldn't be clocked in.");
-                System.Console.WriteLine("The following error was returned...");
-                System.Console.WriteLine(e.Message);
+                System.Console.WriteLine("Date did not need to be formatted.");
             }
 
-            //con.Close();
+            myDT = DateTime.ParseExact(myTimeEvent.ClockIn, "hh:mm tt", new CultureInfo("en-US"));
+            myTimeEvent.ClockIn = myDT.ToString("HH:mm");
+
+            myDT = DateTime.ParseExact(myTimeEvent.ClockOut, "hh:mm tt", new CultureInfo("en-US"));
+            myTimeEvent.ClockOut = myDT.ToString("HH:mm");
         }
     }
 }

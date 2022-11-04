@@ -1,18 +1,22 @@
 using api.Interfaces;
-using api.Models;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class DeleteTimeEvent : IDeleteOne
     {
+        //connection to mysql database
         private string cs;
+        
         public DeleteTimeEvent()
         {
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
+
+        //deletes time events
+        //currently used to delete time events that conflict with an approved request
         public void DeleteOne(int id)
         {
             System.Console.WriteLine($"The time event with an ID of {id} will be deleted");
@@ -40,8 +44,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.ToString());
             }
-
-            // con.Close();
         }
     }
 }

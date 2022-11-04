@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Cors;
 using api.Models;
 using api.Utilities;
 using api.Interfaces;
-using api.CRUD;
 
 namespace api.Controllers
 {
@@ -17,6 +16,7 @@ namespace api.Controllers
     public class ReportingTime : ControllerBase
     {
         // GET: api/ReportingTime
+        //returns empty list of time events...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<TimeEvent> Get()
@@ -25,6 +25,7 @@ namespace api.Controllers
         }
 
         // GET: api/ReportingTime/5
+        //returns empty time event...currently not used
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetReportingTime")]
         public TimeEvent Get(int id)
@@ -33,6 +34,8 @@ namespace api.Controllers
         }
 
         // POST: api/ReportingTime
+        //returns list of time events based on requested report criteria from reportrequest object
+        //designed with capability for more types of time event reports 
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public List<TimeEvent> Post([FromBody] ReportRequest myReport)

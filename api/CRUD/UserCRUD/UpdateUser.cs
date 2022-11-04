@@ -1,18 +1,23 @@
 using api.Interfaces;
 using api.Models;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class UpdateUser : IUpdateOneUser
     {
+        //connection to mysql database
         private string cs;
+
         public UpdateUser()
         {
             ConnectionString connectionString = new ConnectionString();
             cs = connectionString.cs;
         }
+
+        //updates one user to be admin
+        //currently not used, but potential for admin functionality to promote users to admins
         public void UpdateOneUser(int id, User updatedUser)
         {
             System.Console.WriteLine($"The user with an ID of {id} will be updated to match the following details: ");
@@ -43,8 +48,6 @@ namespace api.CRUD
                 System.Console.WriteLine("The following error was returned...");
                 System.Console.WriteLine(e.Message);
             }
-
-            // con.Close();
         }
     }
 }

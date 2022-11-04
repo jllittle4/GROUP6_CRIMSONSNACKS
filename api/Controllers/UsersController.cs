@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using api.Models;
 using Microsoft.AspNetCore.Cors;
-using api.Utilities;
+using api.Models;
 using api.Interfaces;
 using api.CRUD;
 
@@ -16,28 +15,30 @@ namespace api.Controllers
     [ApiController]
     public class Users : ControllerBase
     {
-        //public static User loggedIn = new User();
         // GET: api/Users
+        //returns list of all users to populate dropdowns
         [EnableCors("OpenPolicy")]
         [HttpGet]
         public List<User> Get()
         {
             System.Console.WriteLine("\nReceived request to get all users...");
-            IReadAllUsers readerAll = new ReadUsers();
-            return readerAll.ReadAllUsers();
+            IReadAllUsers reader = new ReadUsers();
+            return reader.ReadAllUsers();
         }
 
         // GET: api/Users/5
+        //returns one user
         [EnableCors("OpenPolicy")]
         [HttpGet("{id}", Name = "GetUsers")]
         public User Get(int id)
         {
             System.Console.WriteLine("\nReceived request to find a user...");
-            IReadOneUser readerOne = new ReadUsers();
-            return readerOne.ReadOneUser(id);
+            IReadOneUser reader = new ReadUsers();
+            return reader.ReadOneUser(id);
         }
 
         // POST: api/Users
+        //creates new user for registration
         [EnableCors("OpenPolicy")]
         [HttpPost]
         public LoginResult Post([FromBody] User newUser)
@@ -50,18 +51,18 @@ namespace api.Controllers
         }
 
         // PUT: api/Users/5
+        //updates user...currently not used
         [EnableCors("OpenPolicy")]
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] User updatedUser)
         {
             System.Console.WriteLine("\nReceived request to update user...");
-            //System.Console.WriteLine(updatedDepartment.ToString());
-
             IUpdateOneUser updater = new UpdateUser();
             updater.UpdateOneUser(id, updatedUser);
         }
 
         // DELETE: api/Users/5
+        //deletes user...currently not used
         [EnableCors("OpenPolicy")]
         [HttpDelete("{id}")]
         public void Delete(int id)

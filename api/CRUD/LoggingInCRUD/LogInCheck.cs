@@ -1,6 +1,4 @@
-using api.Interfaces;
 using api.Models;
-using api.CRUD;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,39 +6,43 @@ namespace api.Utilities
 {
     public class LogInCheck
     {
-        public LoginResult MyLoginResult { get; set; }
-        public User LoginAttempt { get; set; }
+        public LoginResult myLoginResult { get; set; }
+        public User loginAttempt { get; set; }
 
         public LogInCheck(User myUser)
         {
-            MyLoginResult = new LoginResult();
-            this.LoginAttempt = myUser;
+            myLoginResult = new LoginResult();
+            this.loginAttempt = myUser;
         }
 
+        //returns loginresult object to check whether user that attempted to login had a valid username, valid password, and whether they were or weren't an admin
         public LoginResult CheckValidPassword(string userInput)
         {
-            MyLoginResult.CheckUserName = true;
+            myLoginResult.CheckUserName = true;
 
             userInput = ToSHA256(userInput);
-            MyLoginResult.CheckPassword = CompareCharArrays(LoginAttempt.Password, userInput);
+            myLoginResult.CheckPassword = CompareCharArrays(loginAttempt.Password, userInput);
 
             CheckValidAdmin();
-            return MyLoginResult;
+            return myLoginResult;
         }
 
-        public void CheckValidAdmin()
+        //checks whether the user was or wasn't an admin
+        //this field is determined by "ismanager" column in database
+        private void CheckValidAdmin()
         {
-            if (LoginAttempt.IsManager == 0)
+            if (loginAttempt.IsManager == 0)
             {
-                MyLoginResult.IsAdmin = false;
+                myLoginResult.IsAdmin = false;
             }
             else
             {
-                MyLoginResult.IsAdmin = true;
+                myLoginResult.IsAdmin = true;
             }
         }
 
-        public bool CompareCharArrays(string s, string t)
+        //compares length of hashes and whether are an exact match
+        private bool CompareCharArrays(string s, string t)
         {
             if (s.Length != t.Length)
             {
@@ -58,6 +60,7 @@ namespace api.Utilities
             return true;
         }
 
+        //hashes a password for new employees and login attempts
         public static string ToSHA256(string s)
         {
             using var sha256 = SHA256.Create();

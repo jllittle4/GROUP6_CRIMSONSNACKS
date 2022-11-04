@@ -1,23 +1,23 @@
-using api.Controllers;
 using api.Interfaces;
 using api.Models;
-using api.CRUD;
-using api.database;
+using api.Database;
 using MySql.Data.MySqlClient;
 
 namespace api.Utilities
 {
-    
     public class FindDepartmentByName : IReadDepByName
     {
-        public Department myDep = new Department();
+        //connection to mysql database
         private string cs { get; }
+        public Department myDep = new Department();
+
         public FindDepartmentByName()
         {
             ConnectionString connectionString = new ConnectionString();
             this.cs = connectionString.cs;
         }
 
+        //find department by department name, since all department names are unique
         public Department Find(string depname)
         {
             System.Console.WriteLine("Looking for department id...\n");
@@ -54,7 +54,6 @@ namespace api.Utilities
                 System.Console.WriteLine(e.ToString());
             }
 
-            // con.Close();
             return myDep;
         }
     }

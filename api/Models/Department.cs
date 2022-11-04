@@ -1,5 +1,6 @@
 namespace api.Models
 {
+    //model "departments" table in database
     public class Department
     {
         public int DepId { get; set; }

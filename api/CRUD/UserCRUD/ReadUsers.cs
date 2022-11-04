@@ -1,23 +1,26 @@
-using MySql.Data.MySqlClient;
 using api.Models;
 using api.Interfaces;
-using api.database;
+using api.Database;
+using MySql.Data.MySqlClient;
 
 namespace api.CRUD
 {
     public class ReadUsers : IReadAllUsers, IReadOneUser
     {
+        //connection to mysql database
         private string cs { get; }
+        public List<User> allUsers = new List<User>();
+
         public ReadUsers()
         {
             ConnectionString myCS = new ConnectionString();
             cs = myCS.cs;
         }
+
+        //returns list of all users to populate dropdowns
         public List<User> ReadAllUsers()
         {
             System.Console.WriteLine("Reading all users...");
-
-            List<User> allUsers = new List<User>();
 
             using var con = new MySqlConnection(cs);
             con.Open();
@@ -62,13 +65,10 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-
-
-            //con.Close();
-
             return allUsers;
         }
 
+        //returns one user
         public User ReadOneUser(int id)
         {
             System.Console.WriteLine("Looking for user...");
@@ -119,7 +119,6 @@ namespace api.CRUD
                 System.Console.WriteLine(e.Message);
             }
 
-            // con.Close();
             return myUser;
         }
     }
