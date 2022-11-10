@@ -1,0 +1,49 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+h1
+{
+    background-color: #FEFFED;
+    padding: 30px 35px;
+    margin: -10px -50px;
+    text-align: center;
+}
+
+h1, h5
+{
+    color: crimson;
+    text-shadow: black;
+}
+div.Logo
+{
+    position: absolute;
+    width: 1000px;
+    /* margin-left: 150p; */
+    margin-bottom: -500px;
+    height: 1000px;
+    opacity: 30%;
+    background-color: #ffdd7f;
+}
+div.reg
+{
+    position: absolute;
+    width: 1000px;
+     margin-left: 150p;
+     margin-top: 50px;
+    height: inherit;
+     /* opacity: 30%;  */
+     background-color: transparent;
+ } 
+
+img
+{
+    width: 1000px;
+    height: inherit;
+    position: top;
+    background-color: transparent;
+    /* margin-left: 50px; */
+}
+
+body
+{
+    background-color: blue;
+}

@@ -2,7 +2,7 @@
 h2{
 background-color: #FEFFED;
 padding: 30px 35px;
-margin: -10px -50px;
+margin: -10px -50px 10px;
 text-align:center;
 border-radius: 10px 10px 0 0;
 }
@@ -15,8 +15,10 @@ margin-bottom: 40px;
 div.container{
 width: 900px;
 height: 610px;
+position: absolute;
 margin:35px auto;
 font-family: 'Raleway', sans-serif;
+
 }
 div.main{
 width: 300px;
@@ -24,8 +26,11 @@ padding: 10px 50px 25px;
 border: 2px solid gray;
 border-radius: 10px;
 font-family: raleway;
+position: relative;
 float:left;
-margin-top:50px;
+margin-top: 230px;
+margin-left: 340px;
+
 }
 input[type=text],input[type=password]{
 width: 100%;
@@ -68,11 +73,37 @@ border: 1px solid #e5a900;
 color: #4E4D4B;
 font-weight: bold;
 cursor: pointer;
+margin-bottom: 10px;
 width: 100%;
 border-radius: 5px;
-padding: 10px 0;
+padding: 10px 10px;
 outline:none;
+text-align: center;
 }
 input[type=button]:hover{
 background: linear-gradient(#ffdd7f 5%, #ffbc00 100%);
+}
+
+div.Logo
+{
+    position: absolute;
+    width: 1000px;
+    /* margin-left: 150p; */
+    /* margin-top: 50px; */
+    height: inherit;
+    opacity: 30%;
+    background-color: #ffdd7f;
+}
+
+img
+{
+    width: 1000px;
+    height: inherit;
+    position: left;
+    /* margin-left: 50px; */
+}
+
+body
+{
+    background-color: #FEFFED;
 }
