@@ -1,7 +1,7 @@
 //all this work is jeremy's, except for sam's api call to create user
 
 let users = [];
-const baseurl = 'https://mis321-fall2022-riddlemes4m.herokuapp.com/api';
+const baseurl = 'https://localhost:7139/api/';
 var uid = document.getElementById('userid');
 var passid = document.getElementById('passid');
 var ufname = document.getElementById('userfname');

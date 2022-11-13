@@ -11,7 +11,7 @@
 //^^dummy date -jeremy
 
 //base url -jeremy
-const baseUrl = "https://mis321-fall2022-riddlemes4m.herokuapp.com/api";
+const baseUrl = "https://localhost:7139/api/";
 
 getEmpTimeEvents();
 

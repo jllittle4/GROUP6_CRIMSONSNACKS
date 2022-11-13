@@ -1,5 +1,5 @@
 //base url -jeremy
-const baseurl = 'https://mis321-fall2022-riddlemes4m.herokuapp.com/api';
+const baseurl = 'https://localhost:7139/api/';
 //loggingin controller api -sam
 const postUrl = baseurl + 'LoggingIn';
 

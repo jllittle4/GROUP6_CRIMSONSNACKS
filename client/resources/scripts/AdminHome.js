@@ -1,7 +1,7 @@
 `use strict`;
 
 //everything below is jeremy's work, sam just put it in its own js file
-const baseUrl = "https://mis321-fall2022-riddlemes4m.herokuapp.com/api";
+const baseUrl = "https://localhost:7139/api/";
 
 var datetime = new Date();
 document.getElementById("time").textContent = datetime;
