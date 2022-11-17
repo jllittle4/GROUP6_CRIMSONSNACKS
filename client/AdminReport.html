@@ -5,19 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/client/resources/styles/AdminReport.css">
     <link rel="icon" href="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <title>Reports</title>
 </head>
 
 <body>
-    <h1> Reports of Departments and Employees for the Month:</h1>
+    <h1> Reports of Departments and Employees for the Month:</h1> 
+    <div class="dashboard">
+        <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'" class="btn btn-outline-danger btn-lg">
+    </div>
+    <div class=" date">
     <label for="date">Select a Date:</label>
           <input type="date" data-date-inline-picker="true" id = 'date' required/>
 
     <input type="button" value="Submit" onclick="makeTables();">
+    </div>
     <table id = "deptTable"
-    style = "display: none">
+    style = "display: none" class=".table-sm">
         <tr>
             <th>Department:</th>
             <th>Total Time:</th>
@@ -25,16 +31,14 @@
     </table>
 
     </div>
-    <div>
-        <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'">
-    </div>
+   
     <div>
         <h1 id = "h1"
         style = "display: none;">
         Department Monthly Stats</h1>
         <table id="department-table" border="1"
-        style = "display: none;">
-            <thead>
+        style = "display: none;" class=".table-sm">
+            <thead class="thead-light">
                 <tr>
                     <th>Department</th>
                     <th>Total Time (hrs)</th>
@@ -47,13 +51,14 @@
         style = "display: none;">
         Employee Monthly Stats</h1>
         <table id="employee-table" border="1"
-        style = "display: none;">
-            <thead>
+        style = "display: none;" class=".table-sm">
+            <thead class="thead-light">
                 <tr>
                     <th>Employee</th>
                     <th>Total Time (hrs)</th>
                 </tr>
             </thead>
+            
         </table>
     </div>
 

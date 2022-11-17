@@ -1,0 +1,60 @@
+div{
+    margin-left: 500px;
+}
+
+.reason{
+    margin-left: 0px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+}
+
+body{
+    background-color: #feffed;
+}
+
+.date, .dept, .in, .out{
+    padding: 25px;
+    display: inline-block;
+    width: fixed;
+}
+
+/* label{
+    display: inline-block;
+    width: fixed;
+    text-align: left;
+} */
+input{
+    display: inline-block;
+    width: fixed;
+    vertical-align: auto;
+}
+
+h1{
+    color: crimson;
+    padding: 30px 35px;
+    margin: -10px -50px;
+    text-align: center;
+}
+
+.reason{
+    display: inline-block;
+    width: fixed;
+    margin-left: 25px;
+   
+}
+
+.dept{
+    
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+     
+}
+
+form{
+    border: 5px solid crimson;
+    display: outside;
+    padding-bottom: 50px;
+}
+

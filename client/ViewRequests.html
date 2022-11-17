@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/client/resources/styles/ViewRequests.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="icon" href="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" type="image/x-icon">
 
@@ -25,15 +26,15 @@
         </div>
     </div>
     <div id="return-button">
-        <input type="button" value='Return To Dashboard' onclick="retToHome()"></input>
+        <input type="button" value='Return To Dashboard' onclick="retToHome()" class="btn btn-outline-danger btn-lg"></input>
 
     </div>
     <div>
         <div>
             <h1>Pending Requests</h1>
         </div>
-        <table id="pending">
-            <thead>
+        <table id="pending" class=".table-sm">
+            <thead class=" thead-light">
                 <th>Employee:</th>
                 <th>For Date:</th>
                 <th>New Clock In:</th>
@@ -48,8 +49,8 @@
         <div>
             <h1>Approved Requests</h1>
         </div>
-        <table id="approved">
-            <thead>
+        <table id="approved" class=".table-sm">
+            <thead class="thead-light">
                 <th>Employee:</th>
                 <th>For Date:</th>
                 <th>New Clock In:</th>
@@ -63,8 +64,8 @@
         <div>
             <h1>Denied Requests</h1>
         </div>
-        <table id="denied">
-            <thead>
+        <table id="denied" class=".table-sm">
+            <thead class="thead-light">
                 <th>Employee:</th>
                 <th>For Date:</th>
                 <th>New Clock In:</th>
