@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 h2{
 background-color: #FEFFED;
 padding: 30px 35px;
@@ -16,6 +16,7 @@ div.container{
 width: 900px;
 height: 610px;
 position: absolute;
+left: 250px;
 margin:35px auto;
 font-family: 'Raleway', sans-serif;
 
@@ -88,8 +89,9 @@ div.Logo
 {
     position: absolute;
     width: 1000px;
-    /* margin-left: 150p; */
-    /* margin-top: 50px; */
+    margin-left: 150p; 
+    margin-top: 50px; 
+    left: 250px;
     height: inherit;
     opacity: 30%;
     background-color: #ffdd7f;

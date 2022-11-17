@@ -149,6 +149,7 @@ function first(e) {
                 body: JSON.stringify(pendingReq[i])
             }).then((response) => {
                 return response.json();
+                
             }).then(function (response) {
                 requestStatus = response;
                 globalRequest = requestStatus;
