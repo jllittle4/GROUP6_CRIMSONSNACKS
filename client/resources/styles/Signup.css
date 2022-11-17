@@ -6,12 +6,14 @@ h1
     padding: 30px 35px;
     margin: -10px -50px;
     text-align: center;
+
 }
 
 h1, h5
 {
     color: crimson;
     text-shadow: black;
+    
 }
 div.Logo
 {

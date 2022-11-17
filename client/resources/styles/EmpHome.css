@@ -80,9 +80,9 @@ center {
 
 input[type=button] {
   font-size: 16px;
-  background: linear-gradient(#ffbc00 5%, #ffdd7f 100%);
-  border: 1px solid #e5a900;
-  color: #4E4D4B;
+  background: linear-gradient(crimson 5%, rgb(201, 71, 97) 100%);
+  border: 1px solid whitesmoke;
+  color: white;
   font-weight: bold;
   cursor: pointer;
   width: 100%;
