@@ -1,7 +1,27 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
+=======
+<<<<<<< HEAD
+    "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "projectName": "api",
+        "projectPath": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
+>>>>>>> 942bb03a45d4d0cdf848a69dfbeafc9fc76283e5
   },
   "projects": {
     "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {
@@ -14,7 +34,12 @@
         "outputPath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\samth\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+          "C:\\Users\\frick\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> 309e114017ac26ced9271a603390c48b631c48f1
+>>>>>>> 942bb03a45d4d0cdf848a69dfbeafc9fc76283e5
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -61,7 +86,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -73,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
