@@ -1,0 +1,40 @@
+h1{
+    color: crimson;
+    margin-left: 175px;
+}
+
+input[type=date]
+{
+    position: center;
+    padding-left: 10px;
+}
+
+div.date{
+position: center;
+}
+
+table{
+background-color: white;
+border-collapse: collapse;
+}
+
+table td th {
+    border-style: solid;
+    border-width: 1px;
+    
+}
+th + th 
+{ border-left: 1px solid; }
+
+tr + tr 
+{ border-top: 1px solid; }
+
+body{
+    background-color: #feffed;
+}
+.dashboard{
+    color: crimson;
+    background-color: #feffed;
+    margin-left: 555px;
+}
+

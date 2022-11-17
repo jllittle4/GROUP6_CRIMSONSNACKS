@@ -44,6 +44,23 @@ Include JS File Here
 
 <body onload="document.registration.userid.focus();">
     <h1>Registration Form</h1>
+    <div class="Logo">
+        <img src="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" alt="Logo"></div>
+    <h5>Use tab keys to move from one input field to the next.</h5>    
+    <div class="reg">
+    <form name='registration' id='registration'>
+        <ul>
+            <li><label for="userid">User Id:</label></li>
+            <input type="text" name="userid" id='userid' size="12" />
+            <li><label for="passid">Password:</label></li>
+            <input type="password" name="passid" id='passid' size="12" class="form-control" aria-describedby="passwordHelpBlock"/>
+            <small id="passwordHelpBlock" class="form-text text-muted">
+                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+              </small>
+            <li><label for="userfname"> First Name:</label></li>
+            <input type="text" name="userfname" id='userfname' size="50" />
+            <li><label for="userlname"> Last Name:</label></li>
+            <input type="text" name="userlname" id='userlname' size="50" />
 
     <div class="Logo">
         <img src="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" alt="Logo">
