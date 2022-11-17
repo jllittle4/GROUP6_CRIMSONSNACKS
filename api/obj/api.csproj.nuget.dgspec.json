@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
   },
   "projects": {
@@ -15,6 +16,22 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "projectName": "api",
+        "projectPath": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\frick\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\frick\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> 309e114017ac26ced9271a603390c48b631c48f1
         ],
         "originalTargetFrameworks": [
           "net6.0"
