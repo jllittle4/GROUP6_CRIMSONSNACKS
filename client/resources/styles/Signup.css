@@ -15,6 +15,10 @@ h1, h5
     text-shadow: black;
     
 }
+
+h5{
+    margin-left: 425px;
+}
 div.Logo
 {
     position: absolute;
@@ -35,6 +39,11 @@ div.reg
      /* opacity: 30%;  */
      background-color: transparent;
  } 
+
+ form{
+    margin-left: 250px;
+    width: max-content;
+ }
 
 img
 {
