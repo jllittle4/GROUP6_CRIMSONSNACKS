@@ -9,8 +9,16 @@ input[type=date]
     padding-left: 10px;
 }
 
-div.date{
+.date{
 position: center;
+margin-left: 450px;
+margin-top: 50px;
+padding-bottom: 50px;
+}
+
+.clear{
+    margin-left: 450px;
+    margin-top: 50px;
 }
 
 table{
