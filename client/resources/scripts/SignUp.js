@@ -1,6 +1,6 @@
 //all this work is jeremy's, except for sam's api call to create user
 
-const baseurl = 'https://mis321-fall2022-riddlemes4m.herokuapp.com/api/';
+const baseurl = 'https://localhost:7139/api/';
 const userUrl = baseurl + 'Users';
 let users = getEmployees();
 
