@@ -8,87 +8,43 @@
     <title>Sign Up</title>
     <link rel="stylesheet" href="/client/resources/styles/Signup.css">
     <link rel="icon" href="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" type="image/x-icon">
-    <!-- Bootstrap CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-
-
-<!-- <link rel="stylesheet" href="resources/styles/style.css"/>
-Include JS File Here
-<script src="resources/scripts/SignUp.js"></script>
-</head>
-<body>
-<div class="container">
-<div class="main">
-<h2>Sign Up Crimson Snacks!</h2>
-<form id="form_id" method="post" name="myform">
-    <label> First Name :</label>
-        <input type="text" name = "firstname" id = firstname"/>
-    <label> Last Name :</label>
-        <input type="text" name = "lastname" id = lastname"/>
-    <label> User Name :</label>
-        <input type="text" name="username" id="username"/>
-    <label>Password :</label>
-        <input type="password" name="password" id="password"/>
-    <input type="button" value="SignUp" id="signin" onclick="RettoLogin()"/>
-
-</form>
-
-</body> -->
-
-<link rel='stylesheet' href='resources/styles/style.css' type='text/css' />
-
-<script src="resources/scripts/SignUp.js"></script>
+    <link rel='stylesheet' href='resources/styles/style.css' type='text/css' />
 </head>
 
 <body onload="document.registration.userid.focus();">
     <h1 style="text-align: center;">Registration Form</h1>
     <div class="Logo">
-        <img src="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" alt="Logo"></div>
-    <h5 style="text-align: center;" >Use tab keys to move from one input field to the next.</h5>    
-    <div class="reg">
-    <form name='registration' id='registration'>
-        <ul>
-            <label for="userid">User Id:</label>    
-            <input type="text" name="userid" id='userid' size="12"/>
-            <label for="passid">Password:</label>   
-            <input type="password" name="passid" id='passid' size="12" class="form-control" aria-describedby="passwordHelpBlock"/>
-            <small id="passwordHelpBlock" class="form-text text-muted">
-                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-              </small>
-            <label for="userfname"> First Name:</label> 
-            <input type="text" name="userfname" id='userfname' size="50" />
-            <label for="userlname"> Last Name:</label>  
-            <input type="text" name="userlname" id='userlname' size="50" />
-        </ul>
-    </form>
+        <img>
     </div>
-    <!-- <div class="Logo">
-        <img src="https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg" alt="Logo">
-    </div>
-    <h5>Use tab keys to move from one input field to the next.</h5>
     <div class="reg">
         <form name='registration' id='registration'>
             <ul>
-                <li><label for="userid">User Id:</label></li>
+                <label for="userid">User Id:</label>
                 <input type="text" name="userid" id='userid' size="12" />
-                <li><label for="passid">Password:</label></li>
-                <input type="password" name="passid" id='passid' size="12" />
-                <li><label for="userfname"> First Name:</label></li>
+                <label for="passid">Password:</label>
+                <input type="password" name="passid" id='passid' size="12" class="form-control"
+                    aria-describedby="passwordHelpBlock" />
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                    Your password must be 8-20 characters long, contain letters and numbers, and must not contain
+                    spaces, special characters, or emoji.
+                </small>
+                <br>
+                <label for="userfname"> First Name:</label>
                 <input type="text" name="userfname" id='userfname' size="50" />
-                <li><label for="userlname"> Last Name:</label></li>
+                <label for="userlname"> Last Name:</label>
                 <input type="text" name="userlname" id='userlname' size="50" />
-
-                <input type="button" value="Register" id="submit" onclick="RettoLogin()" />
+                <input type="button" value="SignUp" id="signin" onclick="submitRegistrationForm()" />
+                <input id="button3" type="button" value='Return To Login' onclick="RettoHome();" />
             </ul>
         </form>
-    </div> -->
+    </div>
 
+    <script src="resources/scripts/SignUp.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 </body>
 
 </html>
-

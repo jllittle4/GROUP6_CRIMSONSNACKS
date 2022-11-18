@@ -9,43 +9,51 @@ h1 {
 
 }
 
-h1, h5
-{
+h1,
+h5 {
     color: crimson;
     text-shadow: black;
-    
+
 }
 
-h5{
+h5 {
     margin-top: 50px;
-} 
-div.Logo
-{
-    position: absolute;
-    width: 1000px;
-    /* margin-left: 150p; */
-    margin-bottom: -500px;
-    height: 1000px;
+}
+
+div.Logo {
+    background-image: url(https://live.staticflickr.com/65535/52487750451_68bc48b2cf.jpg);
+    /* width: 1000px;
+    margin-bottom: -500px; */
+    /* height: 1000px; */
     opacity: 30%;
     background-color: #ffdd7f;
+
+    height: inherit;
+    /* opacity: 100%; */
+    align-items: center;
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin-top: 50px;
 }
-div.reg
-{
+
+div.reg {
     position: absolute;
     width: 1000px;
-     margin-left: 150p;
-     margin-top: 50px;
+    margin-left: 150p;
+    margin-top: 50px;
     height: inherit;
-     /* opacity: 30%;  */
-     background-color: transparent;
- } 
+    /* opacity: 30%;  */
+    background-color: transparent;
+}
 
- form{
+form {
     /* margin-left: 250px;
     width: max-content;*/
     margin-top: 275px;
     margin-left: 425px;
- } 
+}
 
 img {
     width: 1000px;
@@ -55,21 +63,21 @@ img {
     /* margin-left: 50px; */
 }
 
-.passwordHelpBlock{
-margin-top: 0px;
-margin-bottom: 50px;
+.passwordHelpBlock {
+    margin-top: 0px;
+    margin-bottom: 50px;
 }
 
-label{
-    display:inline-block;
-    width:200px;
-    margin-right:30px;
-    text-align:right;
+label {
+    display: inline-block;
+    width: 200px;
+    margin-right: 30px;
+    text-align: right;
 }
 
 ul {
-        border:none;
-        width:500px;
-        margin:0px auto;
+    border: none;
+    width: 500px;
+    margin: 0px auto;
 
 }

@@ -1034,7 +1034,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\samth\\.nuget\\packages\\": {}
+    "C:\\Users\\frick\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -1042,11 +1042,11 @@
       "projectUniqueName": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
       "projectName": "api",
       "projectPath": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\samth\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\frick\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\samth\\source\\repos\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\samth\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\frick\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
