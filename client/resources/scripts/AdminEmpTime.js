@@ -16,7 +16,7 @@
 
 
 //base url -jeremy
-const baseUrl = 'https://localhost:7139/api/';
+const baseUrl = 'https://mis321-fall2022-riddlemes4m.herokuapp.com/api';
 const userUrl = baseUrl + 'Users';
 let clicked = "";
 let dropDown = "";
