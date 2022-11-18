@@ -16,11 +16,15 @@
     <div class="dashboard">
         <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'" class="btn btn-outline-danger btn-lg">
     </div>
+    
     <div class=" date">
     <label for="date">Select a Date:</label>
           <input type="date" data-date-inline-picker="true" id = 'date' required/>
+          
 
-    <input type="button" value="Submit" onclick="makeTables();">
+    <input type="button" value="Submit" onclick="makeTables();" class="btn btn-outline-success">
+    <input type="button" value='Clear Report' onclick="reLoad()" class="btn btn-outline-danger"></input>
+
     </div>
     <table id = "deptTable"
     style = "display: none" class=".table-sm">
@@ -31,13 +35,7 @@
     </table>
 
     </div>
-    <div>
-        <input type="button" value='Clear Report' onclick="reLoad()"></input>
-
-    </div>
-    <div>
-        <input type="button" value="Return to Dashboard" onclick="window.location = 'AdminHome.html'">
-    </div>
+    
     <div>
         <h1 id = "h1"
         style = "display: none;">

@@ -1,22 +1,22 @@
 #button1 {
 
-    margin-left: 710px;
-    color: white;
-    background-color: green;
+    margin-left: 650px;
+    /* color: white;
+    background-color: green; */
     align-items: center;
     
 }
 
 #button2 {
-    margin-left: 690px;
-    margin-top: 15px;
+    /* margin-left: 690px; */
+    /* margin-top: 15px; */
 }
 
 #button3 {
     margin-left: 660px;
     margin-top: 15px;
-    background-color: white;
-    color: crimson;
+    /* background-color: white;
+    color: crimson; */
 }
 
 body {
@@ -35,4 +35,9 @@ body {
 h1 {
     margin-left: 557.5px;
     margin-top: 50px;
+    color: crimson;
+}
+
+.submit_clear{
+    padding-bottom: 25px;
 }
