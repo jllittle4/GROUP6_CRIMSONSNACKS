@@ -2,7 +2,7 @@
 var datetime = new Date();
 document.getElementById("time").textContent = datetime; //it will print on html page
 
-const baseUrl = 'https://mis321-fall2022-riddlemes4m.herokuapp.com/api';
+const baseUrl = 'https://localhost:7139/api/';
 let username = window.localStorage.getItem('username');
 
 let header = document.getElementById('welcome');
