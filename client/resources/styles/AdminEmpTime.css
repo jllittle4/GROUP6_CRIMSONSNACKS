@@ -25,6 +25,7 @@ body {
 
 .months {
     margin-left: 550px;
+    margin-top: 15px;
 }
 
 .employees {
@@ -33,4 +34,5 @@ body {
 
 h1 {
     margin-left: 557.5px;
+    margin-top: 50px;
 }

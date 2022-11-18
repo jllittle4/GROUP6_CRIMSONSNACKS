@@ -35,3 +35,17 @@ tr + tr
 body{
     background-color: #feffed;
 }
+
+.btn.btn-outline-danger.btn-lg {
+    margin-left: 575px;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-sm {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -8,8 +8,8 @@ div{
     padding-top: 10px;
 }
 
-body{
-    background-color: #feffed;
+body {
+    background-color: #FEFFED;
 }
 
 .date, .dept, .in, .out{
@@ -34,6 +34,7 @@ h1{
     padding: 30px 35px;
     margin: -10px -50px;
     text-align: center;
+    background-color: #FEFFED;
 }
 
 .reason{
@@ -56,5 +57,6 @@ form{
     border: 5px solid crimson;
     display: outside;
     padding-bottom: 50px;
+    
 }
 
