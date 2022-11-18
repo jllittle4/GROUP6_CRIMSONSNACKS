@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
+    "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {
+    "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\samth\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\samth\\source\\repos\\fall_2022\\group_project\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
+        "projectPath": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\thoma\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\thoma\\MIS\\MIS321\\GROUP6_CRIMSONSNACKS\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\samth\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\thoma\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -53,7 +53,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -65,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
