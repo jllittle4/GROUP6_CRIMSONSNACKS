@@ -1,0 +1,38 @@
+#button1 {
+
+    margin-left: 710px;
+    color: white;
+    background-color: green;
+    align-items: center;
+    
+}
+
+#button2 {
+    margin-left: 690px;
+    margin-top: 15px;
+}
+
+#button3 {
+    margin-left: 660px;
+    margin-top: 15px;
+    background-color: white;
+    color: crimson;
+}
+
+body {
+    background-color: #FEFFED;
+}
+
+.months {
+    margin-left: 550px;
+    margin-top: 15px;
+}
+
+.employees {
+    margin-left: 550px;
+}
+
+h1 {
+    margin-left: 557.5px;
+    margin-top: 50px;
+}

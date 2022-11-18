@@ -1,0 +1,38 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+input[type =button] {
+
+    margin-left: 635px;
+    margin-top: 50px;
+    color: crimson;
+    background-color: white;
+    
+}
+table {
+border-collapse: collapse;
+}
+
+table, th, td{
+    margin-top: 100px;
+    margin-left: 250px;
+    background-color: white;
+    border: 1px solid;
+    
+}
+th + tr {border-left: 1px solid;}
+tr + tr {border-top: 1px solid;}
+
+body {
+    background-color: #FEFFED;
+}
+
+th {
+    color: crimson;
+}
+
+
+    
+
+
+
+

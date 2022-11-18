@@ -1,0 +1,51 @@
+h1{
+    color: crimson;
+    margin-left: 500px;
+    padding-top: 10px;
+
+}
+.return-button{
+    color: crimson;
+    background-color: #feffed;
+}
+table{
+    border-collapse: collapse;
+    
+}
+#approved, #denied{
+    margin-left: 375px;
+}
+
+
+table, th, td{
+    background-color: #feffed;
+    border-style: solid;
+    border-width: 1px;
+    margin-top: 75px;
+    margin-left: 325px;
+}
+th{
+    position: center
+    padding 2px;
+}
+th + th 
+{ border-left: 1px solid; }
+tr + tr 
+{ border-top: 1px solid; }
+body{
+    background-color: #feffed;
+}
+
+.btn.btn-outline-danger.btn-lg {
+    margin-left: 575px;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-sm {
+    margin-left: auto;
+    margin-right: auto;
+}
